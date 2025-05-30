@@ -1,0 +1,3663 @@
+{
+  "users": [
+    {
+      "id": 1,
+      "name": "Nguyễn Văn A",
+      "email": "nguyenvana@example.com",
+      "password": "hashed_password",
+      "role": "customer",
+      "status": true,
+      "created_at": "2025-05-01T08:00:00"
+    },
+        {
+      "id": 2,
+      "name": "Nguyễn Văn B",
+      "email": "nguyenvanb@example.com",
+      "password": "hashed_password",
+      "role": "customer",
+      "status": true,
+      "created_at": "2025-05-01T08:00:00"
+    },
+        {
+      "id": 3,
+      "name": "Nguyễn Văn C",
+      "email": "nguyenvanc@example.com",
+      "password": "hashed_password",
+      "role": "customer",
+      "status": true,
+      "created_at": "2025-05-01T08:00:00"
+    },
+        {
+      "id": 4,
+      "name": "Nguyễn Văn D",
+      "email": "nguyenvand@example.com",
+      "password": "hashed_password",
+      "role": "customer",
+      "status": true,
+      "created_at": "2025-05-01T08:00:00"
+    },
+    {
+      "id": 99,
+      "name": "Admin",
+      "email": "admin@shop.vn",
+      "password": "hashed_password",
+      "role": "admin",
+      "status": true,
+      "created_at": "2025-01-01T00:00:00"
+    }
+  ],
+  "categories": [
+    {
+      "id": 1,
+      "name": "Sen đá",
+      "parent_id": null
+    },
+    {
+      "id": 2,
+      "name": "Xương rồng",
+      "parent_id": null
+    },
+    {
+      "id": 3,
+      "name": "Chậu đất nung",
+      "parent_id": null
+    },
+    {
+      "id": 4,
+      "name": "Chậu sứ",
+      "parent_id": null
+    },
+    {
+      "id": 5,
+      "name": "Phụ kiện trang trí",
+      "parent_id": null
+    },
+    {
+      "id": 6,
+      "name": "Đất trồng, phân bón",
+      "parent_id": null
+    } ,
+    {
+      "id": 7,
+      "name": "Sỏi trang trí",
+      "parent_id": null
+    },
+    {
+      "id": 8,
+      "name": "Dụng cụ trồng sen đá",
+      "parent_id": null
+    } 
+  ],
+  "products": [
+    {
+      "id": 1,
+      "name": "Sen đá nâu 5-7cm (bịch nhựa)",
+      "description": "Cây sen đá nâu tượng trưng cho sự bền bỉ và sức sống mãnh liệt.",
+      "price": 15000,
+      "category": {
+        "id": 1,
+        "name": "Sen đá"
+      },
+      "images": [
+        {
+          "id": 1,
+          "image_url": "https://product.hstatic.net/1000187613/product/img_0256_cf6c32e53e8845fd951604273b33efa3_large.jpg"
+        },
+        {
+          "id": 2,
+          "image_url": "https://example.com/images/sendanau-2.jpg"
+        }
+      ],
+      "inventory": {
+        "id": 1,
+        "quantity": 120,
+        "last_updated": "2025-05-10T08:00:00"
+      }
+    },
+    {
+      "id": 2,
+      "name": "Sen đá móng rồng xanh 5-7cm (bịch nhựa)",
+      "description": "Sen đá móng rồng có hình dáng độc đáo và mạnh mẽ.",
+      "price": 15000,
+      "category": {
+        "id": 1,
+        "name": "Sen đá"
+      },
+      "images": [
+        {
+          "id": 3,
+          "image_url": "https://product.hstatic.net/1000187613/product/img_1385_20fcf2eb965e40bb917e163ab333ef85_large.jpg"
+        }
+      ],
+      "inventory": {
+        "id": 2,
+        "quantity": 80,
+        "last_updated": "2025-05-10T08:30:00"
+      }
+    },
+    {
+      "id": 3,
+      "name": "Xương rồng gai cong 3-4cm (Chậu nhựa)",
+      "description": "Sen đá móng rồng có hình dáng độc đáo và mạnh mẽ.",
+      "price": 15000,
+      "category": {
+        "id": 2,
+        "name": "Xương rồng"
+      },
+      "images": [
+        {
+          "id": 3,
+          "image_url": "https://product.hstatic.net/1000187613/product/xoay_xanh_37ad54154c4240e9b4f49ef078f194b0_large.jpg"
+        }
+      ],
+      "inventory": {
+        "id": 3,
+        "quantity": 80,
+        "last_updated": "2025-05-10T08:30:00"
+      }
+    },
+    {
+      "id": 4,
+      "name": "Xương rồng gai cong 3-4cm (Chậu nhựa)",
+      "description": "Sen đá móng rồng có hình dáng độc đáo và mạnh mẽ.",
+      "price": 15000,
+      "category": {
+        "id": 2,
+        "name": "Xương rồng"
+      },
+      "images": [
+        {
+          "id": 4,
+          "image_url": "https://product.hstatic.net/1000187613/product/gai_cong_fc5e4cdf12944ac7801d213b4489df60_large.jpg"
+        }
+      ],
+      "inventory": {
+        "id": 4,
+        "quantity": 80,
+        "last_updated": "2025-05-10T08:30:00"
+      }
+    }
+    ,{
+      "id": 5,
+      "name": "Xương rồng đóm trắng 3-4cm (Chậu nhựa)",
+      "description": "Xương rồng đóm trắng 3-4cm (Chậu nhựa)",
+      "price": 15000,
+      "category": {
+        "id": 2,
+        "name": "Xương rồng"
+      },
+      "images": [
+        {
+          "id": 5,
+          "image_url": "https://product.hstatic.net/1000187613/product/dom_trang_4036b4765b5b4af6849b35491eb6f4be_large.jpg"
+        }
+      ],
+      "inventory": {
+        "id": 5,
+        "quantity": 80,
+        "last_updated": "2025-05-10T08:30:00"
+      }
+    },
+    {
+    "id": 6,
+    "name": "Sen đá sản phẩm 1",
+    "description": "Mô tả cho sen đá sản phẩm 1.",
+    "price": 20000,
+    "category": {
+      "id": 1,
+      "name": "Sen đá"
+    },
+    "images": [
+      {
+        "id": 6,
+        "image_url": "https://example.com/images/214bdaa5-b6d1-4573-92a2-b660a8153a4a.jpg"
+      }
+    ],
+    "inventory": {
+      "id": 6,
+      "quantity": 60,
+      "last_updated": "2025-05-14T15:34:55.679188"
+    }
+  },
+  {
+    "id": 7,
+    "name": "Sen đá sản phẩm 2",
+    "description": "Mô tả cho sen đá sản phẩm 2.",
+    "price": 20000,
+    "category": {
+      "id": 1,
+      "name": "Sen đá"
+    },
+    "images": [
+      {
+        "id": 7,
+        "image_url": "https://example.com/images/2c6ac502-414e-4bba-b4f3-8da04373f95b.jpg"
+      }
+    ],
+    "inventory": {
+      "id": 7,
+      "quantity": 126,
+      "last_updated": "2025-05-14T15:34:55.679270"
+    }
+  },
+  {
+    "id": 8,
+    "name": "Sen đá sản phẩm 3",
+    "description": "Mô tả cho sen đá sản phẩm 3.",
+    "price": 15000,
+    "category": {
+      "id": 1,
+      "name": "Sen đá"
+    },
+    "images": [
+      {
+        "id": 8,
+        "image_url": "https://example.com/images/87421dae-eceb-4c2a-b7b9-cdb012b1b734.jpg"
+      }
+    ],
+    "inventory": {
+      "id": 8,
+      "quantity": 198,
+      "last_updated": "2025-05-14T15:34:55.679319"
+    }
+  },
+  {
+    "id": 9,
+    "name": "Sen đá sản phẩm 4",
+    "description": "Mô tả cho sen đá sản phẩm 4.",
+    "price": 15000,
+    "category": {
+      "id": 1,
+      "name": "Sen đá"
+    },
+    "images": [
+      {
+        "id": 9,
+        "image_url": "https://example.com/images/d326b82e-9e11-45ad-9148-8bc0eb921ae4.jpg"
+      }
+    ],
+    "inventory": {
+      "id": 9,
+      "quantity": 145,
+      "last_updated": "2025-05-14T15:34:55.679347"
+    }
+  },
+  {
+    "id": 10,
+    "name": "Sen đá sản phẩm 5",
+    "description": "Mô tả cho sen đá sản phẩm 5.",
+    "price": 10000,
+    "category": {
+      "id": 1,
+      "name": "Sen đá"
+    },
+    "images": [
+      {
+        "id": 10,
+        "image_url": "https://example.com/images/52e1b212-a9f3-4e5e-89c5-f104d9fc61c2.jpg"
+      }
+    ],
+    "inventory": {
+      "id": 10,
+      "quantity": 88,
+      "last_updated": "2025-05-14T15:34:55.679368"
+    }
+  },
+  {
+    "id": 11,
+    "name": "Sen đá sản phẩm 6",
+    "description": "Mô tả cho sen đá sản phẩm 6.",
+    "price": 20000,
+    "category": {
+      "id": 1,
+      "name": "Sen đá"
+    },
+    "images": [
+      {
+        "id": 11,
+        "image_url": "https://example.com/images/cb3f2ffe-c217-44fb-9b54-c61b8b6e1398.jpg"
+      }
+    ],
+    "inventory": {
+      "id": 11,
+      "quantity": 123,
+      "last_updated": "2025-05-14T15:34:55.679388"
+    }
+  },
+  {
+    "id": 12,
+    "name": "Sen đá sản phẩm 7",
+    "description": "Mô tả cho sen đá sản phẩm 7.",
+    "price": 25000,
+    "category": {
+      "id": 1,
+      "name": "Sen đá"
+    },
+    "images": [
+      {
+        "id": 12,
+        "image_url": "https://example.com/images/657b5c66-8afe-4e0f-918b-5ccf401862a9.jpg"
+      }
+    ],
+    "inventory": {
+      "id": 12,
+      "quantity": 68,
+      "last_updated": "2025-05-14T15:34:55.679407"
+    }
+  },
+  {
+    "id": 13,
+    "name": "Sen đá sản phẩm 8",
+    "description": "Mô tả cho sen đá sản phẩm 8.",
+    "price": 15000,
+    "category": {
+      "id": 1,
+      "name": "Sen đá"
+    },
+    "images": [
+      {
+        "id": 13,
+        "image_url": "https://example.com/images/9b5cc883-8b9c-4dbe-87b8-65f9366093de.jpg"
+      }
+    ],
+    "inventory": {
+      "id": 13,
+      "quantity": 161,
+      "last_updated": "2025-05-14T15:34:55.679453"
+    }
+  },
+  {
+    "id": 14,
+    "name": "Sen đá sản phẩm 9",
+    "description": "Mô tả cho sen đá sản phẩm 9.",
+    "price": 25000,
+    "category": {
+      "id": 1,
+      "name": "Sen đá"
+    },
+    "images": [
+      {
+        "id": 14,
+        "image_url": "https://example.com/images/c3fc3106-203e-4e6e-835f-6c9170725779.jpg"
+      }
+    ],
+    "inventory": {
+      "id": 14,
+      "quantity": 130,
+      "last_updated": "2025-05-14T15:34:55.679483"
+    }
+  },
+  {
+    "id": 15,
+    "name": "Sen đá sản phẩm 10",
+    "description": "Mô tả cho sen đá sản phẩm 10.",
+    "price": 20000,
+    "category": {
+      "id": 1,
+      "name": "Sen đá"
+    },
+    "images": [
+      {
+        "id": 15,
+        "image_url": "https://example.com/images/acc17790-dbdf-4375-8e36-d2f34c21321b.jpg"
+      }
+    ],
+    "inventory": {
+      "id": 15,
+      "quantity": 182,
+      "last_updated": "2025-05-14T15:34:55.679516"
+    }
+  },
+  {
+    "id": 16,
+    "name": "Sen đá sản phẩm 11",
+    "description": "Mô tả cho sen đá sản phẩm 11.",
+    "price": 10000,
+    "category": {
+      "id": 1,
+      "name": "Sen đá"
+    },
+    "images": [
+      {
+        "id": 16,
+        "image_url": "https://example.com/images/a479ae4a-d338-44e6-bbd4-aa04e60d59f9.jpg"
+      }
+    ],
+    "inventory": {
+      "id": 16,
+      "quantity": 125,
+      "last_updated": "2025-05-14T15:34:55.679533"
+    }
+  },
+  {
+    "id": 17,
+    "name": "Sen đá sản phẩm 12",
+    "description": "Mô tả cho sen đá sản phẩm 12.",
+    "price": 10000,
+    "category": {
+      "id": 1,
+      "name": "Sen đá"
+    },
+    "images": [
+      {
+        "id": 17,
+        "image_url": "https://example.com/images/85694f0f-5a3f-4c9d-a468-5a5c8f210741.jpg"
+      }
+    ],
+    "inventory": {
+      "id": 17,
+      "quantity": 72,
+      "last_updated": "2025-05-14T15:34:55.679545"
+    }
+  },
+  {
+    "id": 18,
+    "name": "Sen đá sản phẩm 13",
+    "description": "Mô tả cho sen đá sản phẩm 13.",
+    "price": 10000,
+    "category": {
+      "id": 1,
+      "name": "Sen đá"
+    },
+    "images": [
+      {
+        "id": 18,
+        "image_url": "https://example.com/images/99494b9d-c948-4e4a-b98f-b923f107ec61.jpg"
+      }
+    ],
+    "inventory": {
+      "id": 18,
+      "quantity": 148,
+      "last_updated": "2025-05-14T15:34:55.679559"
+    }
+  },
+  {
+    "id": 19,
+    "name": "Sen đá sản phẩm 14",
+    "description": "Mô tả cho sen đá sản phẩm 14.",
+    "price": 25000,
+    "category": {
+      "id": 1,
+      "name": "Sen đá"
+    },
+    "images": [
+      {
+        "id": 19,
+        "image_url": "https://example.com/images/f057c8f0-0eb8-4320-9a78-d57a053e82ca.jpg"
+      }
+    ],
+    "inventory": {
+      "id": 19,
+      "quantity": 124,
+      "last_updated": "2025-05-14T15:34:55.679576"
+    }
+  },
+  {
+    "id": 20,
+    "name": "Sen đá sản phẩm 15",
+    "description": "Mô tả cho sen đá sản phẩm 15.",
+    "price": 25000,
+    "category": {
+      "id": 1,
+      "name": "Sen đá"
+    },
+    "images": [
+      {
+        "id": 20,
+        "image_url": "https://example.com/images/cfe67025-2b71-4b7c-b295-25904bc727f8.jpg"
+      }
+    ],
+    "inventory": {
+      "id": 20,
+      "quantity": 124,
+      "last_updated": "2025-05-14T15:34:55.679594"
+    }
+  },
+  {
+    "id": 21,
+    "name": "Sen đá sản phẩm 16",
+    "description": "Mô tả cho sen đá sản phẩm 16.",
+    "price": 25000,
+    "category": {
+      "id": 1,
+      "name": "Sen đá"
+    },
+    "images": [
+      {
+        "id": 21,
+        "image_url": "https://example.com/images/ef957452-60d3-431b-9433-735da4bf7727.jpg"
+      }
+    ],
+    "inventory": {
+      "id": 21,
+      "quantity": 137,
+      "last_updated": "2025-05-14T15:34:55.679607"
+    }
+  },
+  {
+    "id": 22,
+    "name": "Sen đá sản phẩm 17",
+    "description": "Mô tả cho sen đá sản phẩm 17.",
+    "price": 20000,
+    "category": {
+      "id": 1,
+      "name": "Sen đá"
+    },
+    "images": [
+      {
+        "id": 22,
+        "image_url": "https://example.com/images/de3eeac9-e31f-4db5-80fa-f0023843ba82.jpg"
+      }
+    ],
+    "inventory": {
+      "id": 22,
+      "quantity": 121,
+      "last_updated": "2025-05-14T15:34:55.679724"
+    }
+  },
+  {
+    "id": 23,
+    "name": "Sen đá sản phẩm 18",
+    "description": "Mô tả cho sen đá sản phẩm 18.",
+    "price": 25000,
+    "category": {
+      "id": 1,
+      "name": "Sen đá"
+    },
+    "images": [
+      {
+        "id": 23,
+        "image_url": "https://example.com/images/4db7f987-9f52-4a0e-8009-2694f00cbd21.jpg"
+      }
+    ],
+    "inventory": {
+      "id": 23,
+      "quantity": 83,
+      "last_updated": "2025-05-14T15:34:55.679797"
+    }
+  },
+  {
+    "id": 24,
+    "name": "Sen đá sản phẩm 19",
+    "description": "Mô tả cho sen đá sản phẩm 19.",
+    "price": 20000,
+    "category": {
+      "id": 1,
+      "name": "Sen đá"
+    },
+    "images": [
+      {
+        "id": 24,
+        "image_url": "https://example.com/images/c0205193-6303-42f6-9ccf-d40dcdbd3a01.jpg"
+      }
+    ],
+    "inventory": {
+      "id": 24,
+      "quantity": 99,
+      "last_updated": "2025-05-14T15:34:55.679848"
+    }
+  },
+  {
+    "id": 25,
+    "name": "Sen đá sản phẩm 20",
+    "description": "Mô tả cho sen đá sản phẩm 20.",
+    "price": 10000,
+    "category": {
+      "id": 1,
+      "name": "Sen đá"
+    },
+    "images": [
+      {
+        "id": 25,
+        "image_url": "https://example.com/images/7aae15c3-e854-47cd-b531-01ec83915c1f.jpg"
+      }
+    ],
+    "inventory": {
+      "id": 25,
+      "quantity": 138,
+      "last_updated": "2025-05-14T15:34:55.680031"
+    }
+  },
+  {
+    "id": 26,
+    "name": "Xương rồng sản phẩm 1",
+    "description": "Mô tả cho xương rồng sản phẩm 1.",
+    "price": 25000,
+    "category": {
+      "id": 2,
+      "name": "Xương rồng"
+    },
+    "images": [
+      {
+        "id": 26,
+        "image_url": "https://example.com/images/c8abca17-4d9a-4eda-9d78-b8d1b10a962e.jpg"
+      }
+    ],
+    "inventory": {
+      "id": 26,
+      "quantity": 125,
+      "last_updated": "2025-05-14T15:34:55.680061"
+    }
+  },
+  {
+    "id": 27,
+    "name": "Xương rồng sản phẩm 2",
+    "description": "Mô tả cho xương rồng sản phẩm 2.",
+    "price": 25000,
+    "category": {
+      "id": 2,
+      "name": "Xương rồng"
+    },
+    "images": [
+      {
+        "id": 27,
+        "image_url": "https://example.com/images/62c65503-958f-4c7d-91c0-3e20faa95fb1.jpg"
+      }
+    ],
+    "inventory": {
+      "id": 27,
+      "quantity": 125,
+      "last_updated": "2025-05-14T15:34:55.680072"
+    }
+  },
+  {
+    "id": 28,
+    "name": "Xương rồng sản phẩm 3",
+    "description": "Mô tả cho xương rồng sản phẩm 3.",
+    "price": 20000,
+    "category": {
+      "id": 2,
+      "name": "Xương rồng"
+    },
+    "images": [
+      {
+        "id": 28,
+        "image_url": "https://example.com/images/a5e1b955-6fbc-4386-9317-be9f75b01e17.jpg"
+      }
+    ],
+    "inventory": {
+      "id": 28,
+      "quantity": 143,
+      "last_updated": "2025-05-14T15:34:55.680090"
+    }
+  },
+  {
+    "id": 29,
+    "name": "Xương rồng sản phẩm 4",
+    "description": "Mô tả cho xương rồng sản phẩm 4.",
+    "price": 25000,
+    "category": {
+      "id": 2,
+      "name": "Xương rồng"
+    },
+    "images": [
+      {
+        "id": 29,
+        "image_url": "https://example.com/images/9d689aff-1e6d-4376-a9fb-7c41a5e64ea0.jpg"
+      }
+    ],
+    "inventory": {
+      "id": 29,
+      "quantity": 199,
+      "last_updated": "2025-05-14T15:34:55.680110"
+    }
+  },
+  {
+    "id": 30,
+    "name": "Xương rồng sản phẩm 5",
+    "description": "Mô tả cho xương rồng sản phẩm 5.",
+    "price": 20000,
+    "category": {
+      "id": 2,
+      "name": "Xương rồng"
+    },
+    "images": [
+      {
+        "id": 30,
+        "image_url": "https://example.com/images/2e270ed0-3225-41ab-a445-ec33590854d1.jpg"
+      }
+    ],
+    "inventory": {
+      "id": 30,
+      "quantity": 105,
+      "last_updated": "2025-05-14T15:34:55.680124"
+    }
+  },
+  {
+    "id": 31,
+    "name": "Xương rồng sản phẩm 6",
+    "description": "Mô tả cho xương rồng sản phẩm 6.",
+    "price": 10000,
+    "category": {
+      "id": 2,
+      "name": "Xương rồng"
+    },
+    "images": [
+      {
+        "id": 31,
+        "image_url": "https://example.com/images/300d1051-fb74-411c-9e6e-ba3f7c9c8c67.jpg"
+      }
+    ],
+    "inventory": {
+      "id": 31,
+      "quantity": 179,
+      "last_updated": "2025-05-14T15:34:55.680140"
+    }
+  },
+  {
+    "id": 32,
+    "name": "Xương rồng sản phẩm 7",
+    "description": "Mô tả cho xương rồng sản phẩm 7.",
+    "price": 10000,
+    "category": {
+      "id": 2,
+      "name": "Xương rồng"
+    },
+    "images": [
+      {
+        "id": 32,
+        "image_url": "https://example.com/images/78a72613-d202-4d4b-b762-f2b55d082c8f.jpg"
+      }
+    ],
+    "inventory": {
+      "id": 32,
+      "quantity": 140,
+      "last_updated": "2025-05-14T15:34:55.680151"
+    }
+  },
+  {
+    "id": 33,
+    "name": "Xương rồng sản phẩm 8",
+    "description": "Mô tả cho xương rồng sản phẩm 8.",
+    "price": 10000,
+    "category": {
+      "id": 2,
+      "name": "Xương rồng"
+    },
+    "images": [
+      {
+        "id": 33,
+        "image_url": "https://example.com/images/6340f298-9a1d-49b7-aac8-bb8c26d833ac.jpg"
+      }
+    ],
+    "inventory": {
+      "id": 33,
+      "quantity": 114,
+      "last_updated": "2025-05-14T15:34:55.680162"
+    }
+  },
+  {
+    "id": 34,
+    "name": "Xương rồng sản phẩm 9",
+    "description": "Mô tả cho xương rồng sản phẩm 9.",
+    "price": 20000,
+    "category": {
+      "id": 2,
+      "name": "Xương rồng"
+    },
+    "images": [
+      {
+        "id": 34,
+        "image_url": "https://example.com/images/a52792fb-c2a9-47da-8f49-ecee5654f285.jpg"
+      }
+    ],
+    "inventory": {
+      "id": 34,
+      "quantity": 83,
+      "last_updated": "2025-05-14T15:34:55.680177"
+    }
+  },
+  {
+    "id": 35,
+    "name": "Xương rồng sản phẩm 10",
+    "description": "Mô tả cho xương rồng sản phẩm 10.",
+    "price": 15000,
+    "category": {
+      "id": 2,
+      "name": "Xương rồng"
+    },
+    "images": [
+      {
+        "id": 35,
+        "image_url": "https://example.com/images/f505994d-7610-4f8e-ace2-12bbc27a1579.jpg"
+      }
+    ],
+    "inventory": {
+      "id": 35,
+      "quantity": 69,
+      "last_updated": "2025-05-14T15:34:55.680187"
+    }
+  },
+  {
+    "id": 36,
+    "name": "Xương rồng sản phẩm 11",
+    "description": "Mô tả cho xương rồng sản phẩm 11.",
+    "price": 10000,
+    "category": {
+      "id": 2,
+      "name": "Xương rồng"
+    },
+    "images": [
+      {
+        "id": 36,
+        "image_url": "https://example.com/images/bf4355a3-619f-4639-879a-f21f2b9fdc92.jpg"
+      }
+    ],
+    "inventory": {
+      "id": 36,
+      "quantity": 122,
+      "last_updated": "2025-05-14T15:34:55.680197"
+    }
+  },
+  {
+    "id": 37,
+    "name": "Xương rồng sản phẩm 12",
+    "description": "Mô tả cho xương rồng sản phẩm 12.",
+    "price": 10000,
+    "category": {
+      "id": 2,
+      "name": "Xương rồng"
+    },
+    "images": [
+      {
+        "id": 37,
+        "image_url": "https://example.com/images/f7c709ac-99e2-4c04-97ef-a249cfb82cbe.jpg"
+      }
+    ],
+    "inventory": {
+      "id": 37,
+      "quantity": 190,
+      "last_updated": "2025-05-14T15:34:55.680208"
+    }
+  },
+  {
+    "id": 38,
+    "name": "Xương rồng sản phẩm 13",
+    "description": "Mô tả cho xương rồng sản phẩm 13.",
+    "price": 20000,
+    "category": {
+      "id": 2,
+      "name": "Xương rồng"
+    },
+    "images": [
+      {
+        "id": 38,
+        "image_url": "https://example.com/images/287048b2-c434-4452-bbcc-cfbc0ba4d1e8.jpg"
+      }
+    ],
+    "inventory": {
+      "id": 38,
+      "quantity": 52,
+      "last_updated": "2025-05-14T15:34:55.680219"
+    }
+  },
+  {
+    "id": 39,
+    "name": "Xương rồng sản phẩm 14",
+    "description": "Mô tả cho xương rồng sản phẩm 14.",
+    "price": 10000,
+    "category": {
+      "id": 2,
+      "name": "Xương rồng"
+    },
+    "images": [
+      {
+        "id": 39,
+        "image_url": "https://example.com/images/0d7d8526-14e2-4e16-bbb1-2e618ac1c4e6.jpg"
+      }
+    ],
+    "inventory": {
+      "id": 39,
+      "quantity": 96,
+      "last_updated": "2025-05-14T15:34:55.680229"
+    }
+  },
+  {
+    "id": 40,
+    "name": "Xương rồng sản phẩm 15",
+    "description": "Mô tả cho xương rồng sản phẩm 15.",
+    "price": 25000,
+    "category": {
+      "id": 2,
+      "name": "Xương rồng"
+    },
+    "images": [
+      {
+        "id": 40,
+        "image_url": "https://example.com/images/3c9ba752-94d9-4fb3-92a6-7f5182f11a54.jpg"
+      }
+    ],
+    "inventory": {
+      "id": 40,
+      "quantity": 132,
+      "last_updated": "2025-05-14T15:34:55.680239"
+    }
+  },
+  {
+    "id": 41,
+    "name": "Xương rồng sản phẩm 16",
+    "description": "Mô tả cho xương rồng sản phẩm 16.",
+    "price": 15000,
+    "category": {
+      "id": 2,
+      "name": "Xương rồng"
+    },
+    "images": [
+      {
+        "id": 41,
+        "image_url": "https://example.com/images/c4242fb5-4744-4206-99db-f0428b74538a.jpg"
+      }
+    ],
+    "inventory": {
+      "id": 41,
+      "quantity": 178,
+      "last_updated": "2025-05-14T15:34:55.680254"
+    }
+  },
+  {
+    "id": 42,
+    "name": "Xương rồng sản phẩm 17",
+    "description": "Mô tả cho xương rồng sản phẩm 17.",
+    "price": 15000,
+    "category": {
+      "id": 2,
+      "name": "Xương rồng"
+    },
+    "images": [
+      {
+        "id": 42,
+        "image_url": "https://example.com/images/f7b7cd1c-6973-4eed-8689-0e22a2198008.jpg"
+      }
+    ],
+    "inventory": {
+      "id": 42,
+      "quantity": 119,
+      "last_updated": "2025-05-14T15:34:55.680267"
+    }
+  },
+  {
+    "id": 43,
+    "name": "Xương rồng sản phẩm 18",
+    "description": "Mô tả cho xương rồng sản phẩm 18.",
+    "price": 20000,
+    "category": {
+      "id": 2,
+      "name": "Xương rồng"
+    },
+    "images": [
+      {
+        "id": 43,
+        "image_url": "https://example.com/images/3b90741a-ee59-40fa-a82c-f282f81a35fb.jpg"
+      }
+    ],
+    "inventory": {
+      "id": 43,
+      "quantity": 172,
+      "last_updated": "2025-05-14T15:34:55.680296"
+    }
+  },
+  {
+    "id": 44,
+    "name": "Xương rồng sản phẩm 19",
+    "description": "Mô tả cho xương rồng sản phẩm 19.",
+    "price": 10000,
+    "category": {
+      "id": 2,
+      "name": "Xương rồng"
+    },
+    "images": [
+      {
+        "id": 44,
+        "image_url": "https://example.com/images/1d077cc6-b825-4661-abeb-fd79107ac127.jpg"
+      }
+    ],
+    "inventory": {
+      "id": 44,
+      "quantity": 55,
+      "last_updated": "2025-05-14T15:34:55.680309"
+    }
+  },
+  {
+    "id": 45,
+    "name": "Xương rồng sản phẩm 20",
+    "description": "Mô tả cho xương rồng sản phẩm 20.",
+    "price": 20000,
+    "category": {
+      "id": 2,
+      "name": "Xương rồng"
+    },
+    "images": [
+      {
+        "id": 45,
+        "image_url": "https://example.com/images/e0d34b12-5527-4a2e-ba75-282c414b342e.jpg"
+      }
+    ],
+    "inventory": {
+      "id": 45,
+      "quantity": 150,
+      "last_updated": "2025-05-14T15:34:55.680459"
+    }
+  },
+  {
+    "id": 46,
+    "name": "Chậu đất nung sản phẩm 1",
+    "description": "Mô tả cho chậu đất nung sản phẩm 1.",
+    "price": 15000,
+    "category": {
+      "id": 3,
+      "name": "Chậu đất nung"
+    },
+    "images": [
+      {
+        "id": 46,
+        "image_url": "https://example.com/images/81ec303b-6919-49d6-be93-42d919f9c0e1.jpg"
+      }
+    ],
+    "inventory": {
+      "id": 46,
+      "quantity": 190,
+      "last_updated": "2025-05-14T15:34:55.680669"
+    }
+  },
+  {
+    "id": 47,
+    "name": "Chậu đất nung sản phẩm 2",
+    "description": "Mô tả cho chậu đất nung sản phẩm 2.",
+    "price": 10000,
+    "category": {
+      "id": 3,
+      "name": "Chậu đất nung"
+    },
+    "images": [
+      {
+        "id": 47,
+        "image_url": "https://example.com/images/08df132d-4279-4fa2-abf0-d661bf1503de.jpg"
+      }
+    ],
+    "inventory": {
+      "id": 47,
+      "quantity": 164,
+      "last_updated": "2025-05-14T15:34:55.680715"
+    }
+  },
+  {
+    "id": 48,
+    "name": "Chậu đất nung sản phẩm 3",
+    "description": "Mô tả cho chậu đất nung sản phẩm 3.",
+    "price": 20000,
+    "category": {
+      "id": 3,
+      "name": "Chậu đất nung"
+    },
+    "images": [
+      {
+        "id": 48,
+        "image_url": "https://example.com/images/1fe04e08-7530-4a15-bcd1-3d4720c4e8c3.jpg"
+      }
+    ],
+    "inventory": {
+      "id": 48,
+      "quantity": 94,
+      "last_updated": "2025-05-14T15:34:55.680816"
+    }
+  },
+  {
+    "id": 49,
+    "name": "Chậu đất nung sản phẩm 4",
+    "description": "Mô tả cho chậu đất nung sản phẩm 4.",
+    "price": 15000,
+    "category": {
+      "id": 3,
+      "name": "Chậu đất nung"
+    },
+    "images": [
+      {
+        "id": 49,
+        "image_url": "https://example.com/images/9b83522a-449c-46ac-b49a-e863d663321b.jpg"
+      }
+    ],
+    "inventory": {
+      "id": 49,
+      "quantity": 141,
+      "last_updated": "2025-05-14T15:34:55.680934"
+    }
+  },
+  {
+    "id": 50,
+    "name": "Chậu đất nung sản phẩm 5",
+    "description": "Mô tả cho chậu đất nung sản phẩm 5.",
+    "price": 20000,
+    "category": {
+      "id": 3,
+      "name": "Chậu đất nung"
+    },
+    "images": [
+      {
+        "id": 50,
+        "image_url": "https://example.com/images/5c99033b-1b1e-47d9-bb90-62349b0c72d0.jpg"
+      }
+    ],
+    "inventory": {
+      "id": 50,
+      "quantity": 55,
+      "last_updated": "2025-05-14T15:34:55.680991"
+    }
+  },
+  {
+    "id": 51,
+    "name": "Chậu đất nung sản phẩm 6",
+    "description": "Mô tả cho chậu đất nung sản phẩm 6.",
+    "price": 20000,
+    "category": {
+      "id": 3,
+      "name": "Chậu đất nung"
+    },
+    "images": [
+      {
+        "id": 51,
+        "image_url": "https://example.com/images/9e1baa08-f386-49ac-b405-9625becb5741.jpg"
+      }
+    ],
+    "inventory": {
+      "id": 51,
+      "quantity": 132,
+      "last_updated": "2025-05-14T15:34:55.681006"
+    }
+  },
+  {
+    "id": 52,
+    "name": "Chậu đất nung sản phẩm 7",
+    "description": "Mô tả cho chậu đất nung sản phẩm 7.",
+    "price": 10000,
+    "category": {
+      "id": 3,
+      "name": "Chậu đất nung"
+    },
+    "images": [
+      {
+        "id": 52,
+        "image_url": "https://example.com/images/121fad23-53c1-41a3-aab6-b2fe18d774eb.jpg"
+      }
+    ],
+    "inventory": {
+      "id": 52,
+      "quantity": 196,
+      "last_updated": "2025-05-14T15:34:55.681023"
+    }
+  },
+  {
+    "id": 53,
+    "name": "Chậu đất nung sản phẩm 8",
+    "description": "Mô tả cho chậu đất nung sản phẩm 8.",
+    "price": 25000,
+    "category": {
+      "id": 3,
+      "name": "Chậu đất nung"
+    },
+    "images": [
+      {
+        "id": 53,
+        "image_url": "https://example.com/images/0f0fedd2-6c20-45e7-9b88-fb5e06be8e23.jpg"
+      }
+    ],
+    "inventory": {
+      "id": 53,
+      "quantity": 113,
+      "last_updated": "2025-05-14T15:34:55.681038"
+    }
+  },
+  {
+    "id": 54,
+    "name": "Chậu đất nung sản phẩm 9",
+    "description": "Mô tả cho chậu đất nung sản phẩm 9.",
+    "price": 25000,
+    "category": {
+      "id": 3,
+      "name": "Chậu đất nung"
+    },
+    "images": [
+      {
+        "id": 54,
+        "image_url": "https://example.com/images/90713cfe-b38f-44d4-ac47-226d38608980.jpg"
+      }
+    ],
+    "inventory": {
+      "id": 54,
+      "quantity": 117,
+      "last_updated": "2025-05-14T15:34:55.681053"
+    }
+  },
+  {
+    "id": 55,
+    "name": "Chậu đất nung sản phẩm 10",
+    "description": "Mô tả cho chậu đất nung sản phẩm 10.",
+    "price": 25000,
+    "category": {
+      "id": 3,
+      "name": "Chậu đất nung"
+    },
+    "images": [
+      {
+        "id": 55,
+        "image_url": "https://example.com/images/78a01a58-c92b-4b57-8141-f06450a22c0a.jpg"
+      }
+    ],
+    "inventory": {
+      "id": 55,
+      "quantity": 117,
+      "last_updated": "2025-05-14T15:34:55.681064"
+    }
+  },
+  {
+    "id": 56,
+    "name": "Chậu đất nung sản phẩm 11",
+    "description": "Mô tả cho chậu đất nung sản phẩm 11.",
+    "price": 20000,
+    "category": {
+      "id": 3,
+      "name": "Chậu đất nung"
+    },
+    "images": [
+      {
+        "id": 56,
+        "image_url": "https://example.com/images/68c2b393-b4d0-42bf-b38f-d0b9dbf0ab3d.jpg"
+      }
+    ],
+    "inventory": {
+      "id": 56,
+      "quantity": 88,
+      "last_updated": "2025-05-14T15:34:55.681074"
+    }
+  },
+  {
+    "id": 57,
+    "name": "Chậu đất nung sản phẩm 12",
+    "description": "Mô tả cho chậu đất nung sản phẩm 12.",
+    "price": 25000,
+    "category": {
+      "id": 3,
+      "name": "Chậu đất nung"
+    },
+    "images": [
+      {
+        "id": 57,
+        "image_url": "https://example.com/images/1d38ec94-448d-41c5-8592-b8ee50f53a9c.jpg"
+      }
+    ],
+    "inventory": {
+      "id": 57,
+      "quantity": 194,
+      "last_updated": "2025-05-14T15:34:55.681084"
+    }
+  },
+  {
+    "id": 58,
+    "name": "Chậu đất nung sản phẩm 13",
+    "description": "Mô tả cho chậu đất nung sản phẩm 13.",
+    "price": 10000,
+    "category": {
+      "id": 3,
+      "name": "Chậu đất nung"
+    },
+    "images": [
+      {
+        "id": 58,
+        "image_url": "https://example.com/images/f4a84b1d-3a8f-4210-a9b3-6fbf284306ea.jpg"
+      }
+    ],
+    "inventory": {
+      "id": 58,
+      "quantity": 174,
+      "last_updated": "2025-05-14T15:34:55.681095"
+    }
+  },
+  {
+    "id": 59,
+    "name": "Chậu đất nung sản phẩm 14",
+    "description": "Mô tả cho chậu đất nung sản phẩm 14.",
+    "price": 10000,
+    "category": {
+      "id": 3,
+      "name": "Chậu đất nung"
+    },
+    "images": [
+      {
+        "id": 59,
+        "image_url": "https://example.com/images/4282a7e9-78c4-4bff-80a7-cd00e37ed0c7.jpg"
+      }
+    ],
+    "inventory": {
+      "id": 59,
+      "quantity": 81,
+      "last_updated": "2025-05-14T15:34:55.681106"
+    }
+  },
+  {
+    "id": 60,
+    "name": "Chậu đất nung sản phẩm 15",
+    "description": "Mô tả cho chậu đất nung sản phẩm 15.",
+    "price": 25000,
+    "category": {
+      "id": 3,
+      "name": "Chậu đất nung"
+    },
+    "images": [
+      {
+        "id": 60,
+        "image_url": "https://example.com/images/e2b0d740-8a17-49f3-9815-8d2bd140dac2.jpg"
+      }
+    ],
+    "inventory": {
+      "id": 60,
+      "quantity": 153,
+      "last_updated": "2025-05-14T15:34:55.681117"
+    }
+  },
+  {
+    "id": 61,
+    "name": "Chậu đất nung sản phẩm 16",
+    "description": "Mô tả cho chậu đất nung sản phẩm 16.",
+    "price": 25000,
+    "category": {
+      "id": 3,
+      "name": "Chậu đất nung"
+    },
+    "images": [
+      {
+        "id": 61,
+        "image_url": "https://example.com/images/e9d70475-888d-420c-8131-8cc1acb1bf5c.jpg"
+      }
+    ],
+    "inventory": {
+      "id": 61,
+      "quantity": 69,
+      "last_updated": "2025-05-14T15:34:55.681146"
+    }
+  },
+  {
+    "id": 62,
+    "name": "Chậu đất nung sản phẩm 17",
+    "description": "Mô tả cho chậu đất nung sản phẩm 17.",
+    "price": 10000,
+    "category": {
+      "id": 3,
+      "name": "Chậu đất nung"
+    },
+    "images": [
+      {
+        "id": 62,
+        "image_url": "https://example.com/images/8d8c584f-8847-4056-94db-e34d1198782f.jpg"
+      }
+    ],
+    "inventory": {
+      "id": 62,
+      "quantity": 77,
+      "last_updated": "2025-05-14T15:34:55.681157"
+    }
+  },
+  {
+    "id": 63,
+    "name": "Chậu đất nung sản phẩm 18",
+    "description": "Mô tả cho chậu đất nung sản phẩm 18.",
+    "price": 15000,
+    "category": {
+      "id": 3,
+      "name": "Chậu đất nung"
+    },
+    "images": [
+      {
+        "id": 63,
+        "image_url": "https://example.com/images/37718ac0-7b75-4968-ae71-69142b1ab485.jpg"
+      }
+    ],
+    "inventory": {
+      "id": 63,
+      "quantity": 123,
+      "last_updated": "2025-05-14T15:34:55.681176"
+    }
+  },
+  {
+    "id": 64,
+    "name": "Chậu đất nung sản phẩm 19",
+    "description": "Mô tả cho chậu đất nung sản phẩm 19.",
+    "price": 15000,
+    "category": {
+      "id": 3,
+      "name": "Chậu đất nung"
+    },
+    "images": [
+      {
+        "id": 64,
+        "image_url": "https://example.com/images/f5d59968-5436-49cc-87f0-fe283986a254.jpg"
+      }
+    ],
+    "inventory": {
+      "id": 64,
+      "quantity": 106,
+      "last_updated": "2025-05-14T15:34:55.681186"
+    }
+  },
+  {
+    "id": 65,
+    "name": "Chậu đất nung sản phẩm 20",
+    "description": "Mô tả cho chậu đất nung sản phẩm 20.",
+    "price": 20000,
+    "category": {
+      "id": 3,
+      "name": "Chậu đất nung"
+    },
+    "images": [
+      {
+        "id": 65,
+        "image_url": "https://example.com/images/8a02a206-dccc-4389-92f7-041a6578010c.jpg"
+      }
+    ],
+    "inventory": {
+      "id": 65,
+      "quantity": 135,
+      "last_updated": "2025-05-14T15:34:55.681204"
+    }
+  },
+  {
+    "id": 66,
+    "name": "Chậu sứ sản phẩm 1",
+    "description": "Mô tả cho chậu sứ sản phẩm 1.",
+    "price": 25000,
+    "category": {
+      "id": 4,
+      "name": "Chậu sứ"
+    },
+    "images": [
+      {
+        "id": 66,
+        "image_url": "https://example.com/images/40785a0c-d72b-4058-a517-13d4ed0b9678.jpg"
+      }
+    ],
+    "inventory": {
+      "id": 66,
+      "quantity": 108,
+      "last_updated": "2025-05-14T15:34:55.681246"
+    }
+  },
+  {
+    "id": 67,
+    "name": "Chậu sứ sản phẩm 2",
+    "description": "Mô tả cho chậu sứ sản phẩm 2.",
+    "price": 10000,
+    "category": {
+      "id": 4,
+      "name": "Chậu sứ"
+    },
+    "images": [
+      {
+        "id": 67,
+        "image_url": "https://example.com/images/ac23183c-f7ed-401c-adda-e086c9714b9b.jpg"
+      }
+    ],
+    "inventory": {
+      "id": 67,
+      "quantity": 190,
+      "last_updated": "2025-05-14T15:34:55.681259"
+    }
+  },
+  {
+    "id": 68,
+    "name": "Chậu sứ sản phẩm 3",
+    "description": "Mô tả cho chậu sứ sản phẩm 3.",
+    "price": 10000,
+    "category": {
+      "id": 4,
+      "name": "Chậu sứ"
+    },
+    "images": [
+      {
+        "id": 68,
+        "image_url": "https://example.com/images/2ba459f8-b957-43d8-876e-8bce2666d0ad.jpg"
+      }
+    ],
+    "inventory": {
+      "id": 68,
+      "quantity": 172,
+      "last_updated": "2025-05-14T15:34:55.681269"
+    }
+  },
+  {
+    "id": 69,
+    "name": "Chậu sứ sản phẩm 4",
+    "description": "Mô tả cho chậu sứ sản phẩm 4.",
+    "price": 25000,
+    "category": {
+      "id": 4,
+      "name": "Chậu sứ"
+    },
+    "images": [
+      {
+        "id": 69,
+        "image_url": "https://example.com/images/a801525f-df7b-4eba-adaf-f29f2e303286.jpg"
+      }
+    ],
+    "inventory": {
+      "id": 69,
+      "quantity": 178,
+      "last_updated": "2025-05-14T15:34:55.681279"
+    }
+  },
+  {
+    "id": 70,
+    "name": "Chậu sứ sản phẩm 5",
+    "description": "Mô tả cho chậu sứ sản phẩm 5.",
+    "price": 15000,
+    "category": {
+      "id": 4,
+      "name": "Chậu sứ"
+    },
+    "images": [
+      {
+        "id": 70,
+        "image_url": "https://example.com/images/6648e003-4631-4d4c-86f3-9c0ade5b9845.jpg"
+      }
+    ],
+    "inventory": {
+      "id": 70,
+      "quantity": 126,
+      "last_updated": "2025-05-14T15:34:55.681290"
+    }
+  },
+  {
+    "id": 71,
+    "name": "Chậu sứ sản phẩm 6",
+    "description": "Mô tả cho chậu sứ sản phẩm 6.",
+    "price": 20000,
+    "category": {
+      "id": 4,
+      "name": "Chậu sứ"
+    },
+    "images": [
+      {
+        "id": 71,
+        "image_url": "https://example.com/images/76b819d9-b473-4c5c-8caa-2e0b83c7ecd9.jpg"
+      }
+    ],
+    "inventory": {
+      "id": 71,
+      "quantity": 180,
+      "last_updated": "2025-05-14T15:34:55.681299"
+    }
+  },
+  {
+    "id": 72,
+    "name": "Chậu sứ sản phẩm 7",
+    "description": "Mô tả cho chậu sứ sản phẩm 7.",
+    "price": 25000,
+    "category": {
+      "id": 4,
+      "name": "Chậu sứ"
+    },
+    "images": [
+      {
+        "id": 72,
+        "image_url": "https://example.com/images/141194f3-5e39-4a13-9ae3-dc9ffaa9ebc2.jpg"
+      }
+    ],
+    "inventory": {
+      "id": 72,
+      "quantity": 179,
+      "last_updated": "2025-05-14T15:34:55.681309"
+    }
+  },
+  {
+    "id": 73,
+    "name": "Chậu sứ sản phẩm 8",
+    "description": "Mô tả cho chậu sứ sản phẩm 8.",
+    "price": 10000,
+    "category": {
+      "id": 4,
+      "name": "Chậu sứ"
+    },
+    "images": [
+      {
+        "id": 73,
+        "image_url": "https://example.com/images/3a1d5ae0-c2fd-4e45-a6ae-f84344013db1.jpg"
+      }
+    ],
+    "inventory": {
+      "id": 73,
+      "quantity": 159,
+      "last_updated": "2025-05-14T15:34:55.681321"
+    }
+  },
+  {
+    "id": 74,
+    "name": "Chậu sứ sản phẩm 9",
+    "description": "Mô tả cho chậu sứ sản phẩm 9.",
+    "price": 10000,
+    "category": {
+      "id": 4,
+      "name": "Chậu sứ"
+    },
+    "images": [
+      {
+        "id": 74,
+        "image_url": "https://example.com/images/1e0ae27e-6e64-4a14-bdf2-f3cddff7b8d2.jpg"
+      }
+    ],
+    "inventory": {
+      "id": 74,
+      "quantity": 172,
+      "last_updated": "2025-05-14T15:34:55.681334"
+    }
+  },
+  {
+    "id": 75,
+    "name": "Chậu sứ sản phẩm 10",
+    "description": "Mô tả cho chậu sứ sản phẩm 10.",
+    "price": 20000,
+    "category": {
+      "id": 4,
+      "name": "Chậu sứ"
+    },
+    "images": [
+      {
+        "id": 75,
+        "image_url": "https://example.com/images/b33384a4-ced3-46b2-b1d4-fc6100b474b0.jpg"
+      }
+    ],
+    "inventory": {
+      "id": 75,
+      "quantity": 72,
+      "last_updated": "2025-05-14T15:34:55.681351"
+    }
+  },
+  {
+    "id": 76,
+    "name": "Chậu sứ sản phẩm 11",
+    "description": "Mô tả cho chậu sứ sản phẩm 11.",
+    "price": 15000,
+    "category": {
+      "id": 4,
+      "name": "Chậu sứ"
+    },
+    "images": [
+      {
+        "id": 76,
+        "image_url": "https://example.com/images/35174bac-035e-4217-b1db-df896ca0bf7d.jpg"
+      }
+    ],
+    "inventory": {
+      "id": 76,
+      "quantity": 118,
+      "last_updated": "2025-05-14T15:34:55.681366"
+    }
+  },
+  {
+    "id": 77,
+    "name": "Chậu sứ sản phẩm 12",
+    "description": "Mô tả cho chậu sứ sản phẩm 12.",
+    "price": 15000,
+    "category": {
+      "id": 4,
+      "name": "Chậu sứ"
+    },
+    "images": [
+      {
+        "id": 77,
+        "image_url": "https://example.com/images/3b4f01d9-c9aa-4866-a7b6-55471cbb410f.jpg"
+      }
+    ],
+    "inventory": {
+      "id": 77,
+      "quantity": 152,
+      "last_updated": "2025-05-14T15:34:55.681382"
+    }
+  },
+  {
+    "id": 78,
+    "name": "Chậu sứ sản phẩm 13",
+    "description": "Mô tả cho chậu sứ sản phẩm 13.",
+    "price": 20000,
+    "category": {
+      "id": 4,
+      "name": "Chậu sứ"
+    },
+    "images": [
+      {
+        "id": 78,
+        "image_url": "https://example.com/images/6ec6399f-6f71-4810-82d0-533f45e70954.jpg"
+      }
+    ],
+    "inventory": {
+      "id": 78,
+      "quantity": 192,
+      "last_updated": "2025-05-14T15:34:55.681510"
+    }
+  },
+  {
+    "id": 79,
+    "name": "Chậu sứ sản phẩm 14",
+    "description": "Mô tả cho chậu sứ sản phẩm 14.",
+    "price": 25000,
+    "category": {
+      "id": 4,
+      "name": "Chậu sứ"
+    },
+    "images": [
+      {
+        "id": 79,
+        "image_url": "https://example.com/images/943620dd-8825-40dc-87b8-159db331890a.jpg"
+      }
+    ],
+    "inventory": {
+      "id": 79,
+      "quantity": 57,
+      "last_updated": "2025-05-14T15:34:55.681635"
+    }
+  },
+  {
+    "id": 80,
+    "name": "Chậu sứ sản phẩm 15",
+    "description": "Mô tả cho chậu sứ sản phẩm 15.",
+    "price": 10000,
+    "category": {
+      "id": 4,
+      "name": "Chậu sứ"
+    },
+    "images": [
+      {
+        "id": 80,
+        "image_url": "https://example.com/images/e52ea827-8a88-4400-96ea-db31fce6336e.jpg"
+      }
+    ],
+    "inventory": {
+      "id": 80,
+      "quantity": 83,
+      "last_updated": "2025-05-14T15:34:55.681723"
+    }
+  },
+  {
+    "id": 81,
+    "name": "Chậu sứ sản phẩm 16",
+    "description": "Mô tả cho chậu sứ sản phẩm 16.",
+    "price": 15000,
+    "category": {
+      "id": 4,
+      "name": "Chậu sứ"
+    },
+    "images": [
+      {
+        "id": 81,
+        "image_url": "https://example.com/images/81383a2a-4bc8-4a48-9d24-7fce321216b1.jpg"
+      }
+    ],
+    "inventory": {
+      "id": 81,
+      "quantity": 183,
+      "last_updated": "2025-05-14T15:34:55.681863"
+    }
+  },
+  {
+    "id": 82,
+    "name": "Chậu sứ sản phẩm 17",
+    "description": "Mô tả cho chậu sứ sản phẩm 17.",
+    "price": 10000,
+    "category": {
+      "id": 4,
+      "name": "Chậu sứ"
+    },
+    "images": [
+      {
+        "id": 82,
+        "image_url": "https://example.com/images/824a0821-b7f5-4edb-bb27-7088c1e886b2.jpg"
+      }
+    ],
+    "inventory": {
+      "id": 82,
+      "quantity": 174,
+      "last_updated": "2025-05-14T15:34:55.681915"
+    }
+  },
+  {
+    "id": 83,
+    "name": "Chậu sứ sản phẩm 18",
+    "description": "Mô tả cho chậu sứ sản phẩm 18.",
+    "price": 20000,
+    "category": {
+      "id": 4,
+      "name": "Chậu sứ"
+    },
+    "images": [
+      {
+        "id": 83,
+        "image_url": "https://example.com/images/6229a996-8364-4732-b443-d5880228aa18.jpg"
+      }
+    ],
+    "inventory": {
+      "id": 83,
+      "quantity": 55,
+      "last_updated": "2025-05-14T15:34:55.681948"
+    }
+  },
+  {
+    "id": 84,
+    "name": "Chậu sứ sản phẩm 19",
+    "description": "Mô tả cho chậu sứ sản phẩm 19.",
+    "price": 25000,
+    "category": {
+      "id": 4,
+      "name": "Chậu sứ"
+    },
+    "images": [
+      {
+        "id": 84,
+        "image_url": "https://example.com/images/69bf637e-77fe-448b-a7ca-c3464b648d4c.jpg"
+      }
+    ],
+    "inventory": {
+      "id": 84,
+      "quantity": 169,
+      "last_updated": "2025-05-14T15:34:55.681976"
+    }
+  },
+  {
+    "id": 85,
+    "name": "Chậu sứ sản phẩm 20",
+    "description": "Mô tả cho chậu sứ sản phẩm 20.",
+    "price": 10000,
+    "category": {
+      "id": 4,
+      "name": "Chậu sứ"
+    },
+    "images": [
+      {
+        "id": 85,
+        "image_url":"https://product.hstatic.net/1000187613/product/o1cn01fkfdad1isgocztcdk___1010460949-0-cib_copy_f4b617450374445d98de3e33b3db889a_master.jpg"
+      }
+
+    ],
+    "inventory": {
+      "id": 85,
+      "quantity": 65,
+      "last_updated": "2025-05-14T15:34:55.681992"
+    }
+  },
+  {
+    "id": 86,
+    "name": "Mèo cam mini 2cm",
+    "description": "Giá bán tính trên 1 con",
+    "price": 10000,
+    "category": {
+      "id": 5,
+      "name": "Phụ kiện trang trí"
+    },
+    "images": [
+      {
+        "id": 86,
+        "image_url": "https://product.hstatic.net/1000187613/product/o1cn01fkfdad1isgocztcdk___1010460949-0-cib_copy_f4b617450374445d98de3e33b3db889a_master.jpg"
+      },
+
+      {
+        "id": 167,
+        "image_url": "https://product.hstatic.net/1000187613/product/o1cn01xmv7rh1isgodbkefq___1010460949-0-cib_copy_aa9a2570cedb4c9b98843fb07059c0c1_master.jpg"
+      },
+      {
+        "id": 168,
+        "image_url": "https://product.hstatic.net/1000187613/product/o1cn01ec65cm1isgoakpekx___1010460949-0-cib_copy_735ec6523b9b4c989d0ecbace24380a7_master.jpg"
+      }
+    ],
+    "inventory": {
+      "id": 86,
+      "quantity": 118,
+      "last_updated": "2025-05-14T15:34:55.682020"
+    }
+  },
+  {
+    "id": 87,
+    "name": "Phụ kiện trang trí sản phẩm 2",
+    "description": "Mô tả cho phụ kiện trang trí sản phẩm 2.",
+    "price": 25000,
+    "category": {
+      "id": 5,
+      "name": "Phụ kiện trang trí"
+    },
+    "images": [
+      {
+        "id": 87,
+        "image_url": "https://example.com/images/eace0733-9476-4824-922f-ff3b577c8fe3.jpg"
+      }
+    ],
+    "inventory": {
+      "id": 87,
+      "quantity": 147,
+      "last_updated": "2025-05-14T15:34:55.682030"
+    }
+  },
+  {
+    "id": 88,
+    "name": "Phụ kiện trang trí sản phẩm 3",
+    "description": "Mô tả cho phụ kiện trang trí sản phẩm 3.",
+    "price": 25000,
+    "category": {
+      "id": 5,
+      "name": "Phụ kiện trang trí"
+    },
+    "images": [
+      {
+        "id": 88,
+        "image_url": "https://example.com/images/0d7e9945-74c1-4190-bf2e-8bd422841dd9.jpg"
+      }
+    ],
+    "inventory": {
+      "id": 88,
+      "quantity": 65,
+      "last_updated": "2025-05-14T15:34:55.682043"
+    }
+  },
+  {
+    "id": 89,
+    "name": "Phụ kiện trang trí sản phẩm 4",
+    "description": "Mô tả cho phụ kiện trang trí sản phẩm 4.",
+    "price": 25000,
+    "category": {
+      "id": 5,
+      "name": "Phụ kiện trang trí"
+    },
+    "images": [
+      {
+        "id": 89,
+        "image_url": "https://example.com/images/ab130c72-6d8f-4561-b278-fca0a24f9bf7.jpg"
+      }
+    ],
+    "inventory": {
+      "id": 89,
+      "quantity": 165,
+      "last_updated": "2025-05-14T15:34:55.682060"
+    }
+  },
+  {
+    "id": 90,
+    "name": "Phụ kiện trang trí sản phẩm 5",
+    "description": "Mô tả cho phụ kiện trang trí sản phẩm 5.",
+    "price": 15000,
+    "category": {
+      "id": 5,
+      "name": "Phụ kiện trang trí"
+    },
+    "images": [
+      {
+        "id": 90,
+        "image_url": "https://example.com/images/287f6a9f-73ee-4784-bff2-927b7300dcab.jpg"
+      }
+    ],
+    "inventory": {
+      "id": 90,
+      "quantity": 168,
+      "last_updated": "2025-05-14T15:34:55.682077"
+    }
+  },
+  {
+    "id": 91,
+    "name": "Phụ kiện trang trí sản phẩm 6",
+    "description": "Mô tả cho phụ kiện trang trí sản phẩm 6.",
+    "price": 20000,
+    "category": {
+      "id": 5,
+      "name": "Phụ kiện trang trí"
+    },
+    "images": [
+      {
+        "id": 91,
+        "image_url": "https://example.com/images/d43425a6-3b7d-4a4a-9c95-4a2b875461c2.jpg"
+      }
+    ],
+    "inventory": {
+      "id": 91,
+      "quantity": 113,
+      "last_updated": "2025-05-14T15:34:55.682098"
+    }
+  },
+  {
+    "id": 92,
+    "name": "Phụ kiện trang trí sản phẩm 7",
+    "description": "Mô tả cho phụ kiện trang trí sản phẩm 7.",
+    "price": 20000,
+    "category": {
+      "id": 5,
+      "name": "Phụ kiện trang trí"
+    },
+    "images": [
+      {
+        "id": 92,
+        "image_url": "https://example.com/images/43922086-0b58-47b6-b658-81bdb8d10152.jpg"
+      }
+    ],
+    "inventory": {
+      "id": 92,
+      "quantity": 105,
+      "last_updated": "2025-05-14T15:34:55.682126"
+    }
+  },
+  {
+    "id": 93,
+    "name": "Phụ kiện trang trí sản phẩm 8",
+    "description": "Mô tả cho phụ kiện trang trí sản phẩm 8.",
+    "price": 25000,
+    "category": {
+      "id": 5,
+      "name": "Phụ kiện trang trí"
+    },
+    "images": [
+      {
+        "id": 93,
+        "image_url": "https://example.com/images/ce85d668-950e-44e9-a78c-cca6029e1315.jpg"
+      }
+    ],
+    "inventory": {
+      "id": 93,
+      "quantity": 71,
+      "last_updated": "2025-05-14T15:34:55.682142"
+    }
+  },
+  {
+    "id": 94,
+    "name": "Phụ kiện trang trí sản phẩm 9",
+    "description": "Mô tả cho phụ kiện trang trí sản phẩm 9.",
+    "price": 20000,
+    "category": {
+      "id": 5,
+      "name": "Phụ kiện trang trí"
+    },
+    "images": [
+      {
+        "id": 94,
+        "image_url": "https://example.com/images/c8d6abd3-3ca4-402f-9250-2d5325862c23.jpg"
+      }
+    ],
+    "inventory": {
+      "id": 94,
+      "quantity": 54,
+      "last_updated": "2025-05-14T15:34:55.682159"
+    }
+  },
+  {
+    "id": 95,
+    "name": "Phụ kiện trang trí sản phẩm 10",
+    "description": "Mô tả cho phụ kiện trang trí sản phẩm 10.",
+    "price": 10000,
+    "category": {
+      "id": 5,
+      "name": "Phụ kiện trang trí"
+    },
+    "images": [
+      {
+        "id": 95,
+        "image_url": "https://example.com/images/9a05166b-f24e-4d7e-8fe3-4fad6cd651e0.jpg"
+      }
+    ],
+    "inventory": {
+      "id": 95,
+      "quantity": 128,
+      "last_updated": "2025-05-14T15:34:55.682176"
+    }
+  },
+  {
+    "id": 96,
+    "name": "Phụ kiện trang trí sản phẩm 11",
+    "description": "Mô tả cho phụ kiện trang trí sản phẩm 11.",
+    "price": 10000,
+    "category": {
+      "id": 5,
+      "name": "Phụ kiện trang trí"
+    },
+    "images": [
+      {
+        "id": 96,
+        "image_url": "https://example.com/images/dd7473c3-9a17-4c10-8dbc-f85b9a783b23.jpg"
+      }
+    ],
+    "inventory": {
+      "id": 96,
+      "quantity": 135,
+      "last_updated": "2025-05-14T15:34:55.682193"
+    }
+  },
+  {
+    "id": 97,
+    "name": "Phụ kiện trang trí sản phẩm 12",
+    "description": "Mô tả cho phụ kiện trang trí sản phẩm 12.",
+    "price": 10000,
+    "category": {
+      "id": 5,
+      "name": "Phụ kiện trang trí"
+    },
+    "images": [
+      {
+        "id": 97,
+        "image_url": "https://example.com/images/6966e4be-6cf9-4305-9da6-042a6942e26c.jpg"
+      }
+    ],
+    "inventory": {
+      "id": 97,
+      "quantity": 54,
+      "last_updated": "2025-05-14T15:34:55.682209"
+    }
+  },
+  {
+    "id": 98,
+    "name": "Phụ kiện trang trí sản phẩm 13",
+    "description": "Mô tả cho phụ kiện trang trí sản phẩm 13.",
+    "price": 15000,
+    "category": {
+      "id": 5,
+      "name": "Phụ kiện trang trí"
+    },
+    "images": [
+      {
+        "id": 98,
+        "image_url": "https://example.com/images/0e63df9b-41bf-479f-9b58-8dc3a940f0cc.jpg"
+      }
+    ],
+    "inventory": {
+      "id": 98,
+      "quantity": 114,
+      "last_updated": "2025-05-14T15:34:55.682237"
+    }
+  },
+  {
+    "id": 99,
+    "name": "Phụ kiện trang trí sản phẩm 14",
+    "description": "Mô tả cho phụ kiện trang trí sản phẩm 14.",
+    "price": 15000,
+    "category": {
+      "id": 5,
+      "name": "Phụ kiện trang trí"
+    },
+    "images": [
+      {
+        "id": 99,
+        "image_url": "https://example.com/images/17d5fd22-01dd-4285-8cea-ef7989a89992.jpg"
+      }
+    ],
+    "inventory": {
+      "id": 99,
+      "quantity": 122,
+      "last_updated": "2025-05-14T15:34:55.682264"
+    }
+  },
+  {
+    "id": 100,
+    "name": "Phụ kiện trang trí sản phẩm 15",
+    "description": "Mô tả cho phụ kiện trang trí sản phẩm 15.",
+    "price": 25000,
+    "category": {
+      "id": 5,
+      "name": "Phụ kiện trang trí"
+    },
+    "images": [
+      {
+        "id": 100,
+        "image_url": "https://example.com/images/ab4fbdf9-e45a-41ae-83fc-a6c2f572db01.jpg"
+      }
+    ],
+    "inventory": {
+      "id": 100,
+      "quantity": 177,
+      "last_updated": "2025-05-14T15:34:55.682295"
+    }
+  },
+  {
+    "id": 101,
+    "name": "Phụ kiện trang trí sản phẩm 16",
+    "description": "Mô tả cho phụ kiện trang trí sản phẩm 16.",
+    "price": 15000,
+    "category": {
+      "id": 5,
+      "name": "Phụ kiện trang trí"
+    },
+    "images": [
+      {
+        "id": 101,
+        "image_url": "https://example.com/images/27d81c46-ebd4-4d57-8344-b257464f8aec.jpg"
+      }
+    ],
+    "inventory": {
+      "id": 101,
+      "quantity": 192,
+      "last_updated": "2025-05-14T15:34:55.682327"
+    }
+  },
+  {
+    "id": 102,
+    "name": "Phụ kiện trang trí sản phẩm 17",
+    "description": "Mô tả cho phụ kiện trang trí sản phẩm 17.",
+    "price": 15000,
+    "category": {
+      "id": 5,
+      "name": "Phụ kiện trang trí"
+    },
+    "images": [
+      {
+        "id": 102,
+        "image_url": "https://example.com/images/21a24ca8-0452-4197-b6ea-7dcca7c375b6.jpg"
+      }
+    ],
+    "inventory": {
+      "id": 102,
+      "quantity": 112,
+      "last_updated": "2025-05-14T15:34:55.682341"
+    }
+  },
+  {
+    "id": 103,
+    "name": "Phụ kiện trang trí sản phẩm 18",
+    "description": "Mô tả cho phụ kiện trang trí sản phẩm 18.",
+    "price": 25000,
+    "category": {
+      "id": 5,
+      "name": "Phụ kiện trang trí"
+    },
+    "images": [
+      {
+        "id": 103,
+        "image_url": "https://example.com/images/b239f634-7573-4c95-b901-b9fb6af371e2.jpg"
+      }
+    ],
+    "inventory": {
+      "id": 103,
+      "quantity": 168,
+      "last_updated": "2025-05-14T15:34:55.682361"
+    }
+  },
+  {
+    "id": 104,
+    "name": "Phụ kiện trang trí sản phẩm 19",
+    "description": "Mô tả cho phụ kiện trang trí sản phẩm 19.",
+    "price": 10000,
+    "category": {
+      "id": 5,
+      "name": "Phụ kiện trang trí"
+    },
+    "images": [
+      {
+        "id": 104,
+        "image_url": "https://example.com/images/12b7e8e5-6caa-4e1d-b250-b3b6fb245d88.jpg"
+      }
+    ],
+    "inventory": {
+      "id": 104,
+      "quantity": 193,
+      "last_updated": "2025-05-14T15:34:55.682378"
+    }
+  },
+  {
+    "id": 105,
+    "name": "Phụ kiện trang trí sản phẩm 20",
+    "description": "Mô tả cho phụ kiện trang trí sản phẩm 20.",
+    "price": 20000,
+    "category": {
+      "id": 5,
+      "name": "Phụ kiện trang trí"
+    },
+    "images": [
+      {
+        "id": 105,
+        "image_url": "https://example.com/images/a5afc594-bdb9-4aa2-a7ca-78a1ff97a7ab.jpg"
+      }
+    ],
+    "inventory": {
+      "id": 105,
+      "quantity": 113,
+      "last_updated": "2025-05-14T15:34:55.682395"
+    }
+  },
+  {
+    "id": 106,
+    "name": "Đất trồng, phân bón sản phẩm 1",
+    "description": "Mô tả cho đất trồng, phân bón sản phẩm 1.",
+    "price": 20000,
+    "category": {
+      "id": 6,
+      "name": "Đất trồng, phân bón"
+    },
+    "images": [
+      {
+        "id": 106,
+        "image_url": "https://example.com/images/a9f03628-49e5-4366-9a78-cc4b8daf97b9.jpg"
+      }
+    ],
+    "inventory": {
+      "id": 106,
+      "quantity": 100,
+      "last_updated": "2025-05-14T15:34:55.682533"
+    }
+  },
+  {
+    "id": 107,
+    "name": "Đất trồng, phân bón sản phẩm 2",
+    "description": "Mô tả cho đất trồng, phân bón sản phẩm 2.",
+    "price": 15000,
+    "category": {
+      "id": 6,
+      "name": "Đất trồng, phân bón"
+    },
+    "images": [
+      {
+        "id": 107,
+        "image_url": "https://example.com/images/375d94d2-28f4-4c6a-8370-9650a3657e04.jpg"
+      }
+    ],
+    "inventory": {
+      "id": 107,
+      "quantity": 125,
+      "last_updated": "2025-05-14T15:34:55.682580"
+    }
+  },
+  {
+    "id": 108,
+    "name": "Đất trồng, phân bón sản phẩm 3",
+    "description": "Mô tả cho đất trồng, phân bón sản phẩm 3.",
+    "price": 25000,
+    "category": {
+      "id": 6,
+      "name": "Đất trồng, phân bón"
+    },
+    "images": [
+      {
+        "id": 108,
+        "image_url": "https://example.com/images/bf2a0a32-b48d-48ac-806a-0971805c3cb2.jpg"
+      }
+    ],
+    "inventory": {
+      "id": 108,
+      "quantity": 107,
+      "last_updated": "2025-05-14T15:34:55.682604"
+    }
+  },
+  {
+    "id": 109,
+    "name": "Đất trồng, phân bón sản phẩm 4",
+    "description": "Mô tả cho đất trồng, phân bón sản phẩm 4.",
+    "price": 25000,
+    "category": {
+      "id": 6,
+      "name": "Đất trồng, phân bón"
+    },
+    "images": [
+      {
+        "id": 109,
+        "image_url": "https://example.com/images/e7f5f03b-96ef-4d50-8278-447554608d57.jpg"
+      }
+    ],
+    "inventory": {
+      "id": 109,
+      "quantity": 165,
+      "last_updated": "2025-05-14T15:34:55.682616"
+    }
+  },
+  {
+    "id": 110,
+    "name": "Đất trồng, phân bón sản phẩm 5",
+    "description": "Mô tả cho đất trồng, phân bón sản phẩm 5.",
+    "price": 20000,
+    "category": {
+      "id": 6,
+      "name": "Đất trồng, phân bón"
+    },
+    "images": [
+      {
+        "id": 110,
+        "image_url": "https://example.com/images/b6cf3949-945b-464e-8ad0-69e0ee24c5f2.jpg"
+      }
+    ],
+    "inventory": {
+      "id": 110,
+      "quantity": 197,
+      "last_updated": "2025-05-14T15:34:55.682636"
+    }
+  },
+  {
+    "id": 111,
+    "name": "Đất trồng, phân bón sản phẩm 6",
+    "description": "Mô tả cho đất trồng, phân bón sản phẩm 6.",
+    "price": 15000,
+    "category": {
+      "id": 6,
+      "name": "Đất trồng, phân bón"
+    },
+    "images": [
+      {
+        "id": 111,
+        "image_url": "https://example.com/images/b6719629-08c6-4218-ada3-3d9ece3a87aa.jpg"
+      }
+    ],
+    "inventory": {
+      "id": 111,
+      "quantity": 82,
+      "last_updated": "2025-05-14T15:34:55.682650"
+    }
+  },
+  {
+    "id": 112,
+    "name": "Đất trồng, phân bón sản phẩm 7",
+    "description": "Mô tả cho đất trồng, phân bón sản phẩm 7.",
+    "price": 25000,
+    "category": {
+      "id": 6,
+      "name": "Đất trồng, phân bón"
+    },
+    "images": [
+      {
+        "id": 112,
+        "image_url": "https://example.com/images/42ea62e3-8ddf-4bcc-a0bb-3212b861ae8e.jpg"
+      }
+    ],
+    "inventory": {
+      "id": 112,
+      "quantity": 132,
+      "last_updated": "2025-05-14T15:34:55.682662"
+    }
+  },
+  {
+    "id": 113,
+    "name": "Đất trồng, phân bón sản phẩm 8",
+    "description": "Mô tả cho đất trồng, phân bón sản phẩm 8.",
+    "price": 10000,
+    "category": {
+      "id": 6,
+      "name": "Đất trồng, phân bón"
+    },
+    "images": [
+      {
+        "id": 113,
+        "image_url": "https://example.com/images/794aca17-e036-449d-89c9-27d08f99faab.jpg"
+      }
+    ],
+    "inventory": {
+      "id": 113,
+      "quantity": 102,
+      "last_updated": "2025-05-14T15:34:55.682672"
+    }
+  },
+  {
+    "id": 114,
+    "name": "Đất trồng, phân bón sản phẩm 9",
+    "description": "Mô tả cho đất trồng, phân bón sản phẩm 9.",
+    "price": 15000,
+    "category": {
+      "id": 6,
+      "name": "Đất trồng, phân bón"
+    },
+    "images": [
+      {
+        "id": 114,
+        "image_url": "https://example.com/images/c6049ec1-9c4e-44bd-a6b8-73675adba6fa.jpg"
+      }
+    ],
+    "inventory": {
+      "id": 114,
+      "quantity": 67,
+      "last_updated": "2025-05-14T15:34:55.682819"
+    }
+  },
+  {
+    "id": 115,
+    "name": "Đất trồng, phân bón sản phẩm 10",
+    "description": "Mô tả cho đất trồng, phân bón sản phẩm 10.",
+    "price": 25000,
+    "category": {
+      "id": 6,
+      "name": "Đất trồng, phân bón"
+    },
+    "images": [
+      {
+        "id": 115,
+        "image_url": "https://example.com/images/04e7f258-0b06-4e83-afbd-a7b7571922ba.jpg"
+      }
+    ],
+    "inventory": {
+      "id": 115,
+      "quantity": 164,
+      "last_updated": "2025-05-14T15:34:55.682859"
+    }
+  },
+  {
+    "id": 116,
+    "name": "Đất trồng, phân bón sản phẩm 11",
+    "description": "Mô tả cho đất trồng, phân bón sản phẩm 11.",
+    "price": 20000,
+    "category": {
+      "id": 6,
+      "name": "Đất trồng, phân bón"
+    },
+    "images": [
+      {
+        "id": 116,
+        "image_url": "https://example.com/images/2c2389e8-f740-47c2-918a-e85ea8192a0c.jpg"
+      }
+    ],
+    "inventory": {
+      "id": 116,
+      "quantity": 159,
+      "last_updated": "2025-05-14T15:34:55.682879"
+    }
+  },
+  {
+    "id": 117,
+    "name": "Đất trồng, phân bón sản phẩm 12",
+    "description": "Mô tả cho đất trồng, phân bón sản phẩm 12.",
+    "price": 25000,
+    "category": {
+      "id": 6,
+      "name": "Đất trồng, phân bón"
+    },
+    "images": [
+      {
+        "id": 117,
+        "image_url": "https://example.com/images/5d4bc9c9-30fb-4c1c-bce1-f15ce40a8e46.jpg"
+      }
+    ],
+    "inventory": {
+      "id": 117,
+      "quantity": 194,
+      "last_updated": "2025-05-14T15:34:55.682892"
+    }
+  },
+  {
+    "id": 118,
+    "name": "Đất trồng, phân bón sản phẩm 13",
+    "description": "Mô tả cho đất trồng, phân bón sản phẩm 13.",
+    "price": 15000,
+    "category": {
+      "id": 6,
+      "name": "Đất trồng, phân bón"
+    },
+    "images": [
+      {
+        "id": 118,
+        "image_url": "https://example.com/images/81e77bee-9235-4b4c-a4e8-f2b4f4ba38b8.jpg"
+      }
+    ],
+    "inventory": {
+      "id": 118,
+      "quantity": 167,
+      "last_updated": "2025-05-14T15:34:55.682903"
+    }
+  },
+  {
+    "id": 119,
+    "name": "Đất trồng, phân bón sản phẩm 14",
+    "description": "Mô tả cho đất trồng, phân bón sản phẩm 14.",
+    "price": 15000,
+    "category": {
+      "id": 6,
+      "name": "Đất trồng, phân bón"
+    },
+    "images": [
+      {
+        "id": 119,
+        "image_url": "https://example.com/images/7f9898f6-a2cb-43eb-8867-07d57ae8e0c4.jpg"
+      }
+    ],
+    "inventory": {
+      "id": 119,
+      "quantity": 69,
+      "last_updated": "2025-05-14T15:34:55.682917"
+    }
+  },
+  {
+    "id": 120,
+    "name": "Đất trồng, phân bón sản phẩm 15",
+    "description": "Mô tả cho đất trồng, phân bón sản phẩm 15.",
+    "price": 15000,
+    "category": {
+      "id": 6,
+      "name": "Đất trồng, phân bón"
+    },
+    "images": [
+      {
+        "id": 120,
+        "image_url": "https://example.com/images/0b300673-82db-42b9-960e-2f1c31b8124d.jpg"
+      }
+    ],
+    "inventory": {
+      "id": 120,
+      "quantity": 152,
+      "last_updated": "2025-05-14T15:34:55.682932"
+    }
+  },
+  {
+    "id": 121,
+    "name": "Đất trồng, phân bón sản phẩm 16",
+    "description": "Mô tả cho đất trồng, phân bón sản phẩm 16.",
+    "price": 20000,
+    "category": {
+      "id": 6,
+      "name": "Đất trồng, phân bón"
+    },
+    "images": [
+      {
+        "id": 121,
+        "image_url": "https://example.com/images/003434e2-d81d-46dd-8293-eeb7cbe3bd14.jpg"
+      }
+    ],
+    "inventory": {
+      "id": 121,
+      "quantity": 102,
+      "last_updated": "2025-05-14T15:34:55.682949"
+    }
+  },
+  {
+    "id": 122,
+    "name": "Đất trồng, phân bón sản phẩm 17",
+    "description": "Mô tả cho đất trồng, phân bón sản phẩm 17.",
+    "price": 20000,
+    "category": {
+      "id": 6,
+      "name": "Đất trồng, phân bón"
+    },
+    "images": [
+      {
+        "id": 122,
+        "image_url": "https://example.com/images/b1291174-c559-4414-9ba5-a857a3fdf785.jpg"
+      }
+    ],
+    "inventory": {
+      "id": 122,
+      "quantity": 146,
+      "last_updated": "2025-05-14T15:34:55.682966"
+    }
+  },
+  {
+    "id": 123,
+    "name": "Đất trồng, phân bón sản phẩm 18",
+    "description": "Mô tả cho đất trồng, phân bón sản phẩm 18.",
+    "price": 15000,
+    "category": {
+      "id": 6,
+      "name": "Đất trồng, phân bón"
+    },
+    "images": [
+      {
+        "id": 123,
+        "image_url": "https://example.com/images/69166f17-1027-4d61-856a-45b8efc85a81.jpg"
+      }
+    ],
+    "inventory": {
+      "id": 123,
+      "quantity": 124,
+      "last_updated": "2025-05-14T15:34:55.682980"
+    }
+  },
+  {
+    "id": 124,
+    "name": "Đất trồng, phân bón sản phẩm 19",
+    "description": "Mô tả cho đất trồng, phân bón sản phẩm 19.",
+    "price": 20000,
+    "category": {
+      "id": 6,
+      "name": "Đất trồng, phân bón"
+    },
+    "images": [
+      {
+        "id": 124,
+        "image_url": "https://example.com/images/4e812d7b-8b30-4bad-9d9a-7a8af5f77dde.jpg"
+      }
+    ],
+    "inventory": {
+      "id": 124,
+      "quantity": 194,
+      "last_updated": "2025-05-14T15:34:55.682991"
+    }
+  },
+  {
+    "id": 125,
+    "name": "Đất trồng, phân bón sản phẩm 20",
+    "description": "Mô tả cho đất trồng, phân bón sản phẩm 20.",
+    "price": 25000,
+    "category": {
+      "id": 6,
+      "name": "Đất trồng, phân bón"
+    },
+    "images": [
+      {
+        "id": 125,
+        "image_url": "https://example.com/images/098b307c-ba6e-4d6c-97e2-3b580c3f2444.jpg"
+      }
+    ],
+    "inventory": {
+      "id": 125,
+      "quantity": 187,
+      "last_updated": "2025-05-14T15:34:55.683002"
+    }
+  },
+  {
+    "id": 126,
+    "name": "Sỏi trang trí sản phẩm 1",
+    "description": "Mô tả cho sỏi trang trí sản phẩm 1.",
+    "price": 25000,
+    "category": {
+      "id": 7,
+      "name": "Sỏi trang trí"
+    },
+    "images": [
+      {
+        "id": 126,
+        "image_url": "https://example.com/images/7889e8b0-e8b5-4a2a-8e4e-71b0b9b46fa8.jpg"
+      }
+    ],
+    "inventory": {
+      "id": 126,
+      "quantity": 123,
+      "last_updated": "2025-05-14T15:34:55.683018"
+    }
+  },
+  {
+    "id": 127,
+    "name": "Sỏi trang trí sản phẩm 2",
+    "description": "Mô tả cho sỏi trang trí sản phẩm 2.",
+    "price": 10000,
+    "category": {
+      "id": 7,
+      "name": "Sỏi trang trí"
+    },
+    "images": [
+      {
+        "id": 127,
+        "image_url": "https://example.com/images/7c029274-0087-4fc4-80f1-036498a6581e.jpg"
+      }
+    ],
+    "inventory": {
+      "id": 127,
+      "quantity": 60,
+      "last_updated": "2025-05-14T15:34:55.683032"
+    }
+  },
+  {
+    "id": 128,
+    "name": "Sỏi trang trí sản phẩm 3",
+    "description": "Mô tả cho sỏi trang trí sản phẩm 3.",
+    "price": 10000,
+    "category": {
+      "id": 7,
+      "name": "Sỏi trang trí"
+    },
+    "images": [
+      {
+        "id": 128,
+        "image_url": "https://example.com/images/2d06478a-408e-4357-8ebf-4d836040c58d.jpg"
+      }
+    ],
+    "inventory": {
+      "id": 128,
+      "quantity": 191,
+      "last_updated": "2025-05-14T15:34:55.683067"
+    }
+  },
+  {
+    "id": 129,
+    "name": "Sỏi trang trí sản phẩm 4",
+    "description": "Mô tả cho sỏi trang trí sản phẩm 4.",
+    "price": 10000,
+    "category": {
+      "id": 7,
+      "name": "Sỏi trang trí"
+    },
+    "images": [
+      {
+        "id": 129,
+        "image_url": "https://example.com/images/c51f5366-3c67-4c02-b5af-0065c4198d57.jpg"
+      }
+    ],
+    "inventory": {
+      "id": 129,
+      "quantity": 140,
+      "last_updated": "2025-05-14T15:34:55.683085"
+    }
+  },
+  {
+    "id": 130,
+    "name": "Sỏi trang trí sản phẩm 5",
+    "description": "Mô tả cho sỏi trang trí sản phẩm 5.",
+    "price": 10000,
+    "category": {
+      "id": 7,
+      "name": "Sỏi trang trí"
+    },
+    "images": [
+      {
+        "id": 130,
+        "image_url": "https://example.com/images/980fe717-ed5d-48d7-9aa9-68872d8fe71a.jpg"
+      }
+    ],
+    "inventory": {
+      "id": 130,
+      "quantity": 168,
+      "last_updated": "2025-05-14T15:34:55.683099"
+    }
+  },
+  {
+    "id": 131,
+    "name": "Sỏi trang trí sản phẩm 6",
+    "description": "Mô tả cho sỏi trang trí sản phẩm 6.",
+    "price": 20000,
+    "category": {
+      "id": 7,
+      "name": "Sỏi trang trí"
+    },
+    "images": [
+      {
+        "id": 131,
+        "image_url": "https://example.com/images/a8d4cd5d-0347-4b2b-bf8a-2d98e66a9a24.jpg"
+      }
+    ],
+    "inventory": {
+      "id": 131,
+      "quantity": 70,
+      "last_updated": "2025-05-14T15:34:55.683115"
+    }
+  },
+  {
+    "id": 132,
+    "name": "Sỏi trang trí sản phẩm 7",
+    "description": "Mô tả cho sỏi trang trí sản phẩm 7.",
+    "price": 25000,
+    "category": {
+      "id": 7,
+      "name": "Sỏi trang trí"
+    },
+    "images": [
+      {
+        "id": 132,
+        "image_url": "https://example.com/images/243a6d8a-4e5c-4c7f-8bc2-ce40ef8c26eb.jpg"
+      }
+    ],
+    "inventory": {
+      "id": 132,
+      "quantity": 197,
+      "last_updated": "2025-05-14T15:34:55.683131"
+    }
+  },
+  {
+    "id": 133,
+    "name": "Sỏi trang trí sản phẩm 8",
+    "description": "Mô tả cho sỏi trang trí sản phẩm 8.",
+    "price": 10000,
+    "category": {
+      "id": 7,
+      "name": "Sỏi trang trí"
+    },
+    "images": [
+      {
+        "id": 133,
+        "image_url": "https://example.com/images/856c9103-6a1b-42e2-911f-c0890cebea9c.jpg"
+      }
+    ],
+    "inventory": {
+      "id": 133,
+      "quantity": 56,
+      "last_updated": "2025-05-14T15:34:55.683143"
+    }
+  },
+  {
+    "id": 134,
+    "name": "Sỏi trang trí sản phẩm 9",
+    "description": "Mô tả cho sỏi trang trí sản phẩm 9.",
+    "price": 15000,
+    "category": {
+      "id": 7,
+      "name": "Sỏi trang trí"
+    },
+    "images": [
+      {
+        "id": 134,
+        "image_url": "https://example.com/images/050b4353-1896-4840-b54f-24d1d60a68ad.jpg"
+      }
+    ],
+    "inventory": {
+      "id": 134,
+      "quantity": 134,
+      "last_updated": "2025-05-14T15:34:55.683154"
+    }
+  },
+  {
+    "id": 135,
+    "name": "Sỏi trang trí sản phẩm 10",
+    "description": "Mô tả cho sỏi trang trí sản phẩm 10.",
+    "price": 15000,
+    "category": {
+      "id": 7,
+      "name": "Sỏi trang trí"
+    },
+    "images": [
+      {
+        "id": 135,
+        "image_url": "https://example.com/images/d7f5c781-578b-43d1-9741-a25ece77e889.jpg"
+      }
+    ],
+    "inventory": {
+      "id": 135,
+      "quantity": 143,
+      "last_updated": "2025-05-14T15:34:55.683165"
+    }
+  },
+  {
+    "id": 136,
+    "name": "Sỏi trang trí sản phẩm 11",
+    "description": "Mô tả cho sỏi trang trí sản phẩm 11.",
+    "price": 15000,
+    "category": {
+      "id": 7,
+      "name": "Sỏi trang trí"
+    },
+    "images": [
+      {
+        "id": 136,
+        "image_url": "https://example.com/images/a0811d72-eadb-4b7c-aa7a-cd14160fa17f.jpg"
+      }
+    ],
+    "inventory": {
+      "id": 136,
+      "quantity": 63,
+      "last_updated": "2025-05-14T15:34:55.683181"
+    }
+  },
+  {
+    "id": 137,
+    "name": "Sỏi trang trí sản phẩm 12",
+    "description": "Mô tả cho sỏi trang trí sản phẩm 12.",
+    "price": 10000,
+    "category": {
+      "id": 7,
+      "name": "Sỏi trang trí"
+    },
+    "images": [
+      {
+        "id": 137,
+        "image_url": "https://example.com/images/92f1e943-320b-41c4-a567-fe650c30707c.jpg"
+      }
+    ],
+    "inventory": {
+      "id": 137,
+      "quantity": 165,
+      "last_updated": "2025-05-14T15:34:55.683194"
+    }
+  },
+  {
+    "id": 138,
+    "name": "Sỏi trang trí sản phẩm 13",
+    "description": "Mô tả cho sỏi trang trí sản phẩm 13.",
+    "price": 10000,
+    "category": {
+      "id": 7,
+      "name": "Sỏi trang trí"
+    },
+    "images": [
+      {
+        "id": 138,
+        "image_url": "https://example.com/images/e4f26b85-6bd0-4e33-b1f4-672f47c3b9e3.jpg"
+      }
+    ],
+    "inventory": {
+      "id": 138,
+      "quantity": 182,
+      "last_updated": "2025-05-14T15:34:55.683221"
+    }
+  },
+  {
+    "id": 139,
+    "name": "Sỏi trang trí sản phẩm 14",
+    "description": "Mô tả cho sỏi trang trí sản phẩm 14.",
+    "price": 10000,
+    "category": {
+      "id": 7,
+      "name": "Sỏi trang trí"
+    },
+    "images": [
+      {
+        "id": 139,
+        "image_url": "https://example.com/images/3b2b8dc1-eb82-41b4-a143-84905a71f40c.jpg"
+      }
+    ],
+    "inventory": {
+      "id": 139,
+      "quantity": 76,
+      "last_updated": "2025-05-14T15:34:55.683249"
+    }
+  },
+  {
+    "id": 140,
+    "name": "Sỏi trang trí sản phẩm 15",
+    "description": "Mô tả cho sỏi trang trí sản phẩm 15.",
+    "price": 20000,
+    "category": {
+      "id": 7,
+      "name": "Sỏi trang trí"
+    },
+    "images": [
+      {
+        "id": 140,
+        "image_url": "https://example.com/images/07116a3b-1f0c-4c1c-9f3f-bef863a205df.jpg"
+      }
+    ],
+    "inventory": {
+      "id": 140,
+      "quantity": 191,
+      "last_updated": "2025-05-14T15:34:55.683282"
+    }
+  },
+  {
+    "id": 141,
+    "name": "Sỏi trang trí sản phẩm 16",
+    "description": "Mô tả cho sỏi trang trí sản phẩm 16.",
+    "price": 20000,
+    "category": {
+      "id": 7,
+      "name": "Sỏi trang trí"
+    },
+    "images": [
+      {
+        "id": 141,
+        "image_url": "https://example.com/images/49150b1b-b645-4481-a7b6-7897fa7144e6.jpg"
+      }
+    ],
+    "inventory": {
+      "id": 141,
+      "quantity": 182,
+      "last_updated": "2025-05-14T15:34:55.683305"
+    }
+  },
+  {
+    "id": 142,
+    "name": "Sỏi trang trí sản phẩm 17",
+    "description": "Mô tả cho sỏi trang trí sản phẩm 17.",
+    "price": 10000,
+    "category": {
+      "id": 7,
+      "name": "Sỏi trang trí"
+    },
+    "images": [
+      {
+        "id": 142,
+        "image_url": "https://example.com/images/681d7f28-18e1-4821-9ffe-2e14360b59a6.jpg"
+      }
+    ],
+    "inventory": {
+      "id": 142,
+      "quantity": 88,
+      "last_updated": "2025-05-14T15:34:55.683317"
+    }
+  },
+  {
+    "id": 143,
+    "name": "Sỏi trang trí sản phẩm 18",
+    "description": "Mô tả cho sỏi trang trí sản phẩm 18.",
+    "price": 10000,
+    "category": {
+      "id": 7,
+      "name": "Sỏi trang trí"
+    },
+    "images": [
+      {
+        "id": 143,
+        "image_url": "https://example.com/images/7d596b1d-24e7-4506-b524-219918759974.jpg"
+      }
+    ],
+    "inventory": {
+      "id": 143,
+      "quantity": 150,
+      "last_updated": "2025-05-14T15:34:55.683329"
+    }
+  },
+  {
+    "id": 144,
+    "name": "Sỏi trang trí sản phẩm 19",
+    "description": "Mô tả cho sỏi trang trí sản phẩm 19.",
+    "price": 15000,
+    "category": {
+      "id": 7,
+      "name": "Sỏi trang trí"
+    },
+    "images": [
+      {
+        "id": 144,
+        "image_url": "https://example.com/images/fdab5472-a5c2-48d7-9b53-52ca9270ef7c.jpg"
+      }
+    ],
+    "inventory": {
+      "id": 144,
+      "quantity": 148,
+      "last_updated": "2025-05-14T15:34:55.683339"
+    }
+  },
+  {
+    "id": 145,
+    "name": "Sỏi trang trí sản phẩm 20",
+    "description": "Mô tả cho sỏi trang trí sản phẩm 20.",
+    "price": 25000,
+    "category": {
+      "id": 7,
+      "name": "Sỏi trang trí"
+    },
+    "images": [
+      {
+        "id": 145,
+        "image_url": "https://example.com/images/d83879a6-d92f-4a20-80b2-badd1c80b6a4.jpg"
+      }
+    ],
+    "inventory": {
+      "id": 145,
+      "quantity": 144,
+      "last_updated": "2025-05-14T15:34:55.683349"
+    }
+  },
+  {
+    "id": 146,
+    "name": "Dụng cụ trồng sen đá sản phẩm 1",
+    "description": "Mô tả cho dụng cụ trồng sen đá sản phẩm 1.",
+    "price": 25000,
+    "category": {
+      "id": 8,
+      "name": "Dụng cụ trồng sen đá"
+    },
+    "images": [
+      {
+        "id": 146,
+        "image_url": "https://example.com/images/cfe9060e-5361-4a2a-8ade-70755838ceb3.jpg"
+      }
+    ],
+    "inventory": {
+      "id": 146,
+      "quantity": 170,
+      "last_updated": "2025-05-14T15:34:55.683364"
+    }
+  },
+  {
+    "id": 147,
+    "name": "Dụng cụ trồng sen đá sản phẩm 2",
+    "description": "Mô tả cho dụng cụ trồng sen đá sản phẩm 2.",
+    "price": 20000,
+    "category": {
+      "id": 8,
+      "name": "Dụng cụ trồng sen đá"
+    },
+    "images": [
+      {
+        "id": 147,
+        "image_url": "https://example.com/images/1410e2c8-b286-4483-9273-f7bb1b153430.jpg"
+      }
+    ],
+    "inventory": {
+      "id": 147,
+      "quantity": 106,
+      "last_updated": "2025-05-14T15:34:55.683374"
+    }
+  },
+  {
+    "id": 148,
+    "name": "Dụng cụ trồng sen đá sản phẩm 3",
+    "description": "Mô tả cho dụng cụ trồng sen đá sản phẩm 3.",
+    "price": 10000,
+    "category": {
+      "id": 8,
+      "name": "Dụng cụ trồng sen đá"
+    },
+    "images": [
+      {
+        "id": 148,
+        "image_url": "https://example.com/images/3ff16c8c-22e4-460b-a113-ea23f090eb1d.jpg"
+      }
+    ],
+    "inventory": {
+      "id": 148,
+      "quantity": 106,
+      "last_updated": "2025-05-14T15:34:55.683384"
+    }
+  },
+  {
+    "id": 149,
+    "name": "Dụng cụ trồng sen đá sản phẩm 4",
+    "description": "Mô tả cho dụng cụ trồng sen đá sản phẩm 4.",
+    "price": 25000,
+    "category": {
+      "id": 8,
+      "name": "Dụng cụ trồng sen đá"
+    },
+    "images": [
+      {
+        "id": 149,
+        "image_url": "https://example.com/images/b50e1c86-b30c-4f64-8b81-21c72da9b90e.jpg"
+      }
+    ],
+    "inventory": {
+      "id": 149,
+      "quantity": 61,
+      "last_updated": "2025-05-14T15:34:55.683399"
+    }
+  },
+  {
+    "id": 150,
+    "name": "Dụng cụ trồng sen đá sản phẩm 5",
+    "description": "Mô tả cho dụng cụ trồng sen đá sản phẩm 5.",
+    "price": 15000,
+    "category": {
+      "id": 8,
+      "name": "Dụng cụ trồng sen đá"
+    },
+    "images": [
+      {
+        "id": 150,
+        "image_url": "https://example.com/images/fab29392-48fc-44e3-814d-38c043577a31.jpg"
+      }
+    ],
+    "inventory": {
+      "id": 150,
+      "quantity": 146,
+      "last_updated": "2025-05-14T15:34:55.683425"
+    }
+  },
+  {
+    "id": 151,
+    "name": "Dụng cụ trồng sen đá sản phẩm 6",
+    "description": "Mô tả cho dụng cụ trồng sen đá sản phẩm 6.",
+    "price": 15000,
+    "category": {
+      "id": 8,
+      "name": "Dụng cụ trồng sen đá"
+    },
+    "images": [
+      {
+        "id": 151,
+        "image_url": "https://example.com/images/9a2c404a-c5b5-4f86-a557-f0b488946e9a.jpg"
+      }
+    ],
+    "inventory": {
+      "id": 151,
+      "quantity": 127,
+      "last_updated": "2025-05-14T15:34:55.683448"
+    }
+  },
+  {
+    "id": 152,
+    "name": "Dụng cụ trồng sen đá sản phẩm 7",
+    "description": "Mô tả cho dụng cụ trồng sen đá sản phẩm 7.",
+    "price": 20000,
+    "category": {
+      "id": 8,
+      "name": "Dụng cụ trồng sen đá"
+    },
+    "images": [
+      {
+        "id": 152,
+        "image_url": "https://example.com/images/7f972a52-c0bb-4cb8-8879-741ae05c81fe.jpg"
+      }
+    ],
+    "inventory": {
+      "id": 152,
+      "quantity": 139,
+      "last_updated": "2025-05-14T15:34:55.683459"
+    }
+  },
+  {
+    "id": 153,
+    "name": "Dụng cụ trồng sen đá sản phẩm 8",
+    "description": "Mô tả cho dụng cụ trồng sen đá sản phẩm 8.",
+    "price": 20000,
+    "category": {
+      "id": 8,
+      "name": "Dụng cụ trồng sen đá"
+    },
+    "images": [
+      {
+        "id": 153,
+        "image_url": "https://example.com/images/dcbcd857-0a89-4d7b-9531-03b56635927b.jpg"
+      }
+    ],
+    "inventory": {
+      "id": 153,
+      "quantity": 137,
+      "last_updated": "2025-05-14T15:34:55.683470"
+    }
+  },
+  {
+    "id": 154,
+    "name": "Dụng cụ trồng sen đá sản phẩm 9",
+    "description": "Mô tả cho dụng cụ trồng sen đá sản phẩm 9.",
+    "price": 10000,
+    "category": {
+      "id": 8,
+      "name": "Dụng cụ trồng sen đá"
+    },
+    "images": [
+      {
+        "id": 154,
+        "image_url": "https://example.com/images/32aae8a3-3bd7-4dd9-913b-8e6b8deb8201.jpg"
+      }
+    ],
+    "inventory": {
+      "id": 154,
+      "quantity": 179,
+      "last_updated": "2025-05-14T15:34:55.683482"
+    }
+  },
+  {
+    "id": 155,
+    "name": "Dụng cụ trồng sen đá sản phẩm 10",
+    "description": "Mô tả cho dụng cụ trồng sen đá sản phẩm 10.",
+    "price": 15000,
+    "category": {
+      "id": 8,
+      "name": "Dụng cụ trồng sen đá"
+    },
+    "images": [
+      {
+        "id": 155,
+        "image_url": "https://example.com/images/29e8f18b-2c3a-40a8-8f21-7834288e7919.jpg"
+      }
+    ],
+    "inventory": {
+      "id": 155,
+      "quantity": 103,
+      "last_updated": "2025-05-14T15:34:55.683510"
+    }
+  },
+  {
+    "id": 156,
+    "name": "Dụng cụ trồng sen đá sản phẩm 11",
+    "description": "Mô tả cho dụng cụ trồng sen đá sản phẩm 11.",
+    "price": 25000,
+    "category": {
+      "id": 8,
+      "name": "Dụng cụ trồng sen đá"
+    },
+    "images": [
+      {
+        "id": 156,
+        "image_url": "https://example.com/images/503f8770-8554-4481-9753-39eaf4f9e2b9.jpg"
+      }
+    ],
+    "inventory": {
+      "id": 156,
+      "quantity": 138,
+      "last_updated": "2025-05-14T15:34:55.683519"
+    }
+  },
+  {
+    "id": 157,
+    "name": "Dụng cụ trồng sen đá sản phẩm 12",
+    "description": "Mô tả cho dụng cụ trồng sen đá sản phẩm 12.",
+    "price": 15000,
+    "category": {
+      "id": 8,
+      "name": "Dụng cụ trồng sen đá"
+    },
+    "images": [
+      {
+        "id": 157,
+        "image_url": "https://example.com/images/ed66d9d6-a4be-43fb-a78c-8976a8004ee7.jpg"
+      }
+    ],
+    "inventory": {
+      "id": 157,
+      "quantity": 185,
+      "last_updated": "2025-05-14T15:34:55.683544"
+    }
+  },
+  {
+    "id": 158,
+    "name": "Dụng cụ trồng sen đá sản phẩm 13",
+    "description": "Mô tả cho dụng cụ trồng sen đá sản phẩm 13.",
+    "price": 10000,
+    "category": {
+      "id": 8,
+      "name": "Dụng cụ trồng sen đá"
+    },
+    "images": [
+      {
+        "id": 158,
+        "image_url": "https://example.com/images/ec6b736a-114b-4087-b7a3-26aa6accde40.jpg"
+      }
+    ],
+    "inventory": {
+      "id": 158,
+      "quantity": 129,
+      "last_updated": "2025-05-14T15:34:55.683561"
+    }
+  },
+  {
+    "id": 159,
+    "name": "Dụng cụ trồng sen đá sản phẩm 14",
+    "description": "Mô tả cho dụng cụ trồng sen đá sản phẩm 14.",
+    "price": 15000,
+    "category": {
+      "id": 8,
+      "name": "Dụng cụ trồng sen đá"
+    },
+    "images": [
+      {
+        "id": 159,
+        "image_url": "https://example.com/images/46b27358-7400-4f19-a412-ea74bfa7d67d.jpg"
+      }
+    ],
+    "inventory": {
+      "id": 159,
+      "quantity": 171,
+      "last_updated": "2025-05-14T15:34:55.683576"
+    }
+  },
+  {
+    "id": 160,
+    "name": "Dụng cụ trồng sen đá sản phẩm 15",
+    "description": "Mô tả cho dụng cụ trồng sen đá sản phẩm 15.",
+    "price": 25000,
+    "category": {
+      "id": 8,
+      "name": "Dụng cụ trồng sen đá"
+    },
+    "images": [
+      {
+        "id": 160,
+        "image_url": "https://example.com/images/a4492079-f66e-4327-839c-48fba311d04d.jpg"
+      }
+    ],
+    "inventory": {
+      "id": 160,
+      "quantity": 74,
+      "last_updated": "2025-05-14T15:34:55.683592"
+    }
+  },
+  {
+    "id": 161,
+    "name": "Dụng cụ trồng sen đá sản phẩm 16",
+    "description": "Mô tả cho dụng cụ trồng sen đá sản phẩm 16.",
+    "price": 10000,
+    "category": {
+      "id": 8,
+      "name": "Dụng cụ trồng sen đá"
+    },
+    "images": [
+      {
+        "id": 161,
+        "image_url": "https://example.com/images/fce7d8e9-e4f9-4ec6-842f-5c5cb3dd9d71.jpg"
+      }
+    ],
+    "inventory": {
+      "id": 161,
+      "quantity": 122,
+      "last_updated": "2025-05-14T15:34:55.683617"
+    }
+  },
+  {
+    "id": 162,
+    "name": "Dụng cụ trồng sen đá sản phẩm 17",
+    "description": "Mô tả cho dụng cụ trồng sen đá sản phẩm 17.",
+    "price": 25000,
+    "category": {
+      "id": 8,
+      "name": "Dụng cụ trồng sen đá"
+    },
+    "images": [
+      {
+        "id": 162,
+        "image_url": "https://example.com/images/6b7eb75b-fdff-4085-9af2-e18a63ea21b6.jpg"
+      }
+    ],
+    "inventory": {
+      "id": 162,
+      "quantity": 110,
+      "last_updated": "2025-05-14T15:34:55.683633"
+    }
+  },
+  {
+    "id": 163,
+    "name": "Dụng cụ trồng sen đá sản phẩm 18",
+    "description": "Mô tả cho dụng cụ trồng sen đá sản phẩm 18.",
+    "price": 25000,
+    "category": {
+      "id": 8,
+      "name": "Dụng cụ trồng sen đá"
+    },
+    "images": [
+      {
+        "id": 163,
+        "image_url": "https://example.com/images/74aba6d6-d6b4-4437-b8e3-e2c90afdf2d9.jpg"
+      }
+    ],
+    "inventory": {
+      "id": 163,
+      "quantity": 57,
+      "last_updated": "2025-05-14T15:34:55.683648"
+    }
+  },
+  {
+    "id": 164,
+    "name": "Dụng cụ trồng sen đá sản phẩm 19",
+    "description": "Mô tả cho dụng cụ trồng sen đá sản phẩm 19.",
+    "price": 10000,
+    "category": {
+      "id": 8,
+      "name": "Dụng cụ trồng sen đá"
+    },
+    "images": [
+      {
+        "id": 164,
+        "image_url": "https://example.com/images/62da1794-7366-4136-9282-d288d9c22447.jpg"
+      }
+    ],
+    "inventory": {
+      "id": 164,
+      "quantity": 70,
+      "last_updated": "2025-05-14T15:34:55.683665"
+    }
+  },
+  {
+    "id": 165,
+    "name": "Dụng cụ trồng sen đá sản phẩm 20",
+    "description": "Mô tả cho dụng cụ trồng sen đá sản phẩm 20.",
+    "price": 25000,
+    "category": {
+      "id": 8,
+      "name": "Dụng cụ trồng sen đá"
+    },
+    "images": [
+      {
+        "id": 165,
+        "image_url": "https://example.com/images/0b8525d2-cf71-43dd-a2cf-0a308b55f573.jpg"
+      }
+    ],
+    "inventory": {
+      "id": 165,
+      "quantity": 82,
+      "last_updated": "2025-05-14T15:34:55.683705"
+    }
+  }
+
+
+  ],
+  "totalCount": 165,
+  "cart": {
+    "id": 1,
+    "user": {
+      "id": 1,
+      "name": "Nguyễn Văn A"
+    },
+    "created_at": "2025-05-10T07:00:00",
+    "items": [
+      {
+        "product": {
+          "id": 1,
+          "name": "Sen đá nâu"
+        },
+        "quantity": 2
+      },
+      {
+        "product": {
+          "id": 2,
+          "name": "Sen đá móng rồng"
+        },
+        "quantity": 1
+      }
+    ]
+  },
+  "orders": [
+    {
+      "id": 101,
+      "user": {
+        "id": 1,
+        "name": "Nguyễn Văn A"
+      },
+      "total_price": 115000,
+      "shipping_address": "123 Đường Hoa, TP.HCM",
+      "payment_method": "COD",
+      "status": "Đang giao",
+      "created_at": "2025-05-10T09:00:00",
+      "promotion": {
+        "id": 1,
+        "code": "SENDA2025",
+        "discount_percent": 10
+      },
+      "items": [
+        {
+          "product": {
+            "id": 1,
+            "name": "Sen đá nâu"
+          },
+          "quantity": 2,
+          "price": 35000
+        },
+        {
+          "product": {
+            "id": 2,
+            "name": "Sen đá móng rồng"
+          },
+          "quantity": 1,
+          "price": 45000
+        }
+      ]
+    }
+  ],
+  "reviews":[
+  {
+    "id": 1,
+    "user_id": 2,
+    "product_id": 1,
+    "rating": 5,
+    "comment": "Cây rất tươi và khỏe. Đóng gói cẩn thận.",
+    "created_at": "2025-05-15T10:20:00"
+  },
+  {
+    "id": 2,
+    "user_id": 3,
+    "product_id": 1,
+    "rating": 4,
+    "comment": "Giao hàng nhanh, nhưng một lá hơi dập nhẹ.",
+    "created_at": "2025-05-16T08:30:00"
+  },
+  {
+    "id": 3,
+    "user_id": 4,
+    "product_id": 1,
+    "rating": 5,
+    "comment": "Sản phẩm đẹp như hình. Sẽ ủng hộ tiếp!",
+    "created_at": "2025-05-16T14:10:00"
+  }
+]
+
+}
