@@ -1,23 +1,18 @@
 import React, { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
-
+import { fetchCategories } from "@/api/categoryApi";
 export default function Breadcrumb() {
   const { id } = useParams();
   const [categoryName, setCategoryName] = useState("");
 
   useEffect(() => {
-    const fetchData = async () => {
+    const load = async () => {
       try {
-        let url = "http://localhost:3001/products";
-        if (id) {
-          url += `?categoryId=${id}`;
-        }
-
-        const res = await fetch(url);
-        const data = await res.json();
+        const data = await fetchCategories();
         setCategoryName(data);
         if (id && data.length > 0) {
-          setCategoryName(data[0].category?.name || "Danh mục");
+          const found = data.find((cat) => cat._id === id);
+          setCategoryName(found?.name);
         } else {
           setCategoryName("Tất cả sản phẩm");
         }
@@ -26,7 +21,7 @@ export default function Breadcrumb() {
       }
     };
 
-    fetchData();
+    load();
   }, [id]);
 
   return (

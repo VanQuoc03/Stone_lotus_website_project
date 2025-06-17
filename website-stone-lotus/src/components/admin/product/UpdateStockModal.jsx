@@ -3,7 +3,9 @@ import React, { useEffect, useState } from "react";
 export default function UpdateStockModal({ product, onClose, onSave }) {
   const [quantity, setQuantity] = useState(0);
   useEffect(() => {
-    if (product) setQuantity(product.inventory?.quantity || 0);
+    if (product) {
+      setQuantity(product.inventory?.quantity || 0);
+    }
   }, [product]);
   if (!product) return null;
   const handleSubmit = () => {

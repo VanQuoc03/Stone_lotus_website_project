@@ -1,23 +1,29 @@
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+
 const priceRanges = [
   { label: "Dưới 25.000₫", min: 0, max: 25000 },
   { label: "25.000₫ - 100.000₫", min: 25000, max: 100000 },
   { label: "100.000₫ - 300.000₫", min: 100000, max: 300000 },
   { label: "Trên 300.000₫", min: 300000, max: Infinity },
 ];
-export default function ProductSideBar({ price }) {
+
+export default function ProductSideBar({ onFilter }) {
   const [selectedPrices, setSelectedPrices] = useState([]);
   const [isOpen, setIsOpen] = useState(true);
 
-  const handleCheckBoxChange = (price) => {
-    const isChecked = selectedPrices.includes(price);
-    const updatedPrice = isChecked
-      ? selectedPrices.filter((price) => price !== price)
-      : [...selectedPrices, price];
-    setSelectedPrices(updatedPrice);
-    onFilter({ prices: updatedPrice });
+  const handleCheckBoxChange = (range) => {
+    const alreadySelected = selectedPrices.some(
+      (p) => p.min === range.min && p.max === range.max
+    );
+
+    const updatedPrices = alreadySelected
+      ? selectedPrices.filter((p) => p.min !== range.min || p.max !== range.max)
+      : [...selectedPrices, range];
+
+    setSelectedPrices(updatedPrices);
+    onFilter && onFilter({ prices: updatedPrices });
   };
+
   return (
     <div className="bg-white p-4 shadow-md rounded-lg min-w-[320px]">
       <button
@@ -29,18 +35,21 @@ export default function ProductSideBar({ price }) {
       </button>
 
       <hr />
+
       {isOpen && (
         <ul>
-          {priceRanges.map((price, index) => (
+          {priceRanges.map((range, index) => (
             <li key={index}>
-              <label htmlFor="" className="flex items-center gap-2">
+              <label className="flex items-center gap-2">
                 <input
                   type="checkbox"
-                  checked={selectedPrices.includes(price)}
-                  onChange={() => handleCheckBoxChange(price)}
+                  checked={selectedPrices.some(
+                    (p) => p.min === range.min && p.max === range.max
+                  )}
+                  onChange={() => handleCheckBoxChange(range)}
                   className="m-2 size-4"
                 />
-                <span>{price.label}</span>
+                <span>{range.label}</span>
               </label>
             </li>
           ))}

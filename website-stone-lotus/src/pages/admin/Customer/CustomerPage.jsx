@@ -167,7 +167,7 @@ export default function CustomerPage() {
         <Pagination
           currentPage={currentPage}
           totalPages={totalPages}
-          onPageChange={setCurrentPage}
+          onPageChange={setCurrentPage} 
         />
       </div>
     </>

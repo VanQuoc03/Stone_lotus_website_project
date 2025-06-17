@@ -1,5 +1,3 @@
-
-
 const InputField = ({ label, name, value, onChange, type = "text", placeholder, icon, children }) => {
   return (
     <div className="space-y-1.5">

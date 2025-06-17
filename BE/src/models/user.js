@@ -9,8 +9,8 @@ const userSchema = new mongoose.Schema({
   email: {
     type: String,
     required: true,
-    unique: true, // Đảm bảo không trùng lặp
-    lowercase: true, // Tự chuyển về chữ thường
+    unique: true,
+    lowercase: true,
     trim: true,
   },
   password: {
@@ -30,7 +30,8 @@ const userSchema = new mongoose.Schema({
     type: Date,
     default: Date.now,
   },
-});
+  address: { type: String },
+}); 
 
 //Tự động hash mật khẩu nếu thay đổi
 userSchema.pre("save", async function (next) {
@@ -39,6 +40,5 @@ userSchema.pre("save", async function (next) {
   }
   next();
 });
-
 
 module.exports = mongoose.model("User", userSchema);

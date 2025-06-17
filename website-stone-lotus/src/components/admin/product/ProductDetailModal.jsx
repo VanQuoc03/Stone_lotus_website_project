@@ -1,9 +1,7 @@
 import React from "react";
 
 export default function ProductDetailModal({ product, onClose }) {
-  {
-    console.log("Chi tiết sản phẩm:", product);
-  }
+  console.log(product, onClose);
   if (!product) return null;
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50">

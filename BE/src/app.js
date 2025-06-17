@@ -13,7 +13,10 @@ const categoryRoutes = require("./routes/category");
 const productRoutes = require("./routes/product");
 const PORT = process.env.PORT || 5000;
 const uploadRoute = require("./routes/uploadRoute");
-
+const cartRoutes = require("./routes/cart");
+const orderRoutes = require("./routes/order");
+const purchaseRoutes = require("./routes/purchase");
+const productInventoryRoutes = require("./routes/productInventory");
 app.use(bodyParser.json());
 app.use(
   cors({
@@ -35,6 +38,17 @@ app.use("/api/products", productRoutes);
 
 //UploadImage
 app.use("/api/upload", uploadRoute);
+
+//Giỏ hàng
+app.use("/api/cart", cartRoutes);
+//Order
+app.use("/api/orders", orderRoutes);
+
+//Purchase
+app.use("/api/purchases", purchaseRoutes);
+
+//Tôn kho sản phẩm
+app.use("/api/inventory", productInventoryRoutes);
 
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);

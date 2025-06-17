@@ -15,7 +15,7 @@ export default function ProductInfo({ product }) {
         <p>
           Giá:{" "}
           <strong className="font-bold text-2xl text-red-500">
-            {product.price.toLocaleString()}₫
+            {product.price}₫
           </strong>
         </p>
       </div>

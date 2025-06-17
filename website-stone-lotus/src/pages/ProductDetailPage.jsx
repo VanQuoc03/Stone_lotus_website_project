@@ -3,13 +3,13 @@ import ProductInfo from "../components/product/ProductDetail/ProductInfo";
 import ProductImageGallery from "../components/product/ProductDetail/ProductImageGallery";
 import { useParams } from "react-router-dom";
 import ProductTabs from "../components/product/ProductDetail/ProductTabs";
-import ProductVariants from "../components/product/ProductDetail/ProductVariants";
 import ProductQuantitySelector from "../components/product/ProductDetail/ProductQuantitySelector";
 import ProductActions from "../components/product/ProductDetail/ProductActions";
 import ProductPolicy from "../components/product/ProductDetail/ProductPolicy";
 import RelatedProducts from "../components/product/ProductDetail/RelatedProducts";
-import RecentlyViewed from "../components/product/ProductDetail/RecentlyViewed";
 import Breadcrumb from "../components/product/Breadcrumb";
+import { fetchProductById } from "@/api/productApi";
+import { ToastContainer } from "react-toastify";
 
 export default function ProductDetailPage() {
   const { id } = useParams();
@@ -19,10 +19,9 @@ export default function ProductDetailPage() {
   useEffect(() => {
     const fetchProduct = async () => {
       try {
-        const res = await fetch(`http://localhost:3001/products/${id}`);
-        const data = await res.json();
-        console.log("Sản phẩm: ", data);
-        setProduct(data);
+        const res = await fetchProductById(id);
+        console.log(res.data);
+        setProduct(res.data);
       } catch (error) {
         console.error("Lỗi tải sản phẩm: ", error);
       }
@@ -60,6 +59,7 @@ export default function ProductDetailPage() {
             quantity={quantity}
             setQuantity={setQuantity}
           />
+          <ToastContainer />
           <ProductActions
             product={product}
             quantity={quantity}
@@ -75,8 +75,8 @@ export default function ProductDetailPage() {
         {/* Liên quan */}
         <div className="lg:col-span-12 mt-10">
           <RelatedProducts
-            categoryId={product.category.id}
-            currentId={product.id}
+            categoryId={product.category?._id}
+            currentId={product._id}
           />
         </div>
 

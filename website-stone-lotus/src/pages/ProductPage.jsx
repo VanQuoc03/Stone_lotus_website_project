@@ -1,30 +1,48 @@
-import { useParams } from "react-router-dom";
-import { useState } from "react";
+import { useParams, useNavigate } from "react-router-dom";
 import useFilteredProducts from "../hooks/useFilteredProducts";
 import ProductPageLayout from "../components/product/ProductPageLayout";
 
 export default function ProductPage() {
   const { id: categoryId } = useParams();
-  const { products, handlePriceFilter, totalCount } =
-    useFilteredProducts(categoryId);
-  const [visibleCount, setVisibleCount] = useState(30);
+  const navigate = useNavigate();
+
+  const {
+    products,
+    totalCount,
+    hasMore,
+    loading,
+    loadMore,
+    handlePriceFilter,
+  } = useFilteredProducts(categoryId);
 
   const isAllProductPage = !categoryId;
-  const visibleProducts = isAllProductPage
-    ? products.slice(0, visibleCount)
-    : products;
+  const categoryName = products?.[0]?.category?.name || "Danh mục";
 
-  const handleLoadMore = () => setVisibleCount((prev) => prev + 30);
-  const categoryName = products[0]?.category?.name || "Danh mục";
+  const handleAddToCart = (product) => {
+    const cart = JSON.parse(localStorage.getItem("cart")) || [];
+
+    const index = cart.findIndex((item) => item.id === product.id);
+
+    if (index !== -1) {
+      cart[index].quantity += 1;
+    } else {
+      cart.push({ ...product, quantity: 1 });
+    }
+
+    localStorage.setItem("cart", JSON.stringify(cart));
+    navigate("/cart");
+  };
 
   return (
     <ProductPageLayout
       title={isAllProductPage ? "Tất cả sản phẩm" : categoryName}
-      products={visibleProducts}
+      products={products}
       totalCount={totalCount}
       onFilter={handlePriceFilter}
-      showLoadMore={isAllProductPage && visibleCount < products.length}
-      onLoadMore={isAllProductPage ? handleLoadMore : undefined}
+      showLoadMore={hasMore}
+      onLoadMore={loadMore}
+      loading={loading}
+      onAddToCart={handleAddToCart}
     />
   );
 }

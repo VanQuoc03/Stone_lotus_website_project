@@ -6,6 +6,20 @@ import useClickOutside from "@/hooks/useClickOutside";
 import ProductModal from "@/components/admin/product/ProductModal";
 import ProductDetailModal from "@/components/admin/product/ProductDetailModal";
 import UpdateStockModal from "@/components/admin/product/UpdateStockModal";
+import Pagination from "@/components/admin/customer/Pagination";
+import useDebounce from "@/hooks/useDebounce";
+import StockEntryModal from "@/components/admin/product/StockEntryModal";
+import {
+  fetchProducts as fetchProductsAPI,
+  fetchCategories,
+  addProduct,
+  updateProduct,
+  deleteProduct,
+  bulkDeleteProducts,
+  bulkUpdateProductStatus,
+  toggleProductStatus,
+  updateProductStock,
+} from "@/services/admin/productService";
 
 export default function ProductPage() {
   const [selectedProducts, setSelectedProducts] = useState([]);
@@ -19,28 +33,35 @@ export default function ProductPage() {
   const [categories, setCategories] = useState([]);
   const [viewProduct, setViewProduct] = useState(null);
   const [stockProduct, setStockProduct] = useState(null);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(1);
+  const searchDebounce = useDebounce(searchQuery);
+  const [stockEntryProduct, setStockEntryProduct] = useState(null);
 
   const ref = useRef();
   useClickOutside(ref, () => setFilterOpen(false));
 
   useEffect(() => {
-    fetchCategories();
+    loadCategories();
   }, []);
 
   useEffect(() => {
-    fetchProducts();
-  }, [categoryFilter, searchQuery]);
+    loadProducts();
+  }, [categoryFilter, searchDebounce, currentPage]);
 
-  const fetchProducts = async () => {
+  const loadProducts = async () => {
     setLoading(true);
     try {
-      const res = await api.get("/api/products", {
-        params: {
-          search: searchQuery || undefined,
-          category: categoryFilter !== "all" ? categoryFilter : undefined,
-        },
+      const res = await fetchProductsAPI({
+        search: searchDebounce,
+        category: categoryFilter,
+        page: currentPage,
+        limit: 10,
       });
-      const normalized = res.data.map((product) => ({
+
+      const { products, total, page, totalPage } = res;
+
+      const normalized = products.map((product) => ({
         ...product,
         images: Array.isArray(product.images)
           ? product.images
@@ -48,35 +69,118 @@ export default function ProductPage() {
           ? [product.images]
           : [],
       }));
+
       setProducts(normalized);
+      if (page !== currentPage) setCurrentPage(page);
+      if (totalPage !== totalPages) setTotalPages(totalPage);
     } catch (err) {
       console.error("Lỗi khi lấy sản phẩm:", err);
     } finally {
       setLoading(false);
     }
   };
-  const fetchCategories = async () => {
+
+  const loadCategories = async () => {
     try {
-      const res = await api.get("/api/categories");
-      console.log(res);
-      setCategories(res.data);
+      const res = await fetchCategories();
+      setCategories(res);
     } catch (error) {
       console.log("Lỗi khi lấy danh mục", error);
     }
   };
 
-  const addProduct = async (product) => {
-    const res = await api.post("/api/products", product);
-    return res.data;
+  const handleSaveProduct = async (product) => {
+    try {
+      const productToSave = { ...product };
+
+      if (product._id) {
+        const updated = await updateProduct(productToSave);
+        const normalizedProduct = {
+          ...updated,
+          images: Array.isArray(updated.images)
+            ? updated.images.map((img) => img.image_url)
+            : [],
+        };
+
+        setProducts((prev) =>
+          prev.map((p) =>
+            p._id === normalizedProduct._id ? normalizedProduct : p
+          )
+        );
+      } else {
+        const created = await addProduct(productToSave);
+        const normalizedProduct = {
+          ...created,
+          images: Array.isArray(created.images)
+            ? created.images.map((img) => img.image_url)
+            : [],
+        };
+
+        setProducts((prev) => [normalizedProduct, ...prev]);
+        setStockEntryProduct(normalizedProduct);
+      }
+    } catch (err) {
+      console.error("Lỗi khi lưu sản phẩm:", err);
+    } finally {
+      setModalOpen(false);
+      setEditData(null);
+    }
   };
 
-  const updateProduct = async (product) => {
-    const res = await api.put(`/api/products/${product._id}`, product);
-    return res.data;
+  const handleDeleteProduct = async (id) => {
+    try {
+      await deleteProduct(id);
+      setProducts((prev) => prev.filter((p) => p._id !== id));
+    } catch (err) {
+      console.error("Lỗi khi xóa sản phẩm:", err);
+    }
   };
 
-  const deleteProduct = async (id) => {
-    await api.delete(`/api/products/${id}`);
+  const handleBulkDelete = async () => {
+    try {
+      await bulkDeleteProducts(selectedProducts);
+      setProducts((prev) =>
+        prev.filter((p) => !selectedProducts.includes(p._id))
+      );
+      setSelectedProducts([]);
+    } catch (err) {
+      console.error("Lỗi khi xóa hàng loạt:", err);
+    }
+  };
+
+  const handleBulkUpdateStatus = async (status) => {
+    try {
+      await bulkUpdateProductStatus(selectedProducts, status);
+      setProducts((prev) =>
+        prev.map((p) =>
+          selectedProducts.includes(p._id) ? { ...p, status } : p
+        )
+      );
+      setSelectedProducts([]);
+    } catch (err) {
+      console.error("Lỗi khi cập nhật trạng thái:", err);
+    }
+  };
+
+  const handleToggleStatus = async (product) => {
+    const newStatus = product.status === "active" ? "inactive" : "active";
+    try {
+      const updated = await toggleProductStatus(product._id, newStatus);
+      setProducts((prev) =>
+        prev.map((p) => (p._id === product._id ? updated : p))
+      );
+    } catch (err) {
+      console.error("Lỗi khi thay đổi trạng thái:", err);
+    }
+  };
+
+  const handleUpdateStock = async (id, quantity) => {
+    try {
+      await updateProductStock(id, quantity);
+      loadProducts();
+    } catch (err) {
+      console.error("Lỗi khi cập nhật tồn kho:", err);
+    }
   };
 
   const toggleProductSelection = (id) => {
@@ -103,74 +207,53 @@ export default function ProductPage() {
     setModalOpen(true);
   };
 
-  const handleSaveProduct = async (product) => {
-    try {
-      const productToSave = {
-        ...product,
-        images: product.images, // vẫn là mảng string
-      };
-
-      if (product._id) {
-        const updated = await updateProduct(productToSave);
-
-        // 👉 Lấy array các URL từ array object trả về
-        const normalizedImages = Array.isArray(updated.images)
-          ? updated.images.map((img) => img.image_url)
-          : [];
-
-        const normalizedProduct = {
-          ...updated,
-          images: normalizedImages,
-        };
-
-        setProducts((prev) =>
-          prev.map((p) =>
-            p._id === normalizedProduct._id ? normalizedProduct : p
-          )
-        );
-      } else {
-        const created = await addProduct(productToSave);
-
-        const normalizedImages = Array.isArray(created.images)
-          ? created.images.map((img) => img.image_url)
-          : [];
-
-        const normalizedProduct = {
-          ...created,
-          images: normalizedImages,
-        };
-
-        setProducts((prev) => [...prev, normalizedProduct]);
-      }
-    } catch (err) {
-      console.error("Lỗi khi lưu sản phẩm:", err);
-    } finally {
-      setModalOpen(false);
-      setEditData(null);
-    }
-  };
-
-  const handleDeleteProduct = async (id) => {
-    try {
-      await deleteProduct(id);
-      setProducts((prev) => prev.filter((p) => p._id !== id));
-    } catch (err) {
-      console.error("Lỗi khi xóa sản phẩm:", err);
-    }
-  };
-
-  //Cập nhật tồn kho
-  const handleUpdateStock = async (id, quantity) => {
-    try {
-      await api.put(`/api/products/${id}/stock`, { quantity });
-      fetchProducts();
-    } catch (error) {
-      console.error("Lỗi khi cập nhật tồn kho:", error);
-    }
-  };
+  const allActive = selectedProducts.every(
+    (id) => products.find((p) => p._id === id)?.status === "active"
+  );
+  const allInactive = selectedProducts.every(
+    (id) => products.find((p) => p._id === id)?.status === "inactive"
+  );
 
   return (
     <div className="flex flex-col gap-4">
+      {selectedProducts.length > 0 && (
+        <div className="bg-yellow-50 p-3 rounded flex justify-between items-center border">
+          <span className="text-sm">
+            {selectedProducts.length} sản phẩm được chọn
+          </span>
+          <div className="flex gap-2">
+            {!allActive && (
+              <button
+                onClick={() => handleBulkUpdateStatus("active")}
+                className="px-3 py-1 text-sm bg-green-500 text-white rounded"
+              >
+                Hiển thị
+              </button>
+            )}
+            {!allInactive && (
+              <button
+                onClick={() => handleBulkUpdateStatus("inactive")}
+                className="px-3 py-1 text-sm bg-yellow-500 text-white rounded"
+              >
+                Ẩn
+              </button>
+            )}
+            <button
+              onClick={() => {
+                if (
+                  window.confirm("Bạn có chắc chắn muốn xóa các sản phẩm này?")
+                ) {
+                  handleBulkDelete;
+                }
+              }}
+              className="px-3 py-1 text-sm bg-red-500 text-white rounded"
+            >
+              Xóa
+            </button>
+          </div>
+        </div>
+      )}
+
       <div className="flex items-center justify-between">
         <h1 className="text-2xl font-bold tracking-tight">Sản phẩm</h1>
         <button
@@ -181,6 +264,7 @@ export default function ProductPage() {
           Thêm sản phẩm
         </button>
       </div>
+
       <div className="flex flex-col gap-4 sm:flex-row sm:items-center">
         <div className="relative flex-1">
           <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-gray-400" />
@@ -235,18 +319,21 @@ export default function ProductPage() {
         </div>
       </div>
 
-      <ProductModal
-        isOpen={modalOpen}
-        onClose={() => setModalOpen(false)}
-        onSave={handleSaveProduct}
-        initialData={editData}
-        categories={categories}
-      />
-      <ProductDetailModal
-        product={viewProduct}
-        onClose={() => setViewProduct(null)}
-      />
-
+      {modalOpen && (
+        <ProductModal
+          isOpen={modalOpen}
+          onClose={() => setModalOpen(false)}
+          onSave={handleSaveProduct}
+          initialData={editData}
+          categories={categories}
+        />
+      )}
+      {viewProduct !== null && (
+        <ProductDetailModal
+          product={viewProduct}
+          onClose={() => setViewProduct(null)}
+        />
+      )}
       <UpdateStockModal
         product={stockProduct}
         onClose={() => setStockProduct(null)}
@@ -262,6 +349,20 @@ export default function ProductPage() {
         onDeleteProduct={handleDeleteProduct}
         onViewProduct={setViewProduct}
         onUpdateStock={setStockProduct}
+        onToggleStatus={handleToggleStatus}
+      />
+      {stockEntryProduct && (
+        <StockEntryModal
+          product={stockEntryProduct}
+          onClose={() => setStockEntryProduct(null)}
+          onSave={loadProducts}
+        />
+      )}
+
+      <Pagination
+        currentPage={currentPage}
+        totalPages={totalPages}
+        onPageChange={setCurrentPage}
       />
     </div>
   );

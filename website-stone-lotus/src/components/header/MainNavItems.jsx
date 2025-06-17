@@ -40,10 +40,10 @@ function MainNavItems({ categories }) {
         >
           {categories.map((cat) => (
             <li
-              key={cat.id}
+              key={cat._id}
               className="px-4 py-2 hover:bg-gray-200 lg:px-4 lg:py-2"
             >
-              <Link to={`/products/category/${cat.id}`}>{cat.name}</Link>
+              <Link to={`/products/category/${cat._id}`}>{cat.name}</Link>
             </li>
           ))}
         </ul>

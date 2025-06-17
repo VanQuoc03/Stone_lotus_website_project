@@ -15,7 +15,7 @@ export default function useCustomer() {
 
   const [totalPages, setTotalPages] = useState(1);
   const [currentPage, setCurrentPage] = useState(1);
-  const [itemsPerPage] = useState(8);
+  const [itemsPerPage] = useState(5);
 
   useEffect(() => {
     const fetchCustomer = async () => {

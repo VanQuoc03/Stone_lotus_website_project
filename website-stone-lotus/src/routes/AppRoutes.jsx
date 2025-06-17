@@ -13,6 +13,13 @@ import CustomerPage from "@/pages/admin/Customer/CustomerPage";
 import SessionExpired from "@/components/common/SessionExpired";
 import CategoriesPageAdmin from "@/pages/admin/Categories/CategoriesPage";
 import { ToastContainer } from "react-toastify";
+import ShoppingCart from "../pages/cart/CartPage";
+import ProfilePage from "@/pages/profile/ProfilePage";
+import CheckoutPage from "@/pages/admin/checkout/CheckoutPage";
+import ThankYouPage from "@/pages/admin/checkout/ThankYouPage";
+import InventoryPage from "@/pages/admin/inventory/InventoryPage";
+import SearchPage from "@/pages/search/SearchPage";
+import OrdersPage from "@/pages/admin/order/OrdersPage";
 
 export default function AppRoutes() {
   return (
@@ -60,6 +67,26 @@ export default function AppRoutes() {
           </RequireAdmin>
         }
       />
+      <Route
+        path="inventory"
+        element={
+          <RequireAdmin>
+            <AdminLayout>
+              <InventoryPage />
+            </AdminLayout>
+          </RequireAdmin>
+        }
+      />
+      <Route
+        path="/admin/orders"
+        element={
+          <RequireAdmin>
+            <AdminLayout>
+              <OrdersPage />
+            </AdminLayout>
+          </RequireAdmin>
+        }
+      />
 
       {/* Customer */}
       <Route path="/login" element={<Login />} />
@@ -93,6 +120,46 @@ export default function AppRoutes() {
         element={
           <Layout>
             <ProductDetailPage />
+          </Layout>
+        }
+      />
+      <Route
+        path="/cart"
+        element={
+          <Layout>
+            <ShoppingCart />
+          </Layout>
+        }
+      />
+      <Route
+        path="/profile"
+        element={
+          <Layout>
+            <ProfilePage />
+          </Layout>
+        }
+      />
+      <Route
+        path="/checkout"
+        element={
+          <Layout>
+            <CheckoutPage />
+          </Layout>
+        }
+      />
+      <Route
+        path="/thank-you/:orderId"
+        element={
+          <Layout>
+            <ThankYouPage />
+          </Layout>
+        }
+      />
+      <Route
+        path="/search"
+        element={
+          <Layout>
+            <SearchPage />
           </Layout>
         }
       />

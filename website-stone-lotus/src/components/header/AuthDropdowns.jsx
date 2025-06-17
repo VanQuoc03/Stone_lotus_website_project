@@ -41,8 +41,10 @@ function AuthDropdowns() {
 
   const handleLogout = () => {
     logout();
+
     setUser(null);
     setIsOpen(false);
+    navigate("/");
     window.location.reload();
   };
 
@@ -60,6 +62,8 @@ function AuthDropdowns() {
 
       if (isAdmin()) {
         navigate("/admin/dashboard");
+      } else {
+        navigate("/");
       }
       setFormData({
         email: " ",

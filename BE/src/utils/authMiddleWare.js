@@ -9,9 +9,7 @@ function authenticateToken(req, res, next) {
 
   const [bearer, token] = authHeader.split(" ");
   if (bearer !== "Bearer" || !token) {
-    return res
-      .status(401)
-      .json({ message: "Định dạng token không hợp lệ" });
+    return res.status(401).json({ message: "Định dạng token không hợp lệ" });
   }
 
   try {

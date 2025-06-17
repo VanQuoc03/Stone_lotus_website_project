@@ -44,7 +44,7 @@ const navItems = [
   },
   {
     title: "Đơn hàng",
-    href: "/orders",
+    href: "/admin/orders",
     icon: <ShoppingCart className="h-5 w-5" />,
   },
   {
@@ -92,7 +92,7 @@ export default function Sidebar() {
                 to={item.href}
                 className={`flex items-center gap-3 rounded-lg px-3 py-2 transition-all ${
                   location.pathname === item.href
-                    ? "bg-green-50 text-green-700 dark:bg-green-900/20 dark:text-green-400"
+                    ? "bg-green-50 text-green-900 dark:bg-green-900/20 dark:text-green-600"
                     : "text-muted-foreground hover:bg-muted hover:text-foreground"
                 }`}
               >

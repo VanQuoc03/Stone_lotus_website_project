@@ -1,5 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import ProductCard from "../ProductCard";
+import { fetchRelatedProducts } from "@/api/productApi";
 
 export default function RelatedProducts({ categoryId, currentId }) {
   const [related, setRelated] = useState([]);
@@ -14,26 +15,16 @@ export default function RelatedProducts({ categoryId, currentId }) {
       setError(null);
 
       try {
-        const res = await fetch(
-          `http://localhost:3001/products?category_id=${categoryId}`
-        );
-        const data = await res.json();
-        if (!Array.isArray(data)) {
-          console.error("Kết quả không phải là mảng:", data);
-          return;
-        }
-        const filtered = data
-          .filter((p) => p.category.id === categoryId && p.id !== currentId)
-          .slice(0, 10);
-        console.log("Sản phẩm đã lọc: ", filtered);
-        setRelated(filtered);
+        const res = await fetchRelatedProducts(categoryId, currentId);
+        setRelated(res.data);
       } catch (error) {
         console.error("Lỗi tải sản phẩm liên quan", error);
+        setError("Không thể tải sản phẩm liên quan.");
       } finally {
         setLoading(false);
       }
     };
-    if (categoryId) fetchRelated();
+    fetchRelated();
   }, [categoryId, currentId]);
 
   const scroll = (direction) => {
@@ -74,7 +65,7 @@ export default function RelatedProducts({ categoryId, currentId }) {
       <div className="w-full py-4">
         <h2 className="text-2xl font-bold mb-4">
           Sản phẩm liên quan{" "}
-          {categoryName ? `trong danh mục "${categoryName}"` : ""}
+          {/* {categoryName ? `trong danh mục "${categoryName}"` : ""} */}
         </h2>
         <p className="text-gray-500 text-center">
           Không có sản phẩm liên quan trong danh mục này.
@@ -88,7 +79,7 @@ export default function RelatedProducts({ categoryId, currentId }) {
       <h2 className="text-2xl font-bold mb-4">Sản phẩm liên quan</h2>
       <div ref={scrollRef} className="grid grid-cols-5 gap-4 mb-2">
         {related.map((product) => (
-          <div key={product.id} className="min-w-[208px] max-w-[208px]">
+          <div key={product._id} className="min-w-[208px] max-w-[208px]">
             <ProductCard product={product} />
           </div>
         ))}

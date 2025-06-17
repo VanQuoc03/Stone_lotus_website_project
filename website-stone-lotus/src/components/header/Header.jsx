@@ -1,14 +1,12 @@
-// Header.jsx
 import React, { useEffect, useState } from "react";
-import { IoSearch, IoClose } from "react-icons/io5";
 import { HiMenu } from "react-icons/hi";
-import axios from "axios";
 import LocationDropdown from "./LocationDropdown";
 import AuthDropdowns from "./AuthDropdowns";
 import Cart from "./Cart";
-import Dropdown from "../../assets/icon_header/Dropdown";
 import SearchBar from "./SearchBar";
 import MainNavItems from "./MainNavItems";
+import { fetchCategories } from "@/api/categoryApi";
+import { useNavigate } from "react-router-dom";
 
 function Header() {
   const [categories, setCategories] = useState([]);
@@ -16,17 +14,24 @@ function Header() {
   const [searchQuery, setSearchQuery] = useState("");
   const [prevScrollPos, setPrevScrollPos] = useState(0);
   const [visible, setVisible] = useState(true);
+  const navigate = useNavigate();
 
   const handleSearch = (e) => {
     e.preventDefault();
-    console.log("Đang tìm kiếm:", searchQuery);
+    if (!searchQuery.trim()) return;
+    navigate(`/search?q=${encodeURIComponent(searchQuery.trim())}`);
   };
 
   useEffect(() => {
-    axios
-      .get("http://localhost:3001/categories")
-      .then((res) => setCategories(res.data))
-      .catch((err) => console.error("Lỗi tải danh mục sản phẩm", err));
+    const load = async () => {
+      try {
+        const data = await fetchCategories();
+        setCategories(data);
+      } catch (error) {
+        console.error("Lỗi khi lấy danh mục", error);
+      }
+    };
+    load();
   }, []);
 
   useEffect(() => {

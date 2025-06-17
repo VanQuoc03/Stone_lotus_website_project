@@ -1,3 +1,4 @@
+import { uploadImages } from "@/utils/uploadImages";
 import { useEffect, useState } from "react";
 
 export default function ProductModal({
@@ -12,7 +13,7 @@ export default function ProductModal({
     name: "",
     description: "",
     price: "",
-    quantity: "",
+    // quantity: "",
     images: [""],
     category: "",
   });
@@ -24,7 +25,6 @@ export default function ProductModal({
         name: initialData.name || "",
         description: initialData.description || "",
         price: initialData.price || 0,
-        quantity: initialData.inventory?.quantity || 0,
         images:
           Array.isArray(initialData.images) && initialData.images.length > 0
             ? initialData.images.map((img) =>
@@ -39,7 +39,7 @@ export default function ProductModal({
         name: "",
         description: "",
         price: "",
-        quantity: "",
+        // quantity: "",
         images: [],
         category: "",
       });
@@ -75,31 +75,16 @@ export default function ProductModal({
   };
 
   const handleFileUpload = async (e) => {
-    const file = e.target.files[0];
-    if (!file) return;
-
-    const formData = new FormData();
-    formData.append("image", file);
+    const files = Array.from(e.target.files);
 
     try {
-      const res = await fetch("http://localhost:5000/api/upload", {
-        method: "POST",
-        body: formData,
-      });
-
-      const data = await res.json();
-
-      if (data.imageUrl) {
-        setForm((prev) => ({
-          ...prev,
-          images: [...prev.images, data.imageUrl],
-        }));
-      } else {
-        alert("Tải ảnh thất bại.");
-      }
+      const urls = await uploadImages(files);
+      setForm((prev) => ({
+        ...prev,
+        images: [...prev.images, ...urls],
+      }));
     } catch (err) {
-      console.error("Upload lỗi:", err);
-      alert("Lỗi khi upload ảnh");
+      alert(err.message);
     }
   };
 
@@ -142,7 +127,7 @@ export default function ProductModal({
             className="w-full border px-3 py-2 rounded"
             required
           />
-          <input
+          {/* <input
             type="number"
             name="quantity"
             placeholder="Tồn kho"
@@ -150,7 +135,7 @@ export default function ProductModal({
             onChange={handleChange}
             className="w-full border px-3 py-2 rounded"
             required
-          />
+          /> */}
 
           <div className="space-y-2">
             <label className="block font-semibold">Ảnh sản phẩm:</label>
@@ -159,6 +144,7 @@ export default function ProductModal({
             <input
               type="file"
               accept="image/*"
+              multiple
               onChange={handleFileUpload}
               className="w-full"
             />

@@ -28,6 +28,28 @@ function createController(service, entityName = "item") {
         res.status(500).json({ message: `Lỗi khi lấy ${entityName}` });
       }
     },
+    getMe: async (req, res) => {
+      try {
+        const user = await service.getById(req.user.id);
+        if (!user)
+          return res.status(404).json({ message: "Người dùng không tồn tại" });
+        res.json(user);
+      } catch (error) {
+        res.status(500).json({ message: "Lỗi khi lấy thông tin người dùng" });
+      }
+    },
+    updateMe: async (req, res) => {
+      try {
+        const updated = await service.update(req.user.id, req.body);
+        if (!updated)
+          return res.status(404).json({ message: "Người dùng không tồn tại" });
+        res.json(updated);
+      } catch (error) {
+        res
+          .status(500)
+          .json({ message: "Lỗi khi cập nhật thông tin người dùng" });
+      }
+    },
     create: async (req, res) => {
       try {
         const created = await service.create(req.body);
@@ -77,6 +99,34 @@ function createController(service, entityName = "item") {
         res.json({ updated });
       } catch (error) {
         res.status(500).json({ message: `Lỗi khi cập nhật ${entityName}` });
+      }
+    },
+    changePassword: async (req, res) => {
+      try {
+        const { currentPassword, newPassword } = req.body;
+        if (!currentPassword || !newPassword) {
+          return res
+            .status(400)
+            .json({ message: "Vui lòng nhập đầy đủ thông tin" });
+        }
+        const user = await service.getById(req.user.id);
+        if (!user) {
+          return res.status(404).json({ message: "Người dùng không tồn tại" });
+        }
+
+        const isMath = await service.comparePassword(
+          currentPassword,
+          user.password
+        );
+        if (!isMath) {
+          return res
+            .status(400)
+            .json({ message: "Mật khẩu hiện tại không đúng" });
+        }
+        const updated = await service.updatePassword(req.user.id, newPassword);
+        res.json({ message: "Đổi mật khẩu thành công", user: updated });
+      } catch (error) {
+        res.status(500).json({ message: "Lỗi khi lưu mật khẩu" });
       }
     },
   };

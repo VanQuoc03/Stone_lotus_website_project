@@ -1,13 +1,20 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-
+import { fetchCategories } from "@/api/categoryApi";
 export default function CategoryMenu() {
   const [categories, setCategories] = useState([]);
   const [isOpen, setIsOpen] = useState(true);
   useEffect(() => {
-    fetch("http://localhost:3001/categories")
-      .then((res) => res.json())
-      .then((data) => setCategories(data));
+    const load = async () => {
+      try {
+        const data = await fetchCategories();
+        console.log(data)
+        setCategories(data);
+      } catch (error) {
+        console.error("Lỗi khi lấy danh mục", error);
+      }
+    };
+    load();
   }, []);
   return (
     <div className=" bg-white p-4 shadow-md rounded-lg min-w-[320px]">
@@ -22,9 +29,9 @@ export default function CategoryMenu() {
       {isOpen && (
         <ul className="">
           {categories.map((category) => (
-            <li key={category.id}>
+            <li key={category._id}>
               <Link
-                to={`/products/category/${category.id}`}
+                to={`/products/category/${category._id}`}
                 className="block hover:bg-gray-200 rounded py-1 pl-1"
               >
                 {category.name}
