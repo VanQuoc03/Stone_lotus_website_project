@@ -20,6 +20,7 @@ import ThankYouPage from "@/pages/admin/checkout/ThankYouPage";
 import InventoryPage from "@/pages/admin/inventory/InventoryPage";
 import SearchPage from "@/pages/search/SearchPage";
 import OrdersPage from "@/pages/admin/order/OrdersPage";
+import OrderDetailsPage from "@/pages/admin/order/OrderDetailsPage";
 
 export default function AppRoutes() {
   return (
@@ -83,6 +84,16 @@ export default function AppRoutes() {
           <RequireAdmin>
             <AdminLayout>
               <OrdersPage />
+            </AdminLayout>
+          </RequireAdmin>
+        }
+      />
+      <Route
+        path="/admin/orders/:id"
+        element={
+          <RequireAdmin>
+            <AdminLayout>
+              <OrderDetailsPage />
             </AdminLayout>
           </RequireAdmin>
         }

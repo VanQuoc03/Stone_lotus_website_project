@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { format } from "date-fns";
 import { MoreHorizontal } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 export default function OrderTable({
   orders,
   selectedOrders,
@@ -8,6 +9,8 @@ export default function OrderTable({
   toggleAllOrders,
 }) {
   const [openMenuId, setOpenMenuId] = useState(null);
+  const navigate = useNavigate();
+
   const getStatusStyle = (status) => {
     switch (status) {
       case "completed":
@@ -44,7 +47,7 @@ export default function OrderTable({
         <tbody>
           {orders.map((order) => (
             <tr key={order._id} className="border-t hover:bg-gray-50">
-              <td className="px-4 py-2">
+              <td className="px-4 py-2 text-center">
                 <input type="checkbox" />
               </td>
               <td className="px-4 py-2 font-medium">
@@ -98,7 +101,10 @@ export default function OrderTable({
                     <div className="px-4 py-2 text-sm font-semibold">
                       Thao tác
                     </div>
-                    <div className="px-4 py-2 text-sm hover:bg-gray-100 cursor-pointer">
+                    <div
+                      className="px-4 py-2 text-sm hover:bg-gray-100 cursor-pointer"
+                      onClick={() => navigate(`/admin/orders/${order._id}`)}
+                    >
                       Xem chi tiết
                     </div>
                     <div className="px-4 py-2 text-sm hover:bg-gray-100 cursor-pointer">

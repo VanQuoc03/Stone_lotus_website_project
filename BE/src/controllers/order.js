@@ -1,3 +1,6 @@
+const dispatchEmail = require("../utils/emailDispatcher");
+const sendOrderEmail = require("../utils/sendOrderEmail");
+const orderConfirmationTemplate = require("../utils/emailTemplates/orderConfirmation");
 const Order = require("../models/order");
 const OrderItem = require("../models/orderItem");
 const Cart = require("../models/cart");
@@ -56,6 +59,13 @@ exports.placeOrder = async (req, res) => {
       shipping_address: shippingInfo,
       payment_method: paymentMethod,
       status: "pending",
+      timeline: [
+        {
+          status: "pending",
+          note: "Đơn hàng đã được tạo và chờ xác nhận",
+          timestamp: new Date(),
+        },
+      ],
     });
 
     const orderItems = cart.items.map((item) => ({
@@ -65,6 +75,11 @@ exports.placeOrder = async (req, res) => {
       price: item.product.price,
     }));
     await OrderItem.insertMany(orderItems);
+
+    await dispatchEmail({
+      type: "confirmation",
+      order: newOrder,
+    });
 
     //Cập nhật kho hàng
     for (const item of cart.items) {
@@ -93,9 +108,10 @@ exports.getOrderById = async (req, res) => {
   try {
     const userId = req.user.id;
     const orderId = req.params.id;
-
+    const isAdmin = req.user.role === "admin";
+    const query = isAdmin ? { _id: orderId } : { _id: orderId, user: userId };
     // Lấy thông tin đơn hàng
-    const order = await Order.findOne({ _id: orderId, user: userId });
+    const order = await Order.findOne(query);
 
     if (!order) {
       return res.status(404).json({ message: "Không tìm thấy đơn hàng" });
@@ -126,9 +142,78 @@ exports.getOrderById = async (req, res) => {
       paymentMethod: order.payment_method,
       status: order.status,
       items: formattedItems,
+      createdAt: order.createdAt,
+      timeline: order.timeline,
     });
   } catch (err) {
     console.error("Lỗi khi lấy chi tiết đơn hàng:", err.message);
     res.status(500).json({ message: "Không thể lấy đơn hàng" });
+  }
+};
+exports.updateOrderStatus = async (req, res) => {
+  const { id } = req.params;
+  const { status, note } = req.body;
+
+  try {
+    const order = await Order.findById(id);
+    if (!order)
+      return res.status(404).json({ message: "Không tìm thấy đơn hàng" });
+
+    if (order.status === status) {
+      return res.status(400).json({ message: "Trạng thái đã giống hiện tại" });
+    }
+
+    order.status = status;
+    order.timeline = order.timeline || [];
+    order.timeline.push({
+      status,
+      note: note || `Cập nhật trạng thái thành ${status}`,
+      timestamp: new Date(),
+    });
+
+    await order.save();
+
+    if (status === "completed") {
+      try {
+        await sendOrderEmail({
+          to: order.shipping_address.email,
+          subject: `Đơn hàng #${order._id
+            .toString()
+            .slice(-6)
+            .toUpperCase()} đã hoàn thành`,
+          html: orderStatusUpdateTemplate({
+            fullName: order.shipping_address.fullName,
+            orderId: order._id.toString().slice(-6).toUpperCase(),
+            status,
+            note,
+          }),
+        });
+      } catch (emailError) {
+        console.error("Gửi email thất bại:", emailError.message);
+      }
+    }
+
+    res.json({ message: "Cập nhật trạng thái thành công", order });
+  } catch (err) {
+    console.error("Lỗi cập nhật trạng thái:", err.message);
+    res.status(500).json({ message: "Lỗi cập nhật trạng thái" });
+  }
+};
+
+exports.manualSendEmail = async (req, res) => {
+  const { id } = req.params;
+  const { type } = req.body;
+
+  try {
+    const order = await Order.findById(id);
+    if (!order)
+      return res.status(404).json({ message: "Không tìm thấy đơn hàng" });
+
+    await dispatchEmail({ type, order });
+
+    res.json({ message: "Đã gửi email thành công" });
+  } catch (err) {
+    console.error("Lỗi gửi email thủ công:", err.message);
+    res.status(500).json({ message: "Không thể gửi email" });
   }
 };
