@@ -17,7 +17,14 @@ const orderSchema = new mongoose.Schema(
     payment_method: { type: String, enum: ["cod", "bank"], required: true },
     status: {
       type: String,
-      enum: ["pending", "processing", "shipped", "completed", "cancelled"],
+      enum: [
+        "pending",
+        "confirmed",
+        "processing",
+        "shipped",
+        "completed",
+        "cancelled",
+      ],
       default: "pending",
     },
     promotion_id: { type: mongoose.Schema.Types.ObjectId, ref: "Promotion" },
@@ -25,7 +32,14 @@ const orderSchema = new mongoose.Schema(
       {
         status: {
           type: String,
-          enum: ["pending", "processing", "shipped", "completed", "cancelled"],
+          enum: [
+            "pending",
+            "confirmed",
+            "processing",
+            "shipped",
+            "completed",
+            "cancelled",
+          ],
           required: true,
         },
         timestamp: {
@@ -37,6 +51,9 @@ const orderSchema = new mongoose.Schema(
         },
       },
     ],
+    cancelledAt: { type: Date },
+    cancelledBy: { type: String },
+    cancelReason: { type: String },
   },
   { timestamps: true }
 );

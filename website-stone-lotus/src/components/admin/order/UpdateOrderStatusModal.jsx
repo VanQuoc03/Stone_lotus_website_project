@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 const STATUS_OPTIONS = [
   { value: "pending", label: "Chờ xác nhận" },
+  { value: "confirmed", label: "Đã xác nhận" },
   { value: "processing", label: "Đang xử lý" },
   { value: "shipped", label: "Đang giao hàng" },
   { value: "completed", label: "Hoàn thành" },

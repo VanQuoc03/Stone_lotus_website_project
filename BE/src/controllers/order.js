@@ -138,12 +138,16 @@ exports.getOrderById = async (req, res) => {
 
     res.json({
       orderId: order._id,
+      total_price: order.total_price,
       shippingInfo: order.shipping_address,
       paymentMethod: order.payment_method,
       status: order.status,
       items: formattedItems,
       createdAt: order.createdAt,
       timeline: order.timeline,
+      cancelledAt: order.cancelledAt,
+      cancelledBy: order.cancelledBy,
+      cancelReason: order.cancelReason,
     });
   } catch (err) {
     console.error("Lỗi khi lấy chi tiết đơn hàng:", err.message);
@@ -215,5 +219,47 @@ exports.manualSendEmail = async (req, res) => {
   } catch (err) {
     console.error("Lỗi gửi email thủ công:", err.message);
     res.status(500).json({ message: "Không thể gửi email" });
+  }
+};
+
+exports.cancelOrder = async (req, res) => {
+  const { id } = req.params;
+  const { reason } = req.body;
+
+  try {
+    const order = await Order.findById(id);
+    if (!order)
+      return res.status(404).json({ message: "Không tìm thấy đơn hàng" });
+
+    if (order.status === "cancelled") {
+      return res.status(400).json({ message: "Đơn hàng đã bị hủy trước đó" });
+    }
+
+    order.status = "cancelled";
+    order.cancelledAt = new Date();
+    order.cancelledBy = req.user?.name || "Hệ thống";
+    order.cancelReason = reason || "Không có lý do cụ thể";
+
+    order.timeline = order.timeline || [];
+    order.timeline.push({
+      status: "cancelled",
+      note: `Đơn hàng bị hủy: ${order.cancelReason}`,
+      timestamp: new Date(),
+    });
+
+    await order.save();
+    await dispatchEmail({
+      type: "status",
+      order,
+      note: order.cancelReason,
+    });
+
+    res.json({
+      message: "Đã hủy đơn hàng thành công",
+      order,
+    });
+  } catch (err) {
+    console.error("Lỗi khi hủy đơn hàng:", err.message);
+    res.status(500).json({ message: "Không thể hủy đơn hàng" });
   }
 };

@@ -5,6 +5,7 @@ const {
   placeOrder,
   getOrderById,
   updateOrderStatus,
+  cancelOrder,
 } = require("../controllers/order");
 const { authenticateToken } = require("../utils/authMiddleWare");
 const { requireRole } = require("../utils/roleMiddleware");
@@ -18,5 +19,6 @@ router.patch(
   requireRole("admin"),
   updateOrderStatus
 );
+router.patch("/:id/cancel", authenticateToken, cancelOrder);
 
 module.exports = router;

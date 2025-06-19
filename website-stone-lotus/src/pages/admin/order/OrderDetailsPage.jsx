@@ -1,3 +1,4 @@
+import CancelBanner from "@/components/admin/order/CancelBanner";
 import CustomerInfo from "@/components/admin/order/CustomerInfo";
 import OrderActions from "@/components/admin/order/OrderActions";
 import OrderItems from "@/components/admin/order/OrderItems";
@@ -6,25 +7,35 @@ import PaymentInfo from "@/components/admin/order/PaymentInfo";
 import ShippingAddress from "@/components/admin/order/ShippingAddress";
 import api from "@/utils/axiosInstance";
 import dayjs from "dayjs";
+import { ArrowLeft } from "lucide-react";
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
+
+const statusColorMap = {
+  pending: "text-yellow-600",
+  processing: "text-blue-600",
+  delivered: "text-green-600",
+  cancelled: "text-red-600",
+};
 
 export default function OrderDetailsPage() {
   const { id } = useParams();
   const [order, setOrder] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const navigate = useNavigate();
+  const token = localStorage.getItem("token");
+
+  if (!id) return;
 
   useEffect(() => {
     const fetchOrder = async () => {
       try {
-        const token = localStorage.getItem("token");
         const res = await api.get(`/api/orders/${id}`, {
           headers: {
             Authorization: `Bearer ${token}`,
           },
         });
-        console.log("Order details:", res.data);
         setOrder(res.data);
       } catch (error) {
         setError("Không thể tải đơn hàng.");
@@ -34,29 +45,59 @@ export default function OrderDetailsPage() {
     };
     fetchOrder();
   }, [id]);
-  //   if (loading) return <div className="p-6">Đang tải...</div>;
-  //   if (error) return <div className="p-6 text-red-500">{error}</div>;
-  if (!order) return null;
 
+  if (loading) return <div className="p-6">Đang tải...</div>;
+  if (error) return <div className="p-6 text-red-500">{error}</div>;
+  if (!order) return null;
+  const subtotal = (order.items || []).reduce(
+    (sum, i) => sum + i.price * i.quantity,
+    0
+  );
+  const totalPrice = order.total_price || 0;
+  console.log(totalPrice);
+  const shippingFee = totalPrice - subtotal;
+  const isCancelled = order.status === "cancelled";
+  const statusClass = statusColorMap[order.status] || "text-gray-600";
+
+  const orderId = id;
   return (
     <div className="min-h-screen bg-gray-50 p-4 md:p-6">
       <div className="max-w-6xl mx-auto space-y-6">
-        <div>
-          <h1 className="text-2xl font-bold text-gray-900">
-            Chi tiết đơn hàng #{order.orderId?.slice(-6).toUpperCase()}
-          </h1>
-          <span className="text-sm text-gray-500">
-            Tạo lúc {dayjs(order.createdAt).format("DD/MM/YYYY HH:mm")}
-          </span>
+        <div className="flex gap-3">
+          <div
+            className="flex items-center gap-2 cursor-pointer px-4 py-4 hover:bg-gray-100 rounded"
+            onClick={() => navigate("/admin/orders")}
+          >
+            <ArrowLeft />
+          </div>
+          <div>
+            <h1 className="text-2xl font-bold text-gray-900">
+              Chi tiết đơn hàng #{order.orderId?.slice(-6).toUpperCase()}
+            </h1>
+            <p className={`text-sm font-medium ${statusClass} mt-1`}>
+              Trạng thái: {order.status}
+            </p>
+            <span className="text-sm text-gray-500">
+              Tạo lúc {dayjs(order.createdAt).format("DD/MM/YYYY HH:mm")}
+            </span>
+          </div>
         </div>
+
+        {isCancelled && (
+          <CancelBanner
+            cancelledAt={order.cancelledAt}
+            cancelledBy={order.cancelledBy}
+            reason={order.cancelReason}
+          />
+        )}
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
           <div className="lg:col-span-2 space-y-6">
             <OrderItems
-              items={order.items}
-              total={order.items.reduce(
-                (sum, i) => sum + i.price * i.quantity,
-                0
-              )}
+              subtotal={subtotal}
+              items={order.items || []}
+              shippingFee={shippingFee}
+              totalPrice={totalPrice}
+              isCancelled={order.status === "cancelled"}
             />
             <OrderTimeline timeline={order.timeline} />
           </div>
@@ -65,31 +106,55 @@ export default function OrderDetailsPage() {
             <ShippingAddress address={order.shippingInfo} />
             <PaymentInfo
               paymentMethod={order.paymentMethod}
-              totalPrice={order.items.reduce(
-                (sum, i) => sum + i.price * i.quantity,
-                0
-              )}
+              totalPrice={totalPrice}
+              isCancelled={order.status === "cancelled"}
             />
             <OrderActions
               orderCode={order.orderId?.slice(-6).toUpperCase()}
               currentStatus={order.status}
-              onStatusUpdate={async (newStatus) => {
+              onStatusUpdate={async (newStatus, note) => {
                 try {
-                  await api.put(
+                  // const token = localStorage.getItem("token");
+                  const res = await api.patch(
                     `/api/orders/${order.orderId}/status`,
-                    { status: newStatus },
+                    { status: newStatus, note },
                     {
                       headers: { Authorization: `Bearer ${token}` },
                     }
                   );
-                  setOrder({ ...order, status: newStatus });
+                  const updatedOrder = {
+                    ...res.data.order,
+                    orderId: order.orderId || orderId, // Preserve orderId
+                    id: order.id || orderId, // Preserve id nếu có
+                  };
+                  setOrder(updatedOrder);
                 } catch (err) {
                   alert("Cập nhật thất bại");
+                  console.log("Lỗi cập nhật trạng thái đơn hàng: ", err);
                 }
               }}
               onPrint={() => window.print()}
               onEmail={() => alert("Gửi email")}
-              onCancel={() => alert("Hủy đơn hàng")}
+              onOrderCancel={async (reason) => {
+                try {
+                  const res = await api.patch(
+                    `/api/orders/${order.orderId}/cancel`,
+                    { reason },
+                    {
+                      headers: {
+                        Authorization: `Bearer ${token}`,
+                      },
+                    }
+                  );
+                  setOrder(res.data.order);
+                  alert("Đơn hàng đã được hủy");
+                } catch (err) {
+                  alert("Hủy đơn hàng thất bại");
+                  console.error("Lỗi khi hủy đơn hàng:", err);
+                }
+              }}
+              isCancelled={order.status === "cancelled"}
+              cancelledAt={order.cancelledAt}
             />
           </div>
         </div>

@@ -2,7 +2,7 @@ const sendOrderEmail = require("./sendOrderEmail");
 const orderConfirmationTemplate = require("./emailTemplates/orderConfirmation");
 const orderStatusUpdateTemplate = require("./emailTemplates/orderStatusUpdateTemplate");
 
-const dispatchEmail = async ({ type, order }) => {
+const dispatchEmail = async ({ type, order, note }) => {
   if (!order) throw new Error("Thiếu thông tin đơn hàng");
 
   const orderCode = order._id.toString().slice(-6).toUpperCase();
@@ -30,7 +30,7 @@ const dispatchEmail = async ({ type, order }) => {
         fullName,
         orderId: orderCode,
         status: order.status,
-        note: `Cập nhật trạng thái thành ${order.status}`,
+        note: note || `Cập nhật trạng thái thành ${order.status}`,
       }),
     });
   }
