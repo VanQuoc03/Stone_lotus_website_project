@@ -5,6 +5,7 @@ import OrderItems from "@/components/admin/order/OrderItems";
 import OrderTimeline from "@/components/admin/order/OrderTimeline";
 import PaymentInfo from "@/components/admin/order/PaymentInfo";
 import ShippingAddress from "@/components/admin/order/ShippingAddress";
+import useOrderDetails from "@/hooks//useOrderDetails";
 import api from "@/utils/axiosInstance";
 import dayjs from "dayjs";
 import { ArrowLeft } from "lucide-react";
@@ -20,11 +21,10 @@ const statusColorMap = {
 
 export default function OrderDetailsPage() {
   const { id } = useParams();
-  const [order, setOrder] = useState(null);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
   const navigate = useNavigate();
   const token = localStorage.getItem("token");
+  const { order, loading, error, updateStatus, cancelOrder } =
+    useOrderDetails(id);
 
   if (!id) return;
 
@@ -54,7 +54,6 @@ export default function OrderDetailsPage() {
     0
   );
   const totalPrice = order.total_price || 0;
-  console.log(totalPrice);
   const shippingFee = totalPrice - subtotal;
   const isCancelled = order.status === "cancelled";
   const statusClass = statusColorMap[order.status] || "text-gray-600";
@@ -112,47 +111,10 @@ export default function OrderDetailsPage() {
             <OrderActions
               orderCode={order.orderId?.slice(-6).toUpperCase()}
               currentStatus={order.status}
-              onStatusUpdate={async (newStatus, note) => {
-                try {
-                  // const token = localStorage.getItem("token");
-                  const res = await api.patch(
-                    `/api/orders/${order.orderId}/status`,
-                    { status: newStatus, note },
-                    {
-                      headers: { Authorization: `Bearer ${token}` },
-                    }
-                  );
-                  const updatedOrder = {
-                    ...res.data.order,
-                    orderId: order.orderId || orderId, // Preserve orderId
-                    id: order.id || orderId, // Preserve id nếu có
-                  };
-                  setOrder(updatedOrder);
-                } catch (err) {
-                  alert("Cập nhật thất bại");
-                  console.log("Lỗi cập nhật trạng thái đơn hàng: ", err);
-                }
-              }}
+              onStatusUpdate={updateStatus}
               onPrint={() => window.print()}
               onEmail={() => alert("Gửi email")}
-              onOrderCancel={async (reason) => {
-                try {
-                  const res = await api.patch(
-                    `/api/orders/${order.orderId}/cancel`,
-                    { reason },
-                    {
-                      headers: {
-                        Authorization: `Bearer ${token}`,
-                      },
-                    }
-                  );
-                  setOrder(res.data.order);
-                  alert("Đơn hàng đã được hủy");
-                } catch (err) {
-                  alert("Hủy đơn hàng thất bại");
-                  console.error("Lỗi khi hủy đơn hàng:", err);
-                }
-              }}
+              onOrderCancel={cancelOrder}
               isCancelled={order.status === "cancelled"}
               cancelledAt={order.cancelledAt}
             />

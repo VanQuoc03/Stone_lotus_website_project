@@ -14,7 +14,34 @@ exports.getAllOrders = async (req, res) => {
       .sort({ createdAt: -1 })
       .populate("user", "name email")
       .lean();
-    res.json(orders);
+    const ordersWithItems = await Promise.all(
+      orders.map(async (order) => {
+        const items = await OrderItem.find({ order: order._id }).populate({
+          path: "product",
+          select: "name price images",
+          populate: {
+            path: "images",
+            select: "image_url -_id",
+          },
+        });
+
+        const formattedItems = items.map((item) => ({
+          id: item._id,
+          name: item.product?.name,
+          image: item.product?.images?.[0]?.image_url || null,
+          price: item.price,
+          quantity: item.quantity,
+          productId: item.product?._id,
+        }));
+
+        return {
+          ...order,
+          id: order._id.toString(), // để tương thích với OrderCard dùng order.id
+          items: formattedItems,
+        };
+      })
+    );
+    res.json(ordersWithItems);
   } catch (error) {
     console.error("Lỗi khi lấy danh sách đơn hàng:", err.message);
     res.status(500).json({ message: "Không thể lấy đơn hàng" });
@@ -76,9 +103,11 @@ exports.placeOrder = async (req, res) => {
     }));
     await OrderItem.insertMany(orderItems);
 
+    const fullOrder = await Order.findById(newOrder._id);
+
     await dispatchEmail({
       type: "confirmation",
-      order: newOrder,
+      order: fullOrder,
     });
 
     //Cập nhật kho hàng
@@ -134,6 +163,7 @@ exports.getOrderById = async (req, res) => {
       image: item.product?.images?.[0]?.image_url || null,
       price: item.price,
       quantity: item.quantity,
+      productId: item.product._id,
     }));
 
     res.json({

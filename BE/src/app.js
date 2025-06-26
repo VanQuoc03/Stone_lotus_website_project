@@ -17,6 +17,9 @@ const cartRoutes = require("./routes/cart");
 const orderRoutes = require("./routes/order");
 const purchaseRoutes = require("./routes/purchase");
 const productInventoryRoutes = require("./routes/productInventory");
+const blogRoutes = require("./routes/blog");
+const likeRoutes = require("./routes/like");
+
 app.use(bodyParser.json());
 app.use(
   cors({
@@ -49,6 +52,12 @@ app.use("/api/purchases", purchaseRoutes);
 
 //Tôn kho sản phẩm
 app.use("/api/inventory", productInventoryRoutes);
+
+//Blog
+app.use("/api/blog", blogRoutes);
+
+//Like
+app.use("/api/likes", likeRoutes);
 
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);

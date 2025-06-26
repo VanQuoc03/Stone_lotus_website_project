@@ -9,7 +9,7 @@ export const addToCart = async ({ product, quantity = 1, variantId = null, updat
       await api.post("/api/cart/add", {
         productId: product._id,
         quantity,
-        variantId, // null nếu không có
+        variantId,
       });
     } else {
       addToGuestCart({ ...product, quantity });

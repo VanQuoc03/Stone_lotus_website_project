@@ -10,7 +10,7 @@ const {
 const { authenticateToken } = require("../utils/authMiddleWare");
 const { requireRole } = require("../utils/roleMiddleware");
 
-router.get("/", authenticateToken, requireRole("admin"), getAllOrders);
+router.get("/", authenticateToken, getAllOrders);
 router.get("/:id", authenticateToken, getOrderById);
 router.post("/", authenticateToken, placeOrder);
 router.patch(

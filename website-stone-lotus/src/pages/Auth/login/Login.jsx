@@ -36,7 +36,6 @@ const Login = () => {
     if (result.success && result.token) {
       try {
         const decoded = jwtDecode(result.token);
-        console.log("JWT decoded:", decoded);
 
         if (decoded.role === "admin") {
           navigate("/admin/dashboard");

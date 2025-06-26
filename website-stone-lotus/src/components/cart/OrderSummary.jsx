@@ -40,7 +40,9 @@ export default function OrderSummary({ items }) {
     <div className="space-y-6">
       {/* Mã giảm giá */}
       <div className="bg-white border rounded-lg shadow-sm">
-        <div className="px-5 py-4 border-b font-semibold text-base">Mã giảm giá</div>
+        <div className="px-5 py-4 border-b font-semibold text-base">
+          Mã giảm giá
+        </div>
         <div className="px-5 py-4 space-y-3">
           <div className="flex gap-2">
             <input
@@ -69,7 +71,9 @@ export default function OrderSummary({ items }) {
 
       {/* Tóm tắt đơn hàng */}
       <div className="bg-white border rounded-lg shadow-sm">
-        <div className="px-5 py-4 border-b font-semibold text-base">Tóm tắt đơn hàng</div>
+        <div className="px-5 py-4 border-b font-semibold text-base">
+          Tóm tắt đơn hàng
+        </div>
         <div className="px-5 py-4 space-y-3 text-sm">
           <div className="flex justify-between">
             <span>Tạm tính</span>
@@ -103,12 +107,13 @@ export default function OrderSummary({ items }) {
 
           {shipping > 0 && (
             <p className="text-xs text-gray-600">
-              Mua thêm <strong>{format(500000 - subTotal)}</strong> để được miễn phí vận chuyển
+              Mua thêm <strong>{format(500000 - subTotal)}</strong> để được miễn
+              phí vận chuyển
             </p>
           )}
         </div>
       </div>
- 
+
       <button
         onClick={() => navigate("/checkout")}
         className="w-full bg-green-600 hover:bg-green-700 text-white py-3 rounded-lg text-base font-semibold flex justify-center items-center transition"

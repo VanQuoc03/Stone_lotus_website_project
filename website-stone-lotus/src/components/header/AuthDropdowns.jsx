@@ -70,7 +70,6 @@ function AuthDropdowns() {
         password: " ",
       });
     }
-    console.log("Login with:", formData);
   };
 
   return (
@@ -145,7 +144,7 @@ function AuthDropdowns() {
                 </Link>
 
                 <Link
-                  to="/orders"
+                  to="/order-manage"
                   className="flex items-center justify-center w-full py-2.5 px-4 bg-[#f8f4ee] hover:bg-[#f0e9db] text-[#c29e6b] rounded-md transition-colors"
                   onClick={() => setIsOpen(false)}
                 >

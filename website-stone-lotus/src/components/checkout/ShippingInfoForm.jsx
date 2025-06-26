@@ -1,9 +1,65 @@
 import React, { useEffect, useState } from "react";
 import { MapPin, Phone, Mail, User } from "lucide-react";
-import api from "@/utils/axiosInstance";
 import SelectField from "../common/SelectField";
+import {
+  getProvinces,
+  getDistrictsByProvince,
+  getWardsByDistrict,
+} from "@/services/locationAPI";
 
-export default function ShippingInfoForm({ formData, onChange }) {
+export default function ShippingInfoForm({
+  formData,
+  onChange,
+  setLocationData,
+}) {
+  const [cities, setCities] = useState([]);
+  const [districts, setDistricts] = useState([]);
+  const [wards, setWards] = useState([]);
+
+  useEffect(() => {
+    if (setLocationData) {
+      setLocationData({ cities, districts, wards });
+    }
+  }, [cities, districts, wards]);
+
+  useEffect(() => {
+    const fetchCities = async () => {
+      try {
+        const data = await getProvinces();
+        setCities(data);
+      } catch (err) {
+        console.error("Không thể tải tỉnh/thành.");
+      }
+    };
+    fetchCities();
+  }, []);
+
+  useEffect(() => {
+    if (!formData.cityCode) return;
+    const fetchDistricts = async () => {
+      try {
+        const data = await getDistrictsByProvince(formData.cityCode);
+        setDistricts(data);
+      } catch (err) {
+        console.error("Không thể tải quận/huyện.");
+      }
+    };
+    fetchDistricts();
+  }, [formData.cityCode]);
+
+  useEffect(() => {
+    if (!formData.districtCode) return;
+    const fetchWards = async () => {
+      try {
+        const data = await getWardsByDistrict(formData.districtCode);
+        setWards(data);
+      } catch (err) {
+        console.error("Không thể tải phường/xã.");
+      }
+    };
+    fetchWards();
+  }, [formData.districtCode]);
+
   return (
     <div className="bg-white rounded-lg shadow-sm p-6">
       <h2 className="text-xl font-semibold mb-6 flex items-center gap-2">
@@ -36,30 +92,47 @@ export default function ShippingInfoForm({ formData, onChange }) {
           value={formData.email}
           onChange={onChange}
         />
+        <InputField
+          icon={<MapPin />}
+          label="Địa chỉ cụ thể"
+          name="address"
+          value={formData.address}
+          onChange={onChange}
+          required
+        />
         <div className="grid md:grid-cols-3 gap-4">
           <SelectField
             label="Tỉnh/Thành phố"
-            name="city"
-            value={formData.city}
+            name="cityCode"
+            value={formData.cityCode}
             onChange={onChange}
             required
-            options={["Hà Nội", "TP. Hồ Chí Minh", "Đà Nẵng"]}
+            options={cities.map((city) => ({
+              label: city.name,
+              value: city.code,
+            }))}
           />
           <SelectField
             label="Quận/Huyện"
-            name="district"
-            value={formData.district}
+            name="districtCode"
+            value={formData.districtCode}
             onChange={onChange}
             required
-            options={["Quận 1", "Quận 2", "Quận 3", "Quận 4", "Quận 8"]}
+            options={districts.map((district) => ({
+              label: district.name,
+              value: district.code,
+            }))}
           />
           <SelectField
             label="Phường/Xã"
-            name="ward"
-            value={formData.ward}
+            name="wardCode"
+            value={formData.wardCode}
             onChange={onChange}
             required
-            options={["Phường 1", "Phường 2", "Phường 3", "Phường 4"]}
+            options={wards.map((ward) => ({
+              label: ward.name,
+              value: ward.code,
+            }))}
           />
         </div>
         <div>

@@ -15,12 +15,17 @@ import CategoriesPageAdmin from "@/pages/admin/Categories/CategoriesPage";
 import { ToastContainer } from "react-toastify";
 import ShoppingCart from "../pages/cart/CartPage";
 import ProfilePage from "@/pages/profile/ProfilePage";
-import CheckoutPage from "@/pages/admin/checkout/CheckoutPage";
-import ThankYouPage from "@/pages/admin/checkout/ThankYouPage";
+import CheckoutPage from "@/pages/checkout/CheckoutPage";
+import ThankYouPage from "@/pages/checkout/ThankYouPage";
 import InventoryPage from "@/pages/admin/inventory/InventoryPage";
 import SearchPage from "@/pages/search/SearchPage";
 import OrdersPage from "@/pages/admin/order/OrdersPage";
 import OrderDetailsPage from "@/pages/admin/order/OrderDetailsPage";
+import OrderDetailsPageUser from "@/pages/order/OrderDetailsPage";
+import OrderManagementPage from "@/pages/order/OrderManagementPage";
+import CareGuidesPageAdmin from "@/pages/admin/care-guide/CareGuidesPage";
+import CareGuidesPageClient from "@/pages/care-guide/CareGuidePage";
+import CareGuideDetailPageClient from "@/pages/care-guide/CareGuideDetailPage";
 
 export default function AppRoutes() {
   return (
@@ -99,6 +104,17 @@ export default function AppRoutes() {
         }
       />
 
+      <Route
+        path="/care-guides"
+        element={
+          <RequireAdmin>
+            <AdminLayout>
+              <CareGuidesPageAdmin />
+            </AdminLayout>
+          </RequireAdmin>
+        }
+      />
+
       {/* Customer */}
       <Route path="/login" element={<Login />} />
       <Route path="/register" element={<Signup />} />
@@ -171,6 +187,42 @@ export default function AppRoutes() {
         element={
           <Layout>
             <SearchPage />
+          </Layout>
+        }
+      />
+      <Route
+        path="/order/:orderId"
+        element={
+          <Layout>
+            <OrderDetailsPageUser />
+          </Layout>
+        }
+      />
+      <Route
+        path="/order-manage"
+        element={
+          <Layout>
+            <OrderManagementPage />
+          </Layout>
+        }
+      />
+
+      {/* Blogs */}
+      <Route
+        path="/care-guide"
+        element={
+          <Layout>
+            <CareGuidesPageClient />
+          </Layout>
+        }
+      />
+      {/* Blog Detail */}
+
+      <Route
+        path="/care-guide/:id"
+        element={
+          <Layout>
+            <CareGuideDetailPageClient />
           </Layout>
         }
       />

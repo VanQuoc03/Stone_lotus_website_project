@@ -80,7 +80,7 @@ function MainNavItems({ categories }) {
         </ul>
       </li>
       <li>
-        <a href="#">CHĂM SÓC</a>
+        <Link to={"/care-guide"}>CHĂM SÓC</Link>
       </li>
       <li>
         <a href="#">LIÊN HỆ</a>

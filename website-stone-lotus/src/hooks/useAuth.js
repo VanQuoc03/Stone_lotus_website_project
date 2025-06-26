@@ -16,7 +16,6 @@ export function useAuth() {
     if (!token) return false;
     try {
       const decoded = jwtDecode(token);
-      console.log(decoded);
       return decoded.role === "admin" || decoded.isAdmin === true;
     } catch (error) {
       console.error("isAdmin() decode failed:", error);
@@ -29,7 +28,6 @@ export function useAuth() {
     setError(null);
     try {
       const response = await api.post("/auth/login", { email, password });
-      console.log("Login response:", response.data);
       const { token, customer } = response.data;
       localStorage.setItem("token", token);
       localStorage.setItem("customer", JSON.stringify(customer));

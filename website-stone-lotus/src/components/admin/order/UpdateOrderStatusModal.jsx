@@ -5,7 +5,6 @@ const STATUS_OPTIONS = [
   { value: "processing", label: "Đang xử lý" },
   { value: "shipped", label: "Đang giao hàng" },
   { value: "completed", label: "Hoàn thành" },
-  { value: "cancelled", label: "Đã hủy" },
 ];
 export default function UpdateOrderStatusModal({
   currentStatus,

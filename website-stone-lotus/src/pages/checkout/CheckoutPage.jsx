@@ -20,6 +20,11 @@ export default function CheckoutPage() {
   const [paymentMethod, setPaymenMethod] = useState("cod");
   const [cartItems, setCartItems] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [locationData, setLocationData] = useState({
+    cities: [],
+    districts: [],
+    wards: [],
+  });
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -38,16 +43,50 @@ export default function CheckoutPage() {
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
-    setFormData((prev) => ({ ...prev, [name]: value }));
+
+    setFormData((prev) => {
+      let newForm = { ...prev, [name]: value };
+
+      if (name === "cityCode") {
+        newForm = { ...newForm, districtCode: "", wardCode: "" };
+      } else if (name === "districtCode") {
+        newForm = { ...newForm, wardCode: "" };
+      }
+
+      return newForm;
+    });
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
     try {
+      const { cities, districts, wards } = locationData;
+
+      const cityName =
+        cities.find((c) => String(c.code) === String(formData.cityCode))
+          ?.name || "";
+
+      const districtName =
+        districts.find((d) => String(d.code) === String(formData.districtCode))
+          ?.name || "";
+
+      const wardName =
+        wards.find((w) => String(w.code) === String(formData.wardCode))?.name ||
+        "";
+
+      const shippingInfoToSubmit = {
+        ...formData,
+        city: cityName,
+        district: districtName,
+        ward: wardName,
+      };
+
       const res = await api.post("/api/orders", {
-        shippingInfo: formData,
+        shippingInfo: shippingInfoToSubmit,
         paymentMethod,
       });
+
       console.log(res.data);
       alert("Đặt hàng thành công!");
       navigate(`/thank-you/${res.data.orderId}`);
@@ -58,8 +97,8 @@ export default function CheckoutPage() {
           "Đặt hàng thất bại. Vui lòng thử lại sau."
       );
     }
-    console.log("Đặt hàng với thông tin:", formData, paymentMethod, cartItems);
   };
+
   return (
     <div className="mt-[200px] min-h-screen bg-gray-50">
       <div className="max-w-7xl mx-auto px-4 py-8">
@@ -86,6 +125,7 @@ export default function CheckoutPage() {
               <ShippingInfoForm
                 formData={formData}
                 onChange={handleInputChange}
+                setLocationData={setLocationData}
               />
               <PaymentMethodSelector
                 selected={paymentMethod}

@@ -8,13 +8,13 @@ import {
   FileText,
 } from "lucide-react";
 import api from "@/utils/axiosInstance";
+import { getOrderStatusMeta } from "@/shared/constants/orderStatus";
 export default function ThankYouPage() {
   const [orderDetails, setOrderDetails] = useState(null);
   const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
 
   const { orderId } = useParams();
-
   useEffect(() => {
     if (!orderId) {
       setLoading(false);
@@ -60,7 +60,9 @@ export default function ThankYouPage() {
             {orderId && (
               <div className="mt-4 bg-white rounded-md py-2 px-4 inline-block border border-gray-200">
                 <span className="text-sm text-gray-500">Mã đơn hàng: </span>
-                <span className="font-medium">{orderId}</span>
+                <span className="font-medium">
+                  #{orderId.slice(-6).toUpperCase()}
+                </span>
               </div>
             )}
           </div>
@@ -110,11 +112,17 @@ export default function ThankYouPage() {
                       </div>
                       <div>
                         <p className="text-sm text-gray-500">Trạng thái:</p>
-                        <p className="font-medium text-green-600">
-                          {orderDetails.status === "pending"
-                            ? "Đã xác nhận"
-                            : orderDetails.status}
-                        </p>
+                        {(() => {
+                          const { label, icon, color } = getOrderStatusMeta(
+                            orderDetails.status
+                          );
+                          return (
+                            <p className={`font-medium ${color}`}>
+                              <span className="mr-1">{icon}</span>
+                              {label}
+                            </p>
+                          );
+                        })()}
                       </div>
                     </div>
                   </div>
@@ -207,10 +215,10 @@ export default function ThankYouPage() {
                 </Link>
 
                 <Link
-                  to="/account/orders"
+                  to={`/order/${orderId}`}
                   className="flex items-center gap-2 px-6 py-3 bg-green-600 text-white rounded-md hover:bg-green-700 transition-colors"
                 >
-                  <FileText className="w-5 h-5" />
+                  <FileText className="w-5 h-5" /> 
                   <span>Xem đơn hàng của tôi</span>
                 </Link>
               </div>

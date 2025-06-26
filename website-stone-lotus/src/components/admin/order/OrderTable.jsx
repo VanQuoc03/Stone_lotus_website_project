@@ -41,7 +41,7 @@ export default function OrderTable({
             <th className="px-4 py-2 text-left">Thanh toán</th>
             <th className="px-4 py-2 text-left">Trạng thái</th>
             <th className="px-4 py-2 text-left">Ngày tạo</th>
-            <th className="px-4 py-2 text-left"></th>
+            <th className="px-4 py-2 text-left">Thao tác</th>
           </tr>
         </thead>
         <tbody>
@@ -54,9 +54,14 @@ export default function OrderTable({
                 {order.shipping_address?.fullName || "-"}
               </td>
               <td>
-                {order.shipping_address?.address || "-"},{" "}
-                {order.shipping_address?.district || ""},{" "}
-                {order.shipping_address?.province || ""}
+                {[
+                  order.shipping_address?.address,
+                  order.shipping_address?.ward,
+                  order.shipping_address?.district,
+                  order.shipping_address?.city,
+                ]
+                  .filter(Boolean)
+                  .join(", ") || "-"}
               </td>
               <td className="px-4 py-2">
                 {order.total_price?.toLocaleString("vi-VN", {
@@ -87,39 +92,13 @@ export default function OrderTable({
               <td className="px-4 py-2 text-sm text-gray-500">
                 {format(new Date(order.createdAt), "dd/MM/yyyy HH:mm")}
               </td>
-              <td className="px-4 py-2 relative text-center">
+              <td className="px-4 py-2 text-sm text-gray-500">
                 <button
-                  className="p-1 rounded-full hover:bg-gray-100"
-                  onClick={() =>
-                    setOpenMenuId(openMenuId === order._id ? null : order._id)
-                  }
+                  onClick={() => navigate(`/admin/orders/${order._id}`)}
+                  className="bg-green-600 px-4 py-2 text-white rounded"
                 >
-                  <MoreHorizontal className="h-4 w-4" />
+                  Chi tiết
                 </button>
-                {openMenuId === order._id && (
-                  <div className="absolute right-0 mt-2 w-48 rounded-md border bg-white shadow-md z-10">
-                    <div className="px-4 py-2 text-sm font-semibold">
-                      Thao tác
-                    </div>
-                    <div
-                      className="px-4 py-2 text-sm hover:bg-gray-100 cursor-pointer"
-                      onClick={() => navigate(`/admin/orders/${order._id}`)}
-                    >
-                      Xem chi tiết
-                    </div>
-                    <div className="px-4 py-2 text-sm hover:bg-gray-100 cursor-pointer">
-                      Cập nhật trạng thái
-                    </div>
-                    <div className="border-t my-1" />
-                    <div className="px-4 py-2 text-sm hover:bg-gray-100 cursor-pointer">
-                      Liên hệ khách hàng
-                    </div>
-                    <div className="border-t my-1" />
-                    <div className="px-4 py-2 text-sm text-red-600 hover:bg-red-100 cursor-pointer">
-                      Hủy đơn hàng
-                    </div>
-                  </div>
-                )}
               </td>
             </tr>
           ))}

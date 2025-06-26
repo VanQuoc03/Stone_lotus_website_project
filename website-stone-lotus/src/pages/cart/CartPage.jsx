@@ -114,7 +114,7 @@ export default function Cart() {
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
         <div className="lg:col-span-2 space-y-4">
           {cart.items
-            .filter((item) => item.product)
+            .filter((item) => item.product && item.product._id)
             .map(({ product, quantity }) => (
               <CartItem
                 key={product._id}
@@ -127,9 +127,7 @@ export default function Cart() {
         </div>
 
         <div className="space-y-6 ">
-          <div
-          // className="sticky top-8 "
-          >
+          <div>
             {" "}
             <OrderSummary items={cart.items} />
             <div className="bg-white rounded-lg shadow-sm border p-4">
