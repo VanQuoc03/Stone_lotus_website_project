@@ -1,13 +1,14 @@
 import { BrowserRouter } from "react-router-dom";
 import AppRoutes from "./routes/AppRoutes";
 import { CartProvider } from "./context/CartContext";
-import { Toaster } from "react-hot-toast";
+
+import { ToastContainer } from "react-toastify";
 
 function App() {
   return (
     <BrowserRouter>
       <CartProvider>
-        <Toaster position="top-right" />
+        <ToastContainer position="top-right" autoClose={2000} />
         <AppRoutes />
       </CartProvider>
     </BrowserRouter>

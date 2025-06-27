@@ -26,6 +26,7 @@ export default function ProductDetailPage() {
         console.error("Lỗi tải sản phẩm: ", error);
       }
     };
+    window.scrollTo({ top: 0, behavior: "smooth" });
     fetchProduct();
   }, [id]);
 

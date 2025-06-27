@@ -27,6 +27,7 @@ export default function CareGuideDetailPage() {
 
   const fetchGuidesById = async () => {
     const res = await api.get(`/api/blog/posts/${id}`);
+    console.log(res.data);
     setPost(res.data);
   };
 
@@ -43,6 +44,7 @@ export default function CareGuideDetailPage() {
   };
 
   useEffect(() => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
     fetchGuidesById();
   }, [id]);
 
@@ -99,7 +101,7 @@ export default function CareGuideDetailPage() {
                 <Clock className="w-4 h-4" /> {post.post.readTime}
               </span>
               <span className="flex items-center gap-1">
-                <Eye className="w-4 h-4" /> {post.views} lượt xem
+                <Eye className="w-4 h-4" /> {post.post.views} lượt xem
               </span>
             </div>
             <h1 className="text-3xl font-bold text-gray-800 leading-snug">

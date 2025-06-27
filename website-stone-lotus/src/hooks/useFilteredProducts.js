@@ -36,6 +36,7 @@ export default function useFilteredProducts(categoryId = null) {
   useEffect(() => {
     setPage(1);
     // setProducts([]);
+    window.scrollTo({ top: 0, behavior: "smooth" });
   }, [categoryId, JSON.stringify(priceFilters)]);
   useEffect(() => {
     fetchData();

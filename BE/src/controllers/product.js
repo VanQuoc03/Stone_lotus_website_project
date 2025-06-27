@@ -94,10 +94,18 @@ const getAllProduct = async (req, res) => {
 //Lấy sản phẩm theo ID
 const getProductById = async (req, res) => {
   try {
-    const product = await Product.findById(req.params.id)
+    if (!mongoose.Types.ObjectId.isValid(req.params.id))
+      return res.status(400).json({ message: "ID không hợp lệ" });
+
+    const product = await Product.findByIdAndUpdate(
+      req.params.id,
+      { $inc: { views: 1 } },
+      { new: true }
+    )
       .populate("category")
       .populate("images")
       .populate("inventory");
+
     if (!product)
       return res
         .status(404)
@@ -199,7 +207,7 @@ const deleteProduct = async (req, res) => {
 };
 
 //Cập nhật tồn kho sản phẩm
-const updateProductStock = async (req, res) => { 
+const updateProductStock = async (req, res) => {
   try {
     const { quantity } = req.body;
     const productId = req.params.id;

@@ -3,15 +3,11 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import api from "@/utils/axiosInstance";
-import {
-  getGuestCart,
-  updateGuestQuantity,
-  removeGuestCart,
-} from "@/utils/guestCart";
 import { useCart } from "@/context/CartContext";
 import CartItem from "@/components/cart/CartItem";
 import OrderSummary from "../../components/cart/OrderSummary";
 import { ShoppingBag, Truck, Shield } from "lucide-react";
+import { toast } from "react-toastify";
 
 export default function Cart() {
   const [cart, setCart] = useState(null);
@@ -23,15 +19,13 @@ export default function Cart() {
   const fetchCart = async () => {
     setLoading(true);
     try {
-      if (token) {
-        const res = await api.get("/api/cart");
-        setCart(res.data);
-      } else {
-        const guestCart = getGuestCart();
-        setCart({
-          items: guestCart.map((p) => ({ product: p, quantity: p.quantity })),
-        });
+      if (!token) {
+        // toast.warn("Bạn cần phải đăng nhập để thêm sản phẩm vào giỏ hàng");
+        navigate("/login");
+        return;
       }
+      const res = await api.get("/api/cart");
+      setCart(res.data);
     } catch (err) {
       console.error("Lỗi lấy giỏ hàng:", err);
     } finally {
@@ -42,11 +36,7 @@ export default function Cart() {
   const updateQuantity = async (productId, quantity) => {
     if (quantity < 1) return;
     try {
-      if (token) {
-        await api.put("/api/cart/update", { productId, quantity });
-      } else {
-        updateGuestQuantity(productId, quantity);
-      }
+      await api.put("/api/cart/update", { productId, quantity });
       fetchCart();
       updateCartCount();
     } catch (err) {
@@ -56,11 +46,7 @@ export default function Cart() {
 
   const removeItem = async (productId) => {
     try {
-      if (token) {
-        await api.delete(`/api/cart/remove/${productId}`);
-      } else {
-        removeGuestCart(productId);
-      }
+      await api.delete(`/api/cart/remove/${productId}`);
       await fetchCart();
       updateCartCount();
     } catch (err) {

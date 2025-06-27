@@ -1,19 +1,26 @@
 import api from "@/utils/axiosInstance";
-import { addToGuestCart } from "@/utils/guestCart";
 
-export const addToCart = async ({ product, quantity = 1, variantId = null, updateCartCount, showSuccess }) => {
+export const addToCart = async ({
+  product,
+  quantity = 1,
+  variantId = null,
+  updateCartCount,
+  showSuccess,
+  onUnauthorized,
+}) => {
   const token = localStorage.getItem("token");
 
+  if (!token) {
+    if (onUnauthorized) onUnauthorized();
+    return;
+  }
+
   try {
-    if (token) {
-      await api.post("/api/cart/add", {
-        productId: product._id,
-        quantity,
-        variantId,
-      });
-    } else {
-      addToGuestCart({ ...product, quantity });
-    }
+    await api.post("/api/cart/add", {
+      productId: product._id,
+      quantity,
+      variantId,
+    });
 
     if (updateCartCount) updateCartCount();
     if (showSuccess) showSuccess();

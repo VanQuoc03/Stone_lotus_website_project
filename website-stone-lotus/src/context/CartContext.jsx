@@ -8,11 +8,21 @@ export const useCart = () => useContext(CartContext);
 
 export const CartProvider = ({ children }) => {
   const [cartCount, setCartCount] = useState(0);
-  const token = localStorage.getItem("token");
+  const [token, setToken] = useState(localStorage.getItem("token"));
+
+  // Theo dõi sự thay đổi token từ localStorage
+  useEffect(() => {
+    const handleStorage = () => {
+      setToken(localStorage.getItem("token"));
+    };
+    window.addEventListener("storage", handleStorage);
+    return () => window.removeEventListener("storage", handleStorage);
+  }, []);
 
   const updateCartCount = async () => {
     try {
-      if (token) {
+      const currentToken = localStorage.getItem("token");
+      if (currentToken) {
         const res = await api.get("/api/cart");
         const count = res.data?.items?.length || 0;
         setCartCount(count);
@@ -28,7 +38,7 @@ export const CartProvider = ({ children }) => {
 
   useEffect(() => {
     updateCartCount();
-  }, []);
+  }, [token]); // ← mỗi lần token thay đổi, update cart
 
   return (
     <CartContext.Provider value={{ cartCount, updateCartCount }}>

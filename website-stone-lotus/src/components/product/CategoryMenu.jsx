@@ -8,7 +8,6 @@ export default function CategoryMenu() {
     const load = async () => {
       try {
         const data = await fetchCategories();
-        console.log(data)
         setCategories(data);
       } catch (error) {
         console.error("Lỗi khi lấy danh mục", error);

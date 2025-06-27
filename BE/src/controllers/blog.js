@@ -31,6 +31,8 @@ const getAllPost = async (req, res) => {
 
 const getPostById = async (req, res) => {
   try {
+    await blogPost.findByIdAndUpdate(req.params.id, { $inc: { views: 1 } });
+
     const post = await blogPost.findById(req.params.id);
     if (!post) {
       return res.status(404).json({ error: "Không tìm thấy bài viết" });

@@ -11,6 +11,7 @@ import {
 import { Link, useNavigate } from "react-router-dom";
 import UserLogin from "../../assets/icon_header/UserLogin";
 import { useAuth } from "../../hooks/useAuth";
+import { useCart } from "@/context/CartContext";
 
 function AuthDropdowns() {
   const [isOpen, setIsOpen] = useState(false);
@@ -23,6 +24,7 @@ function AuthDropdowns() {
   const [rememberMe, setRememberMe] = useState(false);
   const ref = useRef();
   const { login, logout, getUser, isLoading, error, isAdmin } = useAuth();
+  const { updateCartCount } = useCart();
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -59,6 +61,7 @@ function AuthDropdowns() {
     if (result.success) {
       setUser(result.user);
       setIsOpen(false);
+      updateCartCount();
 
       if (isAdmin()) {
         navigate("/admin/dashboard");

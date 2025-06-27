@@ -17,17 +17,27 @@ export default function CareGuidePage() {
   const [filtered, setFiltered] = useState([]);
   const [searchText, setSearchText] = useState("");
   const [loading, setLoading] = useState(true);
+  const [popularPosts, setPopularPosts] = useState([]);
   const navigate = useNavigate();
 
-  const likeCount = useLikeCount(posts._id, "BlogPost");
+  useEffect(() => {
+    const fetchPopular = async () => {
+      try {
+        const res = await api.get("/api/featured?type=blog&limit=3");
+        setPopularPosts(res.data);
+      } catch (err) {
+        console.error("Lỗi lấy bài viết phổ biến", err);
+      }
+    };
+    window.scrollTo({ top: 0, behavior: "smooth" });
+    fetchPopular();
+  }, []);
 
   useEffect(() => {
     const fetchPosts = async () => {
       setLoading(true);
       try {
         const res = await api.get("/api/blog/posts");
-        console.log(res.data);
-
         setPosts(res.data);
         setFiltered(res.data);
       } catch (err) {
@@ -113,10 +123,11 @@ export default function CareGuidePage() {
               Bài viết phổ biến
             </h4>
             <div className="space-y-4">
-              {posts.slice(0, 3).map((post) => (
+              {popularPosts.map((post) => (
                 <div
                   key={post._id}
                   className="flex items-center space-x-3 hover:bg-green-50 p-2 rounded cursor-pointer"
+                  onClick={() => navigate(`/care-guide/${post._id}`)}
                 >
                   <img
                     src={post.image || "/placeholder.svg"}

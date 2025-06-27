@@ -6,6 +6,7 @@ import Headers from "../../components/header/Header";
 import PromoBanner from "@/components/home/PromoBanner";
 import CategoryNav from "@/components/home/CategoryNav";
 import BestSelling from "@/components/home/BestSelling";
+import FeaturedProducts from "@/components/home/FeaturedProducts";
 
 export default function Home() {
   return (
@@ -14,8 +15,8 @@ export default function Home() {
         <PromoBanner />
         <CategoryNav />
         <BestSelling />
-        {/* <FeaturedProducts />
-      <PotList />
+        <FeaturedProducts />
+      {/* <PotList />
       <BlogPreview /> */}
       </div>
     </div>

@@ -27,9 +27,9 @@ export default function PostCard({ post }) {
       <div className="md:w-2/3 p-6 flex flex-col justify-between">
         <div>
           <div className="flex items-center gap-2 mb-2">
-            <span className="bg-green-100 text-green-800 text-xs font-semibold px-2 py-1 rounded">
+            {/* <span className="bg-green-100 text-green-800 text-xs font-semibold px-2 py-1 rounded">
               {post.type || "Chăm sóc"}
-            </span>
+            </span> */}
             <span className="flex items-center gap-1 text-gray-500 text-sm">
               <CalendarDays className="w-4 h-4" />
               {dayjs(post.created_at).format("DD/MM/YYYY")}

@@ -2,13 +2,13 @@ import React, { useState } from "react";
 import { Eye, ShoppingBag } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import api from "@/utils/axiosInstance";
-import { addToGuestCart } from "@/utils/guestCart";
 import { useCart } from "@/context/CartContext";
 import { addToCart } from "@/utils/addToCartHandler";
+import { toast } from "react-toastify";
 
 export default function ProductCard({ product }) {
   const navigate = useNavigate();
-  const [showToast, setShowToast] = useState(false);
+  // const [showToast, setShowToast] = useState(false);
   const { updateCartCount } = useCart();
 
   const handleClick = () => {
@@ -21,20 +21,18 @@ export default function ProductCard({ product }) {
       product,
       quantity: 1,
       updateCartCount,
-      showSuccess: () => {
-        setShowToast(true);
-        setTimeout(() => setShowToast(false), 3000);
-      },
+      showSuccess: () => toast.success("Đã thêm vào giỏ hàng!"),
+      onUnauthorized: () => navigate("/login"),
     });
   };
 
   return (
     <>
-      {showToast && (
+      {/* {showToast && (
         <div className="fixed top-6 right-6 z-50 bg-green-100 border border-green-400 text-green-800 px-4 py-2 rounded shadow-lg">
           ✅ Đã thêm vào giỏ hàng!
         </div>
-      )}
+      )} */}
 
       <div
         className="group relative border rounded-lg p-3 shadow-sm hover:shadow-lg transition text-center text-sm bg-white h-full flex flex-col justify-between"

@@ -4,6 +4,7 @@ import SocialButton from "../../../components/Auth/SocialButton";
 import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../../../hooks/useAuth";
 import { jwtDecode } from "jwt-decode";
+import { useCart } from "@/context/CartContext";
 
 const Login = () => {
   const [formData, setFormData] = useState({
@@ -13,6 +14,7 @@ const Login = () => {
   const [showPassword, setShowPassword] = useState(false);
   const navigate = useNavigate();
   const { login, isLoading, error, getUser, isAdmin } = useAuth();
+  const { updateCartCount } = useCart();
 
   useEffect(() => {
     const user = getUser();
@@ -35,6 +37,8 @@ const Login = () => {
     const result = await login(formData.email, formData.password);
     if (result.success && result.token) {
       try {
+        await updateCartCount();
+
         const decoded = jwtDecode(result.token);
 
         if (decoded.role === "admin") {
