@@ -5,6 +5,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../../../hooks/useAuth";
 import { jwtDecode } from "jwt-decode";
 import { useCart } from "@/context/CartContext";
+import { useGoogleAuth } from "@/hooks/useGoogleAuth";
 
 const Login = () => {
   const [formData, setFormData] = useState({
@@ -15,6 +16,7 @@ const Login = () => {
   const navigate = useNavigate();
   const { login, isLoading, error, getUser, isAdmin } = useAuth();
   const { updateCartCount } = useCart();
+  const { loginWithGoogle } = useGoogleAuth();
 
   useEffect(() => {
     const user = getUser();
@@ -249,7 +251,9 @@ const Login = () => {
                   </svg>
                 }
                 className="py-2.5 w-full"
+                onClick={() => loginWithGoogle()}
               />
+
               <SocialButton
                 label="Facebook"
                 icon={

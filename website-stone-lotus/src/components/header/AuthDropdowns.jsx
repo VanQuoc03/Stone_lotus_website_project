@@ -12,6 +12,10 @@ import { Link, useNavigate } from "react-router-dom";
 import UserLogin from "../../assets/icon_header/UserLogin";
 import { useAuth } from "../../hooks/useAuth";
 import { useCart } from "@/context/CartContext";
+import { FcGoogle } from "react-icons/fc";
+import { FaFacebookF } from "react-icons/fa";
+import SocialButton from "@/components/Auth/SocialButton";
+import { useGoogleAuth } from "@/hooks/useGoogleAuth";
 
 function AuthDropdowns() {
   const [isOpen, setIsOpen] = useState(false);
@@ -25,6 +29,7 @@ function AuthDropdowns() {
   const ref = useRef();
   const { login, logout, getUser, isLoading, error, isAdmin } = useAuth();
   const { updateCartCount } = useCart();
+  const { loginWithGoogle } = useGoogleAuth();
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -258,6 +263,24 @@ function AuthDropdowns() {
                       Quên mật khẩu?
                     </a>
                   </div>
+                </div>
+                <div className="flex flex-col space-y-3 mb-4">
+                  <SocialButton
+                    icon={<FcGoogle size={22} />}
+                    label="Đăng nhập với Google"
+                    onClick={loginWithGoogle}
+                    bgColor="bg-white border border-gray-300"
+                    textColor="text-gray-700"
+                  />
+
+                  {/* Nếu muốn Facebook */}
+                  <SocialButton
+                    icon={<FaFacebookF size={20} />}
+                    label="Đăng nhập với Facebook"
+                    // onClick={handleFacebookLogin}
+                    bgColor="bg-[#4267B2]"
+                    textColor="text-white"
+                  />
                 </div>
 
                 <button

@@ -1,7 +1,5 @@
-const crypto = require("crypto");
-
-const secretKey = crypto.randomBytes(32).toString("hex");
-// const secretKey = 123456789;
+require("dotenv").config();
 module.exports = {
-  secretKey: secretKey,
+  secretKey: process.env.JWT_SECRET,
+  expiresIn: process.env.JWT_EXPIRES_IN || "7d",
 };

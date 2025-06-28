@@ -1,6 +1,5 @@
 const blogPost = require("../models/blogPost");
 const blogComment = require("../models/blogComment");
-const { error } = require("console");
 
 const getAllPost = async (req, res) => {
   try {

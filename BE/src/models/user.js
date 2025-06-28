@@ -15,7 +15,9 @@ const userSchema = new mongoose.Schema({
   },
   password: {
     type: String,
-    required: true,
+    required: function () {
+      return !this.googleId;
+    },
   },
   role: {
     type: String,
@@ -31,7 +33,10 @@ const userSchema = new mongoose.Schema({
     default: Date.now,
   },
   address: { type: String },
-}); 
+
+  googleId: { type: String, unique: true, sparse: true },
+  avatar: String,
+});
 
 //Tự động hash mật khẩu nếu thay đổi
 userSchema.pre("save", async function (next) {

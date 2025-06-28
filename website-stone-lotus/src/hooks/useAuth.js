@@ -7,6 +7,18 @@ export function useAuth() {
   const [error, setError] = useState(null);
 
   const getUser = () => {
+    const token = localStorage.getItem("token");
+
+    if (token) {
+      try {
+        const decoded = jwtDecode(token);
+        return decoded;
+      } catch (error) {
+        console.error("getUser() decode failed:", error);
+      }
+    }
+
+    // fallback nếu cần
     const storedUser = localStorage.getItem("customer");
     return storedUser ? JSON.parse(storedUser) : null;
   };
