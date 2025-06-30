@@ -23,18 +23,26 @@ const googleLogin = async (req, res) => {
     let user = await User.findOne({ googleId });
 
     if (!user) {
-      user = await User.create({
-        googleId,
-        email,
-        name,
-        avatar,
-        password: "", // không dùng mật khẩu
-      });
+      // kiểm tra nếu có tài khoản email rồi thì gán thêm googleId
+      user = await User.findOne({ email });
+
+      if (user) {
+        user.googleId = googleId;
+        user.avatar = avatar;
+        await user.save();
+      } else {
+        user = await User.create({
+          googleId,
+          email,
+          name,
+          avatar,
+        });
+      }
     }
 
     const jwtToken = generateToken(user);
 
-    res.json({ success: true, token: jwtToken });
+    res.json({ success: true, token: jwtToken, customer: user }); // 👈 trả cả customer
   } catch (err) {
     console.error("Google access token invalid:", err.message);
     res

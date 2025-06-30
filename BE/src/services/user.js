@@ -11,6 +11,10 @@ const userService = {
     const hashed = await bcrypt.hash(newPassword, 10);
     return User.findByIdAndUpdate(userId, { password: hashed }, { new: true });
   },
+
+  getByEmail: async (email) => {
+    return await User.findOne({ email });
+  },
 };
 
 module.exports = userService;

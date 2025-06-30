@@ -23,16 +23,19 @@ export default function OrderManagementPage() {
   const getStatusCounts = () => {
     return {
       all: orders.length,
+      pending: orders.filter((o) => o.status === "pending").length,
+      confirmed: orders.filter((o) => o.status === "confirmed").length,
       processing: orders.filter((o) => o.status === "processing").length,
-      shipping: orders.filter((o) => o.status === "shipping").length,
+      shipped: orders.filter((o) => o.status === "shipped").length,
       completed: orders.filter((o) => o.status === "completed").length,
       cancelled: orders.filter((o) => o.status === "cancelled").length,
     };
   };
+
   const statusCounts = getStatusCounts();
 
   return (
-    <div className="min-h-screen bg-gray-50 mt-[200px]">
+    <div className=" max-w-7xl mx-auto min-h-screen bg-gray-50 mt-[200px]">
       <div className="bg-white border-b px-4 py-6">
         <h1 className="text-2xl font-bold text-gray-900">Quản lý đơn hàng</h1>
         <p className="text-gray-600 mt-1">

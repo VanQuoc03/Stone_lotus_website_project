@@ -33,7 +33,11 @@ function createController(service, entityName = "item") {
         const user = await service.getById(req.user.id);
         if (!user)
           return res.status(404).json({ message: "Người dùng không tồn tại" });
-        res.json(user);
+
+        const userObj = user.toObject();
+        userObj.hasPassword = !!user.password;
+
+        res.json(userObj);
       } catch (error) {
         res.status(500).json({ message: "Lỗi khi lấy thông tin người dùng" });
       }
@@ -127,6 +131,32 @@ function createController(service, entityName = "item") {
         res.json({ message: "Đổi mật khẩu thành công", user: updated });
       } catch (error) {
         res.status(500).json({ message: "Lỗi khi lưu mật khẩu" });
+      }
+    },
+    setPassword: async (req, res) => {
+      try {
+        const { newPassword } = req.body;
+        if (!newPassword) {
+          return res
+            .status(400)
+            .json({ message: "Vui lòng nhập mật khẩu mới" });
+        }
+        const user = await service.getById(req.user.id);
+        if (!user) {
+          return res.status(404).json({ message: "Người dùng không tồn tại" });
+        }
+
+        if (user.password && user.password.length > 0) {
+          return res.status(400).json({
+            message:
+              "Tài khoản đã có mật khẩu. Vui lòng đổi mật khẩu thay vì đặt mới",
+          });
+        }
+
+        const updated = await service.updatePassword(req.user.id, newPassword);
+        res.json({ message: "Thiết lập mật khẩu thành công", user: updated });
+      } catch (error) {
+        res.status(500).json({ message: "Lỗi khi thiết lập mật khẩu" });
       }
     },
   };

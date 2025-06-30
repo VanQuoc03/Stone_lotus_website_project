@@ -80,6 +80,10 @@ function AuthDropdowns() {
     }
   };
 
+  const handleGoogleLogin = async () => {
+    loginWithGoogle();
+  };
+
   return (
     <div className="relative" ref={ref}>
       <button
@@ -268,7 +272,7 @@ function AuthDropdowns() {
                   <SocialButton
                     icon={<FcGoogle size={22} />}
                     label="Đăng nhập với Google"
-                    onClick={loginWithGoogle}
+                    onClick={handleGoogleLogin}
                     bgColor="bg-white border border-gray-300"
                     textColor="text-gray-700"
                   />

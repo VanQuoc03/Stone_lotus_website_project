@@ -4,6 +4,7 @@ import SocialButton from "../../../components/Auth/SocialButton";
 import api from "../../../utils/axiosInstance";
 import { Link, useNavigate } from "react-router-dom";
 import { useRegister } from "../../../hooks/useRegister";
+import { useGoogleAuth } from "@/hooks/useGoogleAuth";
 
 const Signup = () => {
   const [formData, setFormData] = useState({
@@ -13,6 +14,7 @@ const Signup = () => {
   });
   const [showPassword, setShowPassword] = useState(false);
   const { register, isLoading, error } = useRegister();
+  const { loginWithGoogle } = useGoogleAuth();
   const navigate = useNavigate();
 
   const handleChange = (e) => {
@@ -244,6 +246,7 @@ const Signup = () => {
                   </svg>
                 }
                 className="py-2.5 w-full"
+                onClick={() => loginWithGoogle()}
               />
               <SocialButton
                 label="Facebook"

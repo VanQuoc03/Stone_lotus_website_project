@@ -26,6 +26,7 @@ import OrderManagementPage from "@/pages/order/OrderManagementPage";
 import CareGuidesPageAdmin from "@/pages/admin/care-guide/CareGuidesPage";
 import CareGuidesPageClient from "@/pages/care-guide/CareGuidePage";
 import CareGuideDetailPageClient from "@/pages/care-guide/CareGuideDetailPage";
+import ProductReview from "@/components/review/ProductReview";
 
 export default function AppRoutes() {
   return (
@@ -223,6 +224,16 @@ export default function AppRoutes() {
         element={
           <Layout>
             <CareGuideDetailPageClient />
+          </Layout>
+        }
+      />
+
+      {/* Review product */}
+      <Route
+        path="/order-review/:id"
+        element={
+          <Layout>
+            <ProductReview />
           </Layout>
         }
       />

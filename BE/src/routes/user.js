@@ -49,5 +49,10 @@ router.post(
   authMiddleware.authenticateToken,
   userController.changePassword
 );
+router.post(
+  "/set-password",
+  authMiddleware.authenticateToken,
+  userController.setPassword
+);
 
 module.exports = router;

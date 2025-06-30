@@ -55,7 +55,7 @@ exports.placeOrder = async (req, res) => {
   try {
     const cart = await Cart.findOne({ user: userId }).populate({
       path: "items.product",
-      select: "name price",
+      select: "name price images",
     });
     if (!cart || cart.items.length === 0) {
       return res.status(400).json({ message: "Giỏ hàng rỗng" });
@@ -98,6 +98,7 @@ exports.placeOrder = async (req, res) => {
     const orderItems = cart.items.map((item) => ({
       order: newOrder._id,
       product: item.product._id,
+      image: item.product.images?.[0]?.image_url || null,
       quantity: item.quantity,
       price: item.product.price,
     }));
@@ -149,7 +150,7 @@ exports.getOrderById = async (req, res) => {
     // Lấy các sản phẩm trong đơn hàng
     const items = await OrderItem.find({ order: order._id }).populate({
       path: "product",
-      select: "name price images",
+      select: "name price",
       populate: {
         path: "images",
         select: "image_url -_id",
@@ -291,5 +292,51 @@ exports.cancelOrder = async (req, res) => {
   } catch (err) {
     console.error("Lỗi khi hủy đơn hàng:", err.message);
     res.status(500).json({ message: "Không thể hủy đơn hàng" });
+  }
+};
+
+exports.getMyOrders = async (req, res) => {
+  try {
+    const userId = req.user.id;
+
+   
+    const orders = await Order.find({ user: userId })
+      .sort({ createdAt: -1 })
+      .lean();
+
+    
+    const orderIds = orders.map((order) => order._id);
+
+    const items = await OrderItem.find({ order: { $in: orderIds } })
+      .populate({
+        path: "product",
+        select: "name price",
+        populate: {
+          path: "images",
+          select: "image_url -_id",
+        },
+      })
+      .lean();
+
+    
+    const groupedItems = {};
+    items.forEach((item) => {
+      const key = item.order.toString();
+      if (!groupedItems[key]) groupedItems[key] = [];
+      groupedItems[key].push(item);
+    });
+
+    const enrichedOrders = orders.map((order) => {
+      const key = order._id.toString();
+      return {
+        ...order,
+        items: groupedItems[key] || [],
+      };
+    });
+
+    res.json(enrichedOrders);
+  } catch (err) {
+    console.error("Lỗi khi lấy đơn hàng của người dùng:", err);
+    res.status(500).json({ message: "Không thể lấy đơn hàng của bạn" });
   }
 };

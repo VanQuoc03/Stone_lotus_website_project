@@ -20,11 +20,12 @@ const productInventoryRoutes = require("./routes/productInventory");
 const blogRoutes = require("./routes/blog");
 const likeRoutes = require("./routes/like");
 const featuredRoutes = require("./routes/featured");
+const reviewRoutes = require("./routes/review");
 
 app.use(bodyParser.json());
 app.use(
   cors({
-    origin: "http://localhost:3000", // hoặc dùng "*" trong dev
+    origin: "http://localhost:3000",
     credentials: true,
   })
 );
@@ -62,6 +63,9 @@ app.use("/api/likes", likeRoutes);
 
 //Featured
 app.use("/api", featuredRoutes);
+
+//Review
+app.use("/api/reviews", reviewRoutes);
 
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);

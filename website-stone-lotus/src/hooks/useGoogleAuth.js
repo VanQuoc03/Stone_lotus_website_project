@@ -27,6 +27,9 @@ export const useGoogleAuth = () => {
           } else {
             navigate("/");
           }
+          setTimeout(() => {
+            window.location.reload();
+          }, 100);
         } else {
           console.error("Google login backend error:", data.message);
         }

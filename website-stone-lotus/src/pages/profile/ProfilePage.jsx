@@ -12,12 +12,15 @@ import {
 } from "lucide-react";
 import EditProfileForm from "@/components/profile/EditProfileForm";
 import ChangePasswordForm from "@/components/profile/ChangePasswordForm";
+import SetPasswordForm from "@/components/profile/SetPasswordForm";
+import PurchaseHistoryModal from "@/components/profile/PurchaseHistoryModal";
 
 export default function ProfilePage() {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
   const [showEditForm, setShowEditForm] = useState(false);
   const [showChangePasswordForm, setShowChangePasswordForm] = useState(false);
+  const [showHistoryModal, setShowHistoryModal] = useState(false);
 
   const fetchUser = async () => {
     try {
@@ -172,18 +175,38 @@ export default function ProfilePage() {
           onClick={() => setShowChangePasswordForm(!showChangePasswordForm)}
         >
           <Key className="h-4 w-4" />
-          {showChangePasswordForm ? "Đóng đổi mật khẩu" : "Thay đổi mật khẩu"}
+          {showChangePasswordForm
+            ? "Đóng"
+            : user?.hasPassword
+            ? "Thay đổi mật khẩu"
+            : "Tạo mật khẩu"}
         </button>
-        {showChangePasswordForm && (
-          <ChangePasswordForm
-            onSuccess={() => setShowChangePasswordForm(false)}
-            onCancel={() => setShowChangePasswordForm(false)}
-          />
-        )}
+        {showChangePasswordForm &&
+          (user?.hasPassword ? (
+            <ChangePasswordForm
+              onSuccess={() => setShowChangePasswordForm(false)}
+              onCancel={() => setShowChangePasswordForm(false)}
+            />
+          ) : (
+            <SetPasswordForm
+              onSuccess={() => {
+                setShowChangePasswordForm(false);
+                setUser((prev) => ({ ...prev, hasPassword: true }));
+              }}
+              onCancel={() => setShowChangePasswordForm(false)}
+            />
+          ))}
 
-        <button className="w-full flex items-center gap-2 border px-4 py-3 rounded hover:bg-gray-50">
+        <button
+          className="w-full flex items-center gap-2 border px-4 py-3 rounded hover:bg-gray-50"
+          onClick={() => setShowHistoryModal(true)}
+        >
           <ShoppingBag className="h-4 w-4" /> Lịch sử mua hàng
         </button>
+        <PurchaseHistoryModal
+          isOpen={showHistoryModal}
+          onClose={() => setShowHistoryModal(false)}
+        />
       </div>
     </div>
   );

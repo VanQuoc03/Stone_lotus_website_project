@@ -64,16 +64,22 @@ export default function OrderCard({ order }) {
         <div className="flex flex-col gap-2">
           <button
             className="px-4 py-2 border rounded text-sm hover:bg-gray-100"
-            onClick={() => alert(`Xem chi tiết đơn hàng ${order.id}`)}
+            onClick={() => navigate(`/order/${order.id}`)}
           >
             Chi tiết
           </button>
           {order.status === "completed" && (
-            <button className="px-4 py-2 border rounded text-sm hover:bg-gray-100">
+            <button
+              className="px-4 py-2 border rounded text-sm hover:bg-gray-100"
+              onClick={() => navigate(`/order-review/${order.id}`)}
+            >
               Đánh giá
             </button>
           )}
-          <button className="px-4 py-2 border rounded text-sm hover:bg-gray-100">
+          <button
+            className="px-4 py-2 border rounded text-sm hover:bg-gray-100"
+            onClick={() => alert("Đang phát triển")}
+          >
             Hóa đơn
           </button>
         </div>
