@@ -9,8 +9,8 @@ export default function ProductReview() {
   const [ratings, setRatings] = useState({});
   const [reviews, setReviews] = useState({});
   const [images, setImages] = useState({});
+  const [submitted, setSubmitted] = useState({});
   const [order, setOrder] = useState(null);
-  const [isSubmitting, setIsSubmitting] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
   const navigate = useNavigate();
 
@@ -18,8 +18,19 @@ export default function ProductReview() {
     const fetchOrder = async () => {
       try {
         const res = await api.get(`/api/orders/${id}`);
-        console.log(res.data);
-        setOrder(res.data);
+        const fullOrder = res.data;
+
+        // Gọi API lấy các product đã đánh giá
+        const reviewedRes = await api.get(
+          `/api/reviews/checked/${fullOrder.orderId}`
+        );
+        const reviewedIds = reviewedRes.data.reviewedProductIds;
+
+        // Lọc bỏ các item đã review
+        const remainingItems = fullOrder.items.filter(
+          (item) => !reviewedIds.includes(item.productId)
+        );
+        setOrder({ ...fullOrder, items: remainingItems });
       } catch (err) {
         console.error("Không thể tải đơn hàng", err);
       } finally {
@@ -41,31 +52,30 @@ export default function ProductReview() {
       alert("Lỗi khi upload ảnh. Vui lòng thử lại.");
     }
   };
+
   const handleRatingChange = (id, rating) => {
     setRatings({ ...ratings, [id]: rating });
   };
+
   const handleReviewChange = (id, value) => {
     setReviews({ ...reviews, [id]: value });
   };
 
-  const submitReviews = async () => {
-    setIsSubmitting(true);
+  const submitSingleReview = async (product) => {
+    const productId = product.id;
     try {
-      for (const product of order.items) {
-        await api.post("/api/reviews", {
-          product: product.id,
-          order: product.id,
-          rating: ratings[product.id],
-          comment: reviews[product.id] || "",
-          images: images[product.id] || [],
-        });
-      }
-      alert("Đã gửi toàn bộ đánh giá!");
+      await api.post("/api/reviews", {
+        product: product.productId,
+        order: order.orderId,
+        rating: ratings[productId],
+        comment: reviews[productId] || "",
+        images: images[productId] || [],
+      });
+      setSubmitted((prev) => ({ ...prev, [productId]: true }));
+      alert("Đã gửi đánh giá cho sản phẩm");
     } catch (err) {
       console.error("Lỗi gửi đánh giá:", err);
       alert(err?.response?.data?.message || "Lỗi khi gửi đánh giá");
-    } finally {
-      setIsSubmitting(false);
     }
   };
 
@@ -79,7 +89,26 @@ export default function ProductReview() {
       </div>
     );
   }
-  const canSubmit = order.items.every((p) => ratings[p.id] > 0);
+
+  if (!order.items || order.items.length === 0) {
+    return (
+      <div className="max-w-4xl mx-auto p-6 mt-[200px] text-center">
+        <h2 className="text-2xl font-semibold text-green-600 mb-4">
+          Bạn đã đánh giá tất cả sản phẩm trong đơn hàng này!
+        </h2>
+        <p className="text-gray-600 mb-6">
+          Cảm ơn bạn đã gửi đánh giá, điều này sẽ giúp chúng tôi cải thiện chất
+          lượng dịch vụ.
+        </p>
+        <button
+          onClick={() => navigate("/order-manage")}
+          className="px-6 py-2 bg-blue-600 text-white rounded"
+        >
+          Quay về quản lý đơn hàng
+        </button>
+      </div>
+    );
+  }
 
   return (
     <div className="max-w-4xl mx-auto p-6 space-y-6 mt-[200px]">
@@ -106,7 +135,7 @@ export default function ProductReview() {
 
         {order.items.map((p) => (
           <div key={p.id} className="flex items-start gap-4 py-4 border-t">
-            <image
+            <img
               src={p.image}
               alt={p.name}
               width={80}
@@ -130,6 +159,7 @@ export default function ProductReview() {
                         ? "text-yellow-400"
                         : "text-gray-300"
                     }`}
+                    disabled={submitted[p.id]}
                   >
                     ★
                   </button>
@@ -142,6 +172,7 @@ export default function ProductReview() {
                 placeholder="Viết cảm nhận của bạn..."
                 value={reviews[p.id] || ""}
                 onChange={(e) => handleReviewChange(p.id, e.target.value)}
+                disabled={submitted[p.id]}
               ></textarea>
 
               <div className="mt-3">
@@ -150,6 +181,7 @@ export default function ProductReview() {
                   multiple
                   accept="image/*"
                   onChange={(e) => handleImageUpload(p.id, e)}
+                  disabled={submitted[p.id]}
                 />
                 <div className="flex gap-2 mt-2">
                   {(images[p.id] || []).map((img, i) => (
@@ -164,50 +196,25 @@ export default function ProductReview() {
                   ))}
                 </div>
               </div>
+
+              <button
+                onClick={() => submitSingleReview(p)}
+                disabled={!ratings[p.id] || submitted[p.id]}
+                className="mt-3 px-4 py-2 bg-blue-600 text-white rounded disabled:opacity-50"
+              >
+                {submitted[p.id] ? "Đã gửi" : "Gửi đánh giá"}
+              </button>
             </div>
           </div>
         ))}
       </div>
 
-      {/* <div className="bg-white border rounded shadow p-4">
-        <h2 className="font-medium mb-2">Đánh giá tổng thể đơn hàng</h2>
-
-        <div className="flex gap-2 mb-3">
-          {[1, 2, 3, 4, 5].map((s) => (
-            <button
-              key={s}
-              onClick={() => setOverallRating(s)}
-              className={`text-2xl ${
-                s <= overallRating ? "text-yellow-400" : "text-gray-300"
-              }`}
-            >
-              ★
-            </button>
-          ))}
-        </div>
-
-        <textarea
-          className="w-full border rounded p-2 text-sm"
-          rows={4}
-          placeholder="Cảm nhận về dịch vụ, giao hàng..."
-          value={overallReview}
-          onChange={(e) => setOverallReview(e.target.value)}
-        ></textarea>
-      </div> */}
-
-      <div className="flex justify-end gap-4">
+      <div className="flex justify-end">
         <button
           className="px-6 py-2 border rounded"
           onClick={() => navigate("/order-manage")}
         >
-          Để sau
-        </button>
-        <button
-          onClick={submitReviews}
-          disabled={!canSubmit || isSubmitting}
-          className="px-6 py-2 bg-blue-600 text-white rounded disabled:opacity-50"
-        >
-          {isSubmitting ? "Đang gửi..." : "Gửi đánh giá"}
+          Trở lại quản lý đơn hàng
         </button>
       </div>
     </div>

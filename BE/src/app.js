@@ -21,6 +21,7 @@ const blogRoutes = require("./routes/blog");
 const likeRoutes = require("./routes/like");
 const featuredRoutes = require("./routes/featured");
 const reviewRoutes = require("./routes/review");
+const dashboardRoutes = require("./routes/dashboard");
 
 app.use(bodyParser.json());
 app.use(
@@ -66,6 +67,9 @@ app.use("/api", featuredRoutes);
 
 //Review
 app.use("/api/reviews", reviewRoutes);
+
+//Dashboard
+app.use("/api/dashboard", dashboardRoutes);
 
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);

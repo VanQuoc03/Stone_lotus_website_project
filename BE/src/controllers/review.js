@@ -33,4 +33,42 @@ async function createReview(req, res) {
     console.error("Lỗi review sản phẩm", error);
   }
 }
-module.exports = { createReview };
+
+async function getReviewsByProduct(req, res) {
+  try {
+    const { productId } = req.params;
+
+    const reviews = await Review.find({ product: productId })
+      .populate("user", "name avatar")
+      .sort({ createdAt: -1 });
+    res.status(200).json(reviews);
+  } catch (err) {
+    console.error("Lỗi lấy review theo sản phẩm", err);
+    res.status(500).json({ message: "Lỗi server" });
+  }
+}
+
+async function getReviewedProductsInOrder(req, res) {
+  try {
+    const { orderId } = req.params;
+    const userId = req.user.id;
+
+    const reviews = await Review.find({
+      order: orderId,
+      user: userId,
+    }).select("product"); // chỉ lấy product
+
+    const reviewedProductIds = reviews.map((r) => r.product.toString());
+
+    res.status(200).json({ reviewedProductIds });
+  } catch (err) {
+    console.error("Lỗi khi lấy danh sách sản phẩm đã đánh giá:", err);
+    res.status(500).json({ message: "Lỗi server" });
+  }
+}
+
+module.exports = {
+  createReview,
+  getReviewsByProduct,
+  getReviewedProductsInOrder,
+};

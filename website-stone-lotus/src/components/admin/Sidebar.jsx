@@ -18,25 +18,13 @@ import {
   Moon,
   Droplets,
 } from "lucide-react";
-// import { Button } from "@/components/ui/button";
-// import { Input } from "@/components/ui/input";
-// import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
-// import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-// import {
-//   DropdownMenu,
-//   DropdownMenuContent,
-//   DropdownMenuGroup,
-//   DropdownMenuItem,
-//   DropdownMenuLabel,
-//   DropdownMenuSeparator,
-//   DropdownMenuTrigger,
-// } from "@/components/ui/dropdown-menu";
-
-// Tạm bỏ useMobile, có thể thay bằng logic window.innerWidth nếu cần
-// Dark mode toggle đơn giản (class toggle hoặc context)
 
 const navItems = [
-  { title: "Tổng quan", href: "#", icon: <BarChart3 className="h-5 w-5" /> },
+  {
+    title: "Tổng quan",
+    href: "/admin/dashboard",
+    icon: <BarChart3 className="h-5 w-5" />,
+  },
   {
     title: "Sản phẩm",
     href: "/admin/products",
