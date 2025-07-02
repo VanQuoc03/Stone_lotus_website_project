@@ -26,6 +26,7 @@ import TopProductsChart from "@/components/dashboard/TopProductsChart";
 import InventorySummary from "@/components/dashboard/InventorySummary";
 import CategoryOverview from "@/components/dashboard/CategoryOverview";
 import RecentOrders from "@/components/dashboard/RecentOrders";
+import RecentAndLowStockTabs from "@/components/dashboard/RecentAndLowStockTabs";
 
 const timeRanges = [
   { label: "24 giờ qua", value: "24h" },
@@ -115,7 +116,7 @@ export default function Dashboard() {
         <CategoryOverview />
       </div>
       <div>
-        <RecentOrders />
+        <RecentAndLowStockTabs />
       </div>
 
       {/* <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">

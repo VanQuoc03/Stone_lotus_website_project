@@ -17,7 +17,6 @@ export default function SalesChart({ range = "7d" }) {
   useEffect(() => {
     const fetchChart = async () => {
       const res = await api.get(`/api/dashboard/sales-chart?range=${range}`);
-      console.log(res.data);
       setData(res.data);
     };
     fetchChart();

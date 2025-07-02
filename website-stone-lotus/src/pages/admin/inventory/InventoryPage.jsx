@@ -186,7 +186,7 @@ export default function InventoryPage() {
                   <tr key={item._id} className="border-b hover:bg-gray-50">
                     <td className="p-4 font-medium">
                       <img
-                        src={item.images?.[0].image_url || "/placeholder.svg"}
+                        src={item.images?.[0]?.image_url || "/placeholder.svg"}
                         alt={item.name}
                         width={40}
                         height={40}

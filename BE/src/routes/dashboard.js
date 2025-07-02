@@ -6,6 +6,7 @@ const {
   getInventorySummary,
   getCategorySummary,
   getRecentOrders,
+  getLowStockProducts,
 } = require("../controllers/dashboardController");
 
 const { authenticateToken } = require("../utils/authMiddleWare");
@@ -23,6 +24,14 @@ router.get(
   authenticateToken,
   requireRole("admin"),
   getInventorySummary
+);
+
+//Dashboard kho sắp hết
+router.get(
+  "/inventory/low-stock",
+  authenticateToken,
+  requireRole("admin"),
+  getLowStockProducts
 );
 
 router.get(

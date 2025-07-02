@@ -170,10 +170,48 @@ const getRecentOrders = async (req, res) => {
   }
 };
 
+const getLowStockProducts = async (req, res) => {
+  try {
+    const threshold = 5;
+
+    const inventories = await ProductInventory.find({
+      quantity: { $lte: threshold },
+    })
+      .sort({ quantity: 1 })
+      .limit(5)
+      .populate({
+        path: "product",
+        populate: [
+          { path: "category", select: "name" },
+          { path: "images", select: "image_url" },
+        ],
+      });
+
+    const result = inventories.map((inv) => {
+      const p = inv.product;
+      return {
+        id: p._id,
+        name: p.name,
+        quantity: inv.quantity,
+        updatedAt: inv.last_updated,
+        category: p.category?.name || "Không rõ",
+        image: p.images?.[0]?.image_url || null,
+        needRestock: inv.quantity <= threshold,
+      };
+    });
+
+    res.json(result);
+  } catch (err) {
+    console.error("Lỗi khi lấy sản phẩm sắp hết hàng:", err.message);
+    res.status(500).json({ message: "Không thể lấy dữ liệu sản phẩm sắp hết" });
+  }
+};
+
 module.exports = {
   getSummary,
   getSalesChart,
   getInventorySummary,
   getCategorySummary,
   getRecentOrders,
+  getLowStockProducts,
 };

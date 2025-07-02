@@ -24,9 +24,7 @@ const CustomTooltip = ({ active, payload }) => {
             className="w-full h-24 object-cover rounded mb-1"
           />
         )}
-        <div className="text-sm text-gray-600">
-          {item.views} lượt xem
-        </div>
+        <div className="text-sm text-gray-600">{item.views} lượt xem</div>
       </div>
     );
   }
@@ -39,7 +37,6 @@ export default function TopProductsChart() {
   useEffect(() => {
     const fetchTopProducts = async () => {
       const res = await api.get("/api/featured?type=product&limit=5");
-      console.log("Top products data:", res.data);
       setData(res.data);
     };
     fetchTopProducts();
