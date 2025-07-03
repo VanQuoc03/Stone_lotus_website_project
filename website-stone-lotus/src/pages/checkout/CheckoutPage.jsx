@@ -17,6 +17,7 @@ export default function CheckoutPage() {
     ward: "",
     note: "",
   });
+  const [isPlacingOrder, setIsPlacingOrder] = useState(false);
 
   const validateForm = () => {
     // const requiredFields = [
@@ -78,8 +79,10 @@ export default function CheckoutPage() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    if (isPlacingOrder) return;
     // if (!validateForm()) return;
 
+    setIsPlacingOrder(true);
     try {
       const { cities, districts, wards } = locationData;
 
@@ -116,6 +119,8 @@ export default function CheckoutPage() {
         error.response?.data?.message ||
           "Đặt hàng thất bại. Vui lòng thử lại sau."
       );
+    } finally {
+      setIsPlacingOrder(false);
     }
   };
 
@@ -153,7 +158,11 @@ export default function CheckoutPage() {
               />
             </div>
             <div className="lg:col-span-1">
-              <CheckoutSummary cartItems={cartItems} onSubmit={handleSubmit} />
+              <CheckoutSummary
+                cartItems={cartItems}
+                onSubmit={handleSubmit}
+                isPlacingOrder={isPlacingOrder}
+              />
             </div>
           </form>
         )}
