@@ -102,40 +102,46 @@ export default function ProductModal({
           {initialData ? "Chỉnh sửa sản phẩm" : "Thêm sản phẩm"}
         </h2>
         <form onSubmit={handleSubmit} className="space-y-4">
-          <input
-            type="text"
-            name="name"
-            placeholder="Tên sản phẩm"
-            value={form.name}
-            onChange={handleChange}
-            className="w-full border px-3 py-2 rounded"
-            required
-          />
-          <textarea
-            name="description"
-            placeholder="Mô tả"
-            value={form.description}
-            onChange={handleChange}
-            className="w-full border px-3 py-2 rounded"
-          ></textarea>
-          <input
-            type="number"
-            name="price"
-            placeholder="Giá"
-            value={form.price}
-            onChange={handleChange}
-            className="w-full border px-3 py-2 rounded"
-            required
-          />
-          {/* <input
-            type="number"
-            name="quantity"
-            placeholder="Tồn kho"
-            value={form.quantity}
-            onChange={handleChange}
-            className="w-full border px-3 py-2 rounded"
-            required
-          /> */}
+          <label className="block font-semibold">
+            Tên sản phẩm:
+            <input
+              type="text"
+              name="name"
+              value={form.name}
+              onChange={handleChange}
+              className="w-full border px-3 py-2 rounded mt-1"
+              required
+            />
+          </label>
+
+          <label className="block font-semibold">
+            Mô tả:
+            <textarea
+              name="description"
+              value={form.description}
+              onChange={handleChange}
+              className="w-full border px-3 py-2 rounded mt-1"
+            />
+          </label>
+
+          <label className="block font-semibold">
+            Giá:
+            <input
+              type="number"
+              name="price"
+              value={form.price}
+              onChange={(e) => {
+                const val = Number(e.target.value);
+                setForm((prev) => ({
+                  ...prev,
+                  price: val >= 0 ? val : 0,
+                }));
+              }}
+              min={0}
+              className="w-full border px-3 py-2 rounded mt-1"
+              required
+            />
+          </label>
 
           <div className="space-y-2">
             <label className="block font-semibold">Ảnh sản phẩm:</label>
@@ -191,20 +197,23 @@ export default function ProductModal({
             </div>
           </div>
 
-          <select
-            name="category"
-            value={form.category}
-            onChange={handleChange}
-            className="w-full border px-3 py-2 rounded"
-            required
-          >
-            <option value="">-- Chọn danh mục --</option>
-            {categories.map((cat) => (
-              <option key={cat._id} value={cat._id}>
-                {cat.name}
-              </option>
-            ))}
-          </select>
+          <label className="block font-semibold">
+            Danh mục:
+            <select
+              name="category"
+              value={form.category}
+              onChange={handleChange}
+              className="w-full border px-3 py-2 rounded mt-1"
+              required
+            >
+              <option value="">-- Chọn danh mục --</option>
+              {categories.map((cat) => (
+                <option key={cat._id} value={cat._id}>
+                  {cat.name}
+                </option>
+              ))}
+            </select>
+          </label>
 
           <div className="flex justify-end gap-2">
             <button

@@ -160,7 +160,7 @@ export default function CareGuidesPage() {
   return (
     <div className="p-6 max-w-7xl mx-auto">
       <div className="flex items-center justify-between mb-6">
-        <h1 className="text-2xl font-bold">Hướng dẫn chăm sóc mấy em đào</h1>
+        <h1 className="text-2xl font-bold">Hướng dẫn chăm sóc</h1>
         <button
           className="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded"
           onClick={() => setShowModal(true)}

@@ -9,9 +9,10 @@ export default function StockEntryModal({ product, onClose, onSave }) {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
+    const num = Number(value);
     setForm((prev) => ({
       ...prev,
-      [name]: Number(value),
+      [name]: num >= 0 ? num : 0,
     }));
   };
 
@@ -26,6 +27,7 @@ export default function StockEntryModal({ product, onClose, onSave }) {
       alert("Vui lòng nhập đúng số lượng và giá nhập");
       return;
     }
+
     try {
       await api.post("/api/purchases", {
         product: product._id,
@@ -48,24 +50,33 @@ export default function StockEntryModal({ product, onClose, onSave }) {
       <div className="bg-white p-6 rounded shadow-md w-full max-w-md">
         <h2 className="text-xl font-bold mb-4">Nhập hàng: {product.name}</h2>
         <form onSubmit={handleSubmit} className="space-y-4">
-          <input
-            type="number"
-            name="quantity"
-            value={form.quantity}
-            onChange={handleChange}
-            placeholder="Số lượng nhập"
-            className="w-full border px-3 py-2 rounded"
-            required
-          />
-          <input
-            type="number"
-            name="purchasePrice"
-            value={form.purchasePrice}
-            onChange={handleChange}
-            placeholder="Giá nhập mỗi đơn vị"
-            className="w-full border px-3 py-2 rounded"
-            required
-          />
+          <label className="block font-semibold">
+            Số lượng nhập:
+            <input
+              type="number"
+              name="quantity"
+              value={form.quantity}
+              onChange={handleChange}
+              placeholder="Số lượng nhập"
+              min={1}
+              className="w-full border px-3 py-2 rounded mt-1"
+              required
+            />
+          </label>
+
+          <label className="block font-semibold">
+            Giá nhập mỗi đơn vị:
+            <input
+              type="number"
+              name="purchasePrice"
+              value={form.purchasePrice}
+              onChange={handleChange}
+              placeholder="Giá nhập mỗi đơn vị"
+              min={0}
+              className="w-full border px-3 py-2 rounded mt-1"
+              required
+            />
+          </label>
 
           <div className="flex justify-end gap-2">
             <button
