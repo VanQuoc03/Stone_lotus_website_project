@@ -52,6 +52,8 @@ export default function ProfilePage() {
     ? formatDate(user.created_at)
     : "Không có thông tin";
 
+  const isGoogleUser = !!user?.googleId;
+
   if (loading)
     return <div className="p-6 mt-[100px]">Đang tải thông tin...</div>;
 
@@ -167,35 +169,40 @@ export default function ProfilePage() {
               setShowEditForm(false);
             }}
             onCancel={() => setShowEditForm(false)}
+            isGoogleUser={isGoogleUser}
           />
         )}
 
-        <button
-          className="w-full flex items-center gap-2 border px-4 py-3 rounded hover:bg-gray-50"
-          onClick={() => setShowChangePasswordForm(!showChangePasswordForm)}
-        >
-          <Key className="h-4 w-4" />
-          {showChangePasswordForm
-            ? "Đóng"
-            : user?.hasPassword
-            ? "Thay đổi mật khẩu"
-            : "Tạo mật khẩu"}
-        </button>
-        {showChangePasswordForm &&
-          (user?.hasPassword ? (
-            <ChangePasswordForm
-              onSuccess={() => setShowChangePasswordForm(false)}
-              onCancel={() => setShowChangePasswordForm(false)}
-            />
-          ) : (
-            <SetPasswordForm
-              onSuccess={() => {
-                setShowChangePasswordForm(false);
-                setUser((prev) => ({ ...prev, hasPassword: true }));
-              }}
-              onCancel={() => setShowChangePasswordForm(false)}
-            />
-          ))}
+        {!isGoogleUser && (
+          <>
+            <button
+              className="w-full flex items-center gap-2 border px-4 py-3 rounded hover:bg-gray-50"
+              onClick={() => setShowChangePasswordForm(!showChangePasswordForm)}
+            >
+              <Key className="h-4 w-4" />
+              {showChangePasswordForm
+                ? "Đóng"
+                : user?.hasPassword
+                ? "Thay đổi mật khẩu"
+                : "Tạo mật khẩu"}
+            </button>
+            {showChangePasswordForm &&
+              (user?.hasPassword ? (
+                <ChangePasswordForm
+                  onSuccess={() => setShowChangePasswordForm(false)}
+                  onCancel={() => setShowChangePasswordForm(false)}
+                />
+              ) : (
+                <SetPasswordForm
+                  onSuccess={() => {
+                    setShowChangePasswordForm(false);
+                    setUser((prev) => ({ ...prev, hasPassword: true }));
+                  }}
+                  onCancel={() => setShowChangePasswordForm(false)}
+                />
+              ))}
+          </>
+        )}
 
         <button
           className="w-full flex items-center gap-2 border px-4 py-3 rounded hover:bg-gray-50"

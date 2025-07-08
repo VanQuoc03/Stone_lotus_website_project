@@ -2,7 +2,12 @@
 import React, { useState } from "react";
 import api from "@/utils/axiosInstance";
 
-export default function EditProfileForm({ initialData, onUpdate, onCancel }) {
+export default function EditProfileForm({
+  initialData,
+  onUpdate,
+  onCancel,
+  isGoogleUser,
+}) {
   const [formData, setFormData] = useState({
     name: initialData.name || "",
     email: initialData.email || "",
@@ -58,9 +63,16 @@ export default function EditProfileForm({ initialData, onUpdate, onCancel }) {
           name="email"
           value={formData.email}
           onChange={handleChange}
-          className="w-full border border-gray-300 rounded px-3 py-2"
+          className="w-full border border-gray-300 rounded px-3 py-2 bg-gray-100 cursor-not-allowed"
           required
+          disabled={isGoogleUser}
         />
+        {isGoogleUser && (
+          <p className="text-xs text-gray-500 mt-1">
+            Bạn không thể thay đổi email đối với tài khoản đăng nhập bằng
+            Google.
+          </p>
+        )}
       </div>
       <div>
         <label className="block text-sm font-medium text-gray-700 mb-1">

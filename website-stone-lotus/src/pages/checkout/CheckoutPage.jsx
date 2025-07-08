@@ -19,24 +19,6 @@ export default function CheckoutPage() {
   });
   const [isPlacingOrder, setIsPlacingOrder] = useState(false);
 
-  const validateForm = () => {
-    // const requiredFields = [
-    //   "fullName",
-    //   "phone",
-    //   "email",
-    //   "address",
-    //   "city",
-    //   "district",
-    //   "ward",
-    //   "note",
-    // ];
-    // for (const field of requiredFields) {
-    //   if (!formData[field] || formData[field].trim() === "") {
-    //     alert("Vui lòng điền đầy đủ thông tin giao hàng.");
-    //     return false;
-    //   }
-    // }
-  };
   const [paymentMethod, setPaymenMethod] = useState("cod");
   const [cartItems, setCartItems] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -80,7 +62,6 @@ export default function CheckoutPage() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (isPlacingOrder) return;
-    // if (!validateForm()) return;
 
     setIsPlacingOrder(true);
     try {

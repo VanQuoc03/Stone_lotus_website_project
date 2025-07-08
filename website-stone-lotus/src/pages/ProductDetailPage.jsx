@@ -20,7 +20,6 @@ export default function ProductDetailPage() {
     const fetchProduct = async () => {
       try {
         const res = await fetchProductById(id);
-        console.log(res.data);
         setProduct(res.data);
       } catch (error) {
         console.error("Lỗi tải sản phẩm: ", error);
@@ -59,6 +58,7 @@ export default function ProductDetailPage() {
           <ProductQuantitySelector
             quantity={quantity}
             setQuantity={setQuantity}
+            maxQuantity={product?.inventory?.quantity || 10}
           />
           <ToastContainer />
           <ProductActions

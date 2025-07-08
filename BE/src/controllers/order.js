@@ -8,12 +8,51 @@ const ProductInventory = require("../models/productInventory");
 
 exports.getAllOrders = async (req, res) => {
   try {
+    const {
+      page = 1,
+      limit = 10,
+      status,
+      search,
+      sort = "createdAt_desc",
+    } = req.query;
+
     const isAdmin = req.user.role === "admin";
-    const query = isAdmin ? {} : { user: req.user.id };
+    let query = isAdmin ? {} : { user: req.user.id };
+
+    if (status && status !== "all") {
+      query.status = status;
+    }
+
+    if (search) {
+      const searchRegex = { $regex: search, $options: "i" };
+      query.$or = [
+        { "shipping_address.fullName": searchRegex },
+        { "shipping_address.phone": searchRegex },
+      ];
+      // Check if search term could be a valid ObjectId
+      if (search.match(/^[0-9a-fA-F]{24}$/)) {
+        query.$or.push({ _id: search });
+      }
+    }
+
+    const [sortField, sortOrder] = sort.split("_");
+    const sortOptions = {};
+    if (sortField) {
+      sortOptions[sortField] = sortOrder === "asc" ? 1 : -1;
+    } else {
+      sortOptions.createdAt = -1; // Default sort
+    }
+
+    const totalOrders = await Order.countDocuments(query);
+    const totalPages = Math.ceil(totalOrders / limit);
+
     const orders = await Order.find(query)
-      .sort({ createdAt: -1 })
+      .sort(sortOptions)
+      .skip((page - 1) * limit)
+      .limit(parseInt(limit))
       .populate("user", "name email")
       .lean();
+
     const ordersWithItems = await Promise.all(
       orders.map(async (order) => {
         const items = await OrderItem.find({ order: order._id }).populate({
@@ -41,8 +80,13 @@ exports.getAllOrders = async (req, res) => {
         };
       })
     );
-    res.json(ordersWithItems);
-  } catch (error) {
+    res.json({
+      orders: ordersWithItems,
+      currentPage: parseInt(page),
+      totalPages,
+      totalOrders,
+    });
+  } catch (err) {
     console.error("Lỗi khi lấy danh sách đơn hàng:", err.message);
     res.status(500).json({ message: "Không thể lấy đơn hàng" });
   }
@@ -299,12 +343,10 @@ exports.getMyOrders = async (req, res) => {
   try {
     const userId = req.user.id;
 
-   
     const orders = await Order.find({ user: userId })
       .sort({ createdAt: -1 })
       .lean();
 
-    
     const orderIds = orders.map((order) => order._id);
 
     const items = await OrderItem.find({ order: { $in: orderIds } })
@@ -318,7 +360,6 @@ exports.getMyOrders = async (req, res) => {
       })
       .lean();
 
-    
     const groupedItems = {};
     items.forEach((item) => {
       const key = item.order.toString();
