@@ -1,6 +1,4 @@
-// pages/Cart.jsx
 import React, { useEffect, useState } from "react";
-import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import api from "@/utils/axiosInstance";
 import { useCart } from "@/context/CartContext";
@@ -20,7 +18,7 @@ export default function Cart() {
     setLoading(true);
     try {
       if (!token) {
-        // toast.warn("Bạn cần phải đăng nhập để thêm sản phẩm vào giỏ hàng");
+        toast.warn("Bạn cần đăng nhập để xem giỏ hàng!");
         navigate("/login");
         return;
       }
@@ -28,19 +26,48 @@ export default function Cart() {
       setCart(res.data);
     } catch (err) {
       console.error("Lỗi lấy giỏ hàng:", err);
+      toast.error(
+        err.response?.data?.error || "Không thể tải giỏ hàng. Vui lòng thử lại."
+      );
     } finally {
       setLoading(false);
     }
   };
 
   const updateQuantity = async (productId, quantity) => {
-    if (quantity < 1) return;
+    if (quantity < 1) {
+      toast.warn("Số lượng không thể nhỏ hơn 1!");
+      return;
+    }
     try {
-      await api.put("/api/cart/update", { productId, quantity });
-      fetchCart();
+      const res = await api.put("/api/cart/update", { productId, quantity });
+      console.log("Cập nhật giỏ hàng thành công:", res.data);
+      if (!res.data || !res.data.items) {
+        throw new Error("Dữ liệu giỏ hàng không hợp lệ");
+      }
+      setCart(res.data);
       updateCartCount();
+      const item = res.data.items.find(
+        (i) => i.product && i.product._id === productId
+      );
+      if (!item) {
+        toast.error("Sản phẩm không tồn tại trong giỏ hàng!");
+        await fetchCart();
+        return;
+      }
+      const stock = item.product.inventory
+        ? item.product.inventory.quantity
+        : 0;
+      if (quantity >= stock) {
+        toast.warn(`Sản phẩm này chỉ còn ${stock} trong kho!`);
+      }
     } catch (err) {
       console.error("Lỗi cập nhật số lượng:", err);
+      toast.error(
+        err.response?.data?.error ||
+          "Lỗi khi cập nhật số lượng. Vui lòng thử lại."
+      );
+      await fetchCart();
     }
   };
 
@@ -49,10 +76,15 @@ export default function Cart() {
       await api.delete(`/api/cart/remove/${productId}`);
       await fetchCart();
       updateCartCount();
+      toast.success("Đã xóa sản phẩm khỏi giỏ hàng!");
     } catch (err) {
       console.error("Lỗi xóa sản phẩm:", err);
+      toast.error(
+        err.response?.data?.error || "Lỗi khi xóa sản phẩm. Vui lòng thử lại."
+      );
     }
   };
+
   useEffect(() => {
     fetchCart();
   }, []);
@@ -100,7 +132,12 @@ export default function Cart() {
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
         <div className="lg:col-span-2 space-y-4">
           {cart.items
-            .filter((item) => item.product && item.product._id)
+            .filter(
+              (item) =>
+                item.product &&
+                typeof item.product === "object" &&
+                item.product._id
+            )
             .map(({ product, quantity }) => (
               <CartItem
                 key={product._id}
@@ -108,14 +145,16 @@ export default function Cart() {
                 quantity={quantity}
                 onUpdateQuantity={updateQuantity}
                 onRemove={removeItem}
+                availableStock={
+                  product.inventory ? product.inventory.quantity : 0
+                }
               />
             ))}
         </div>
 
-        <div className="space-y-6 ">
+        <div className="space-y-6">
           <div>
-            {" "}
-            <OrderSummary items={cart.items} />
+            <OrderSummary items={cart.items} shippingFee={0} />
             <div className="bg-white rounded-lg shadow-sm border p-4">
               <div className="space-y-3">
                 <div className="flex items-center space-x-3">

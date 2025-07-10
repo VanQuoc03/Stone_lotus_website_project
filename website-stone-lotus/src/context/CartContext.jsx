@@ -36,12 +36,30 @@ export const CartProvider = ({ children }) => {
     }
   };
 
+  const getCartItemQuantity = async (productId) => {
+    try {
+      const res = await api.get("/api/cart");
+      if (res.status !== 200 || !res.data || !res.data.items) {
+        return 0;
+      }
+      const item = res.data.items.find(
+        (i) => i.product && i.product._id === productId
+      );
+      return item ? item.quantity : 0;
+    } catch (err) {
+      console.error("Lỗi lấy số lượng sản phẩm trong giỏ hàng:", err);
+      return 0;
+    }
+  };
+
   useEffect(() => {
     updateCartCount();
-  }, [token]); // ← mỗi lần token thay đổi, update cart
+  }, [token]);
 
   return (
-    <CartContext.Provider value={{ cartCount, updateCartCount }}>
+    <CartContext.Provider
+      value={{ cartCount, updateCartCount, getCartItemQuantity }}
+    >
       {children}
     </CartContext.Provider>
   );

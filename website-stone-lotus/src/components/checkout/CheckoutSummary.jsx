@@ -2,6 +2,7 @@ export default function CheckoutSummary({
   cartItems,
   onSubmit,
   isPlacingOrder,
+  shippingFee,
 }) {
   const format = (price) =>
     new Intl.NumberFormat("vi-VN", {
@@ -14,7 +15,7 @@ export default function CheckoutSummary({
     return sum + price * item.quantity;
   }, 0);
 
-  const shipping = subtotal >= 500000 ? 0 : 30000;
+  const shipping = typeof shippingFee === "number" ? shippingFee : 0;
   const total = subtotal + shipping;
 
   return (

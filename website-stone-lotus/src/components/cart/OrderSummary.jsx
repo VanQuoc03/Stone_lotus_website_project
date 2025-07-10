@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { ArrowRight } from "lucide-react";
 
-export default function OrderSummary({ items }) {
+export default function OrderSummary({ items, shippingFee = 0 }) {
   const navigate = useNavigate();
   const [discountCode, setDiscountCode] = useState("");
   const [discount, setDiscount] = useState(0);
@@ -14,8 +14,7 @@ export default function OrderSummary({ items }) {
     0
   );
 
-  const shipping = subTotal >= 500000 ? 0 : 30000;
-  const total = subTotal - discount + shipping;
+  const total = subTotal - discount + shippingFee;
 
   const handleApplyCode = () => {
     if (discountCode.trim().toUpperCase() === "GIAM10") {
@@ -90,10 +89,10 @@ export default function OrderSummary({ items }) {
           <div className="flex justify-between">
             <span>Phí vận chuyển</span>
             <span>
-              {shipping === 0 ? (
+              {shippingFee === 0 ? (
                 <span className="text-green-600 font-medium">Miễn phí</span>
               ) : (
-                format(shipping)
+                format(shippingFee)
               )}
             </span>
           </div>
@@ -105,7 +104,7 @@ export default function OrderSummary({ items }) {
             <span className="text-green-700">{format(total)}</span>
           </div>
 
-          {shipping > 0 && (
+          {shippingFee > 0 && (
             <p className="text-xs text-gray-600">
               Mua thêm <strong>{format(500000 - subTotal)}</strong> để được miễn
               phí vận chuyển

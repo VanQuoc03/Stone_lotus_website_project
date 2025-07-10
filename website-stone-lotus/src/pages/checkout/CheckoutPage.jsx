@@ -4,7 +4,8 @@ import ShippingInfoForm from "@/components/checkout/ShippingInfoForm";
 import api from "@/utils/axiosInstance";
 import { ArrowLeft } from "lucide-react";
 import React, { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
+import { useCart } from "@/context/CartContext";
 
 export default function CheckoutPage() {
   const [formData, setFormData] = useState({
@@ -27,13 +28,37 @@ export default function CheckoutPage() {
     districts: [],
     wards: [],
   });
+  const [shopInfo, setShopInfo] = useState(null);
+  const [shippingFee, setShippingFee] = useState(0);
   const navigate = useNavigate();
+  const location = useLocation();
+  const buyNowItem = location.state?.buyNowItem;
+  const { updateCartCount } = useCart();
 
   useEffect(() => {
     const fetchCart = async () => {
       try {
         const res = await api.get("/api/cart");
-        setCartItems(res.data.items);
+        if (buyNowItem) {
+          const item = res.data.items.find(
+            (i) => i.product && i.product._id === buyNowItem.productId
+          );
+          if (item) {
+            setCartItems([
+              { product: item.product, quantity: buyNowItem.quantity },
+            ]);
+          } else {
+            // Nếu sản phẩm không có trong giỏ hàng, lấy thông tin từ API sản phẩm
+            const productRes = await api.get(
+              `/api/products/${buyNowItem.productId}`
+            );
+            setCartItems([
+              { product: productRes.data, quantity: buyNowItem.quantity },
+            ]);
+          }
+        } else {
+          setCartItems(res.data.items);
+        }
       } catch (err) {
         console.error("Lỗi khi lấy giỏ hàng:", err);
       } finally {
@@ -68,16 +93,17 @@ export default function CheckoutPage() {
       const { cities, districts, wards } = locationData;
 
       const cityName =
-        cities.find((c) => String(c.code) === String(formData.cityCode))
-          ?.name || "";
+        cities.find((c) => String(c.ProvinceID) === String(formData.cityCode))
+          ?.ProvinceName || "";
 
       const districtName =
-        districts.find((d) => String(d.code) === String(formData.districtCode))
-          ?.name || "";
+        districts.find(
+          (d) => String(d.DistrictID) === String(formData.districtCode)
+        )?.DistrictName || "";
 
       const wardName =
-        wards.find((w) => String(w.code) === String(formData.wardCode))?.name ||
-        "";
+        wards.find((w) => String(w.WardCode) === String(formData.wardCode))
+          ?.WardName || "";
 
       const shippingInfoToSubmit = {
         ...formData,
@@ -86,14 +112,32 @@ export default function CheckoutPage() {
         ward: wardName,
       };
 
+      const itemsToSubmit = buyNowItem
+        ? [
+            {
+              product: buyNowItem.productId,
+              quantity: buyNowItem.quantity,
+              variantId: buyNowItem.variantId,
+            },
+          ]
+        : cartItems.map((item) => ({
+            product: item.product._id,
+            quantity: item.quantity,
+            variantId: item.variantId,
+          }));
+
       const res = await api.post("/api/orders", {
         shippingInfo: shippingInfoToSubmit,
         paymentMethod,
+        items: itemsToSubmit,
+        shippingFee,
+        fromCart: !buyNowItem,
       });
 
       console.log(res.data);
       alert("Đặt hàng thành công!");
       navigate(`/thank-you/${res.data.orderId}`);
+      await updateCartCount();
     } catch (error) {
       console.error("Lỗi đặt hàng:", error);
       alert(
@@ -104,6 +148,31 @@ export default function CheckoutPage() {
       setIsPlacingOrder(false);
     }
   };
+  //Hàm tính phí shipping
+  const fetchShippingFee = async () => {
+    if (!formData.districtCode || !formData.wardCode || !cartItems.length) {
+      console.warn("❌ Thiếu dữ liệu, chưa gọi GHN Fee API");
+      return;
+    }
+
+    try {
+      const res = await api.post("/api/shipping/calculate-fee", {
+        districtCode: formData.districtCode,
+        wardCode: formData.wardCode,
+        cartItems,
+      });
+      const fee = res.data.shippingFee;
+      console.log("🎯 Phí vận chuyển từ backend:", fee);
+      setShippingFee(fee);
+    } catch (err) {
+      console.error("❌ Lỗi khi gọi backend tính phí:", err);
+      setShippingFee(0);
+    }
+  };
+
+  useEffect(() => {
+    fetchShippingFee();
+  }, [formData.districtCode, formData.wardCode, cartItems, shopInfo]);
 
   return (
     <div className="mt-[200px] min-h-screen bg-gray-50">
@@ -140,6 +209,7 @@ export default function CheckoutPage() {
             </div>
             <div className="lg:col-span-1">
               <CheckoutSummary
+                shippingFee={shippingFee}
                 cartItems={cartItems}
                 onSubmit={handleSubmit}
                 isPlacingOrder={isPlacingOrder}

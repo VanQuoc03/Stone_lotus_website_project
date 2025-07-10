@@ -191,29 +191,7 @@ export default function CareGuideDetailPage() {
             />
           </div>
 
-          <div className="p-4 shadow rounded bg-white">
-            <h4 className="text-lg font-semibold mb-4">Bài viết phổ biến</h4>
-            <div className="space-y-3">
-              {post.popularPosts?.map((item) => (
-                <div
-                  key={item.id}
-                  className="flex gap-3 hover:bg-green-50 p-2 rounded cursor-pointer"
-                >
-                  <img
-                    src={item.image}
-                    alt={item.title}
-                    className="w-16 h-16 object-cover rounded"
-                  />
-                  <div className="text-sm">
-                    <p className="font-medium text-gray-800 line-clamp-2">
-                      {item.title}
-                    </p>
-                    <p className="text-xs text-gray-500">{item.date}</p>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
+
 
           <div className="p-4 shadow rounded text-white bg-gradient-to-br from-green-500 to-emerald-600">
             <h4 className="text-lg font-semibold mb-2">Đăng ký nhận tin</h4>

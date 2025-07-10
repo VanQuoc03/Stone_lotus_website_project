@@ -30,7 +30,7 @@ export default function ProductDetailPage() {
   }, [id]);
 
   if (!product) return <p className="p-6">Đang tải sản phẩm...</p>;
-
+  const availableStock = product.inventory ? product.inventory.quantity : 0;
   return (
     <>
       <div className="ml-28 mt-[220px]">
@@ -59,12 +59,14 @@ export default function ProductDetailPage() {
             quantity={quantity}
             setQuantity={setQuantity}
             maxQuantity={product?.inventory?.quantity || 10}
+            availableStock={availableStock}
           />
           <ToastContainer />
           <ProductActions
             product={product}
             quantity={quantity}
             variant={selectedVariant}
+            availableStock={availableStock}
           />
           <ProductPolicy />
         </div>

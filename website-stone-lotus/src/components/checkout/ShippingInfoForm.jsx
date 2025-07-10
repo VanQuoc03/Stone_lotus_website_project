@@ -108,8 +108,8 @@ export default function ShippingInfoForm({
             onChange={onChange}
             required
             options={cities.map((city) => ({
-              label: city.name,
-              value: city.code,
+              label: city.ProvinceName,
+              value: city.ProvinceID,
             }))}
           />
           <SelectField
@@ -119,8 +119,8 @@ export default function ShippingInfoForm({
             onChange={onChange}
             required
             options={districts.map((district) => ({
-              label: district.name,
-              value: district.code,
+              label: district.DistrictName,
+              value: district.DistrictID,
             }))}
           />
           <SelectField
@@ -130,8 +130,8 @@ export default function ShippingInfoForm({
             onChange={onChange}
             required
             options={wards.map((ward) => ({
-              label: ward.name,
-              value: ward.code,
+              label: ward.WardName,
+              value: ward.WardCode,
             }))}
           />
         </div>
