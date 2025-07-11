@@ -23,6 +23,7 @@ const featuredRoutes = require("./routes/featured");
 const reviewRoutes = require("./routes/review");
 const dashboardRoutes = require("./routes/dashboard");
 const shippingRoutes = require("./routes/shipping");
+const chatRoutes = require("./routes/chat");
 
 app.use(bodyParser.json());
 app.use(
@@ -74,6 +75,9 @@ app.use("/api/dashboard", dashboardRoutes);
 
 //Shipping
 app.use("/api/shipping", shippingRoutes);
+
+//AI chat
+app.use("/api", chatRoutes);
 
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
