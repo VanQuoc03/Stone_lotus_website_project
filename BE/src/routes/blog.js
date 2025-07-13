@@ -34,5 +34,10 @@ router.post(
   authenticateToken,
   blogComment.replyToComment
 );
+router.delete(
+  "/comments/:commentId",
+  authenticateToken,
+  blogComment.deleteComment
+);
 
 module.exports = router;

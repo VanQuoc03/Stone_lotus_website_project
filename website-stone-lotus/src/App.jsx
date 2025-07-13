@@ -3,6 +3,10 @@ import AppRoutes from "./routes/AppRoutes";
 import { CartProvider } from "./context/CartContext";
 import { ToastContainer } from "react-toastify";
 import { GoogleOAuthProvider } from "@react-oauth/google";
+import { useEffect } from "react";
+import "@n8n/chat/style.css";
+import { createChat } from "@n8n/chat";
+import ChatBot from "./components/common/ChatBot";
 
 function App() {
   return (

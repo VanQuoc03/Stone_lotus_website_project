@@ -6,17 +6,25 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { MoreHorizontal, PlusCircle, Trash2, FilePenLine } from "lucide-react";
+import {
+  MoreHorizontal,
+  PlusCircle,
+  Trash2,
+  FilePenLine,
+  Eye,
+} from "lucide-react";
 
 import api from "@/utils/axiosInstance";
 import React, { useEffect, useState, useCallback } from "react";
 import GuideFormSheet from "@/components/admin/care-guide/GuideFormSheet";
+import { Link } from "react-router-dom";
 
 export default function CareGuidesPage() {
   const [guides, setGuides] = useState([]);
   const [searchQuery, setSearchQuery] = useState("");
   const [isSheetOpen, setIsSheetOpen] = useState(false);
   const [editingGuide, setEditingGuide] = useState(null);
+  const [isUploading, setIsUploading] = useState(false);
   const [form, setForm] = useState({
     title: "",
     excerpt: "",
@@ -31,6 +39,7 @@ export default function CareGuidesPage() {
   const fetchGuides = useCallback(async () => {
     try {
       const res = await api.get("/api/blog/posts");
+      console.log("Fetched guides:", res.data);
       setGuides(res.data);
     } catch (error) {
       console.error("Lỗi tải dữ liệu", error);
@@ -51,16 +60,21 @@ export default function CareGuidesPage() {
     if (!file) return;
 
     const formData = new FormData();
-    formData.append("image", file); // Use single image upload
+    formData.append("images", file);
+
+    setIsUploading(true);
 
     try {
-      const res = await api.post("/api/upload", formData, {
+      const res = await api.post("/api/upload/multiple", formData, {
         headers: { "Content-Type": "multipart/form-data" },
       });
-      const imageUrl = res.data.imageUrl;
+      console.log("Upload thành công:", res.data);
+      const imageUrl = res.data.imageUrls?.[0];
       setForm((prev) => ({ ...prev, images: [imageUrl] }));
     } catch (err) {
       alert("Upload thất bại: " + err.message);
+    } finally {
+      setIsUploading(false);
     }
   };
 
@@ -77,6 +91,12 @@ export default function CareGuidesPage() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    if (isUploading) {
+      alert("Vui lòng đợi ảnh được upload xong trước khi tạo.");
+      return;
+    }
+
     const submissionData = {
       ...form,
       image: form.images[0] || "",
@@ -111,6 +131,7 @@ export default function CareGuidesPage() {
     setForm({
       title: guide.title || "",
       content: guide.content || "",
+      readTime: guide.readTime || "",
       type: guide.type || "",
       images: guide.image ? [guide.image] : [],
     });
@@ -229,6 +250,15 @@ export default function CareGuidesPage() {
                         <Trash2 className="mr-2 h-4 w-4" />
                         <span>Xóa</span>
                       </DropdownMenuItem>
+                      <DropdownMenuItem>
+                        <Link
+                          to={`/admin/care-guides/${guide._id}`}
+                          className="flex items-center"
+                        >
+                          <Eye className="mr-2 h-4 w-4" />
+                          <span>Xem</span>
+                        </Link>
+                      </DropdownMenuItem>
                     </DropdownMenuContent>
                   </DropdownMenu>
                 </td>
@@ -248,6 +278,7 @@ export default function CareGuidesPage() {
         onSubmit={handleSubmit}
         onFileUpload={handleImageUpload}
         isEditing={!!editingGuide}
+        isUploading={isUploading}
       />
     </div>
   );

@@ -27,6 +27,7 @@ import CareGuidesPageAdmin from "@/pages/admin/care-guide/CareGuidesPage";
 import CareGuidesPageClient from "@/pages/care-guide/CareGuidePage";
 import CareGuideDetailPageClient from "@/pages/care-guide/CareGuideDetailPage";
 import ProductReview from "@/components/review/ProductReview";
+import AdminCareGuideDetailPage from "@/pages/admin/care-guide/AdminCareGuideDetailPage";
 
 export default function AppRoutes() {
   return (
@@ -106,11 +107,21 @@ export default function AppRoutes() {
       />
 
       <Route
-        path="/care-guides"
+        path="/admin/care-guides"
         element={
           <RequireAdmin>
             <AdminLayout>
               <CareGuidesPageAdmin />
+            </AdminLayout>
+          </RequireAdmin>
+        }
+      />
+      <Route
+        path="/admin/care-guides/:id"
+        element={
+          <RequireAdmin>
+            <AdminLayout>
+              <AdminCareGuideDetailPage />
             </AdminLayout>
           </RequireAdmin>
         }

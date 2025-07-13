@@ -22,6 +22,7 @@ export default function GuideFormSheet({
   onSubmit,
   onFileUpload,
   isEditing,
+  isUploading,
 }) {
   const quillModules = {
     toolbar: [
@@ -78,6 +79,29 @@ export default function GuideFormSheet({
               placeholder="Ví dụ: Cây trong nhà"
             />
           </div>
+          <div className="space-y-1">
+            <label className="text-sm font-medium text-gray-700">
+              Thời gian đọc (phút)
+            </label>
+            <Input
+              type="number"
+              name="readTime"
+              value={form.readTime}
+              onChange={(e) => {
+                const value = e.target.value;
+                // Chỉ chấp nhận số >= 0 hoặc rỗng (nếu muốn cho phép xóa)
+                if (
+                  value === "" ||
+                  (Number(value) >= 0 && Number.isInteger(+value))
+                ) {
+                  onChange(e);
+                }
+              }}
+              placeholder="VD: 3"
+              min={1}
+              required
+            />
+          </div>
           <div className="grid gap-2">
             <Label htmlFor="content">Nội dung</Label>
             <div className="bg-white rounded-md">
@@ -116,8 +140,12 @@ export default function GuideFormSheet({
               Hủy
             </Button>
           </SheetClose>
-          <Button type="submit" onClick={onSubmit}>
-            {isEditing ? "Lưu thay đổi" : "Tạo mới"}
+          <Button type="submit" onClick={onSubmit} disabled={isUploading}>
+            {isUploading
+              ? "Đang tải ảnh..."
+              : isEditing
+              ? "Lưu thay đổi"
+              : "Tạo mới"}
           </Button>
         </SheetFooter>
       </SheetContent>

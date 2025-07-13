@@ -66,3 +66,30 @@
     @apply bg-background text-foreground;
   }
 }
+
+/* Tuỳ chỉnh giao diện hiện đại cho widget n8n chat */
+:root {
+  --chat--color-primary: #6366f1;
+  --chat--color-primary-shade-50: #818cf8;
+  --chat--color-primary-shade-100: #4f46e5;
+  --chat--color-secondary: #06b6d4;
+  --chat--color-white: #fff;
+  --chat--color-light: #f3f4f6;
+  --chat--color-dark: #18181b;
+  --chat--window--width: 400px;
+  --chat--window--height: 600px;
+  --chat--border-radius: 1.5rem;
+  --chat--header--background: linear-gradient(90deg, #6366f1 0%, #06b6d4 100%);
+  --chat--header--color: #fff;
+  --chat--message--font-size: 1rem;
+  --chat--message--user--background: #6366f1;
+  --chat--message--user--color: #fff;
+  --chat--message--bot--background: #f3f4f6;
+  --chat--message--bot--color: #18181b;
+  --chat--toggle--background: #6366f1;
+  --chat--toggle--hover--background: #818cf8;
+  --chat--toggle--active--background: #4f46e5;
+  --chat--toggle--color: #fff;
+  --chat--toggle--size: 64px;
+  font-family: 'Inter', 'Roboto', sans-serif;
+}

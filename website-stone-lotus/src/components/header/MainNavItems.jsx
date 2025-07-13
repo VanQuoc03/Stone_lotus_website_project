@@ -73,10 +73,6 @@ function MainNavItems({ categories }) {
             {" "}
             <a href="#">Giao hàng</a>{" "}
           </li>
-          <li className="px-4 py-2 hover:bg-gray-200 lg:px-4 lg:py-2">
-            {" "}
-            <a href="#">Xem lại đơn hàng</a>{" "}
-          </li>
         </ul>
       </li>
       <li>

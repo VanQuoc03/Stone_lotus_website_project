@@ -86,3 +86,20 @@ exports.replyToComment = async (req, res) => {
     res.status(500).json({ message: "Lỗi phản hồi", error: err.message });
   }
 };
+
+exports.deleteComment = async (req, res) => {
+  try {
+    const { commentId } = req.params;
+    const deleted = await BlogComment.findByIdAndDelete(commentId);
+
+    if (!deleted) {
+      return res.status(404).json({ error: "Không tìm thấy bình luận" });
+    }
+
+    await BlogComment.deleteMany({ parent: commentId });
+
+    res.json({ message: "Đã xóa bình luận thành công" });
+  } catch (error) {
+    res.status(500).json({ error: "Lỗi server khi xóa bình luận" });
+  }
+};

@@ -92,6 +92,13 @@ export default function CareGuideDetailPage() {
       <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
         <div className="lg:col-span-3 space-y-6">
           <div className="space-y-2">
+            <button
+              className="flex items-center gap-1 text-sm text-gray-600 hover:underline mb-4"
+              onClick={() => window.history.back()}
+            >
+              <ChevronLeft className="w-4 h-4" /> Quay lại danh sách
+            </button>
+
             <div className="flex items-center gap-3 text-sm text-gray-500">
               <span className="flex items-center gap-1">
                 <Calendar className="w-4 h-4" />{" "}
@@ -190,8 +197,6 @@ export default function CareGuideDetailPage() {
               className="w-full px-4 py-2 border border-gray-300 rounded focus:outline-none"
             />
           </div>
-
-
 
           <div className="p-4 shadow rounded text-white bg-gradient-to-br from-green-500 to-emerald-600">
             <h4 className="text-lg font-semibold mb-2">Đăng ký nhận tin</h4>
