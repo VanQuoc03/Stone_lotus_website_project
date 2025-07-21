@@ -17,6 +17,7 @@ export default function ProductModal({
     images: [""],
     category: "",
   });
+  const [uploading, setUploading] = useState(false);
 
   useEffect(() => {
     if (initialData) {
@@ -76,6 +77,8 @@ export default function ProductModal({
 
   const handleFileUpload = async (e) => {
     const files = Array.from(e.target.files);
+    if (files.length === 0) return;
+    setUploading(true);
 
     try {
       const urls = await uploadImages(files);
@@ -85,6 +88,8 @@ export default function ProductModal({
       }));
     } catch (err) {
       alert(err.message);
+    } finally {
+      setUploading(false);
     }
   };
 
@@ -223,12 +228,24 @@ export default function ProductModal({
             >
               Hủy
             </button>
-            <button
-              type="submit"
-              className="px-4 py-2 bg-green-600 text-white rounded"
-            >
-              {initialData ? "Lưu" : "Thêm"}
-            </button>
+            {!uploading && (
+              <button
+                type="submit"
+                className="px-4 py-2 bg-green-600 text-white rounded"
+              >
+                {initialData ? "Lưu" : "Thêm"}
+              </button>
+            )}
+
+            {uploading && (
+              <button
+                type="button"
+                disabled
+                className="px-4 py-2 bg-gray-400 text-white rounded cursor-not-allowed"
+              >
+                Đang tải ảnh...
+              </button>
+            )}
           </div>
         </form>
       </div>

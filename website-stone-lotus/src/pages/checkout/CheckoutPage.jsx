@@ -148,10 +148,11 @@ export default function CheckoutPage() {
       setIsPlacingOrder(false);
     }
   };
+  
   //Hàm tính phí shipping
   const fetchShippingFee = async () => {
     if (!formData.districtCode || !formData.wardCode || !cartItems.length) {
-      console.warn("❌ Thiếu dữ liệu, chưa gọi GHN Fee API");
+      console.warn("Thiếu dữ liệu, chưa gọi GHN Fee API");
       return;
     }
 
@@ -162,10 +163,10 @@ export default function CheckoutPage() {
         cartItems,
       });
       const fee = res.data.shippingFee;
-      console.log("🎯 Phí vận chuyển từ backend:", fee);
+      console.log("Phí vận chuyển từ backend:", fee);
       setShippingFee(fee);
     } catch (err) {
-      console.error("❌ Lỗi khi gọi backend tính phí:", err);
+      console.error("Lỗi khi gọi backend tính phí:", err);
       setShippingFee(0);
     }
   };

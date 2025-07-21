@@ -75,15 +75,15 @@ export default function CustomerTable({
               />
             </th>
             <th className="p-2">
-              Khách hàng <ArrowUpDown className="inline h-4 w-4 ml-1" />
+              Khách hàng <ArrowUpDown className=" inline h-4 w-4 ml-1" />
             </th>
             <th className="p-2">Trạng thái</th>
-            <th className="hidden md:table-cell p-2">
+            {/* <th className="hidden md:table-cell p-2">
               Đơn hàng <ArrowUpDown className="inline h-4 w-4 ml-1" />
             </th>
             <th className="hidden md:table-cell p-2">
               Tổng chi tiêu <ArrowUpDown className="inline h-4 w-4 ml-1" />
-            </th>
+            </th> */}
             <th className="hidden md:table-cell p-2">
               Ngày đăng ký <ArrowUpDown className="inline h-4 w-4 ml-1" />
             </th>
@@ -124,18 +124,18 @@ export default function CustomerTable({
                   {customer.status ? "Đang hoạt động" : "Không hoạt động"}
                 </span>
               </td>
-              <td className="hidden md:table-cell p-2 text-center">12</td>
-              <td className="hidden md:table-cell p-2 text-center">
-                {formatCurrency(customer.total_spent)}
-              </td>
+                {/* <td className="hidden md:table-cell p-2 text-center">12</td>
+                <td className="hidden md:table-cell p-2 text-center">
+                  {formatCurrency(customer.total_spent)}
+                </td> */}
               <td className="hidden md:table-cell p-2 text-center">
                 {dayjs(customer.created_at).format("DD/MM/YYYY - HH:mm")}
               </td>
               <td className="p-2 text-center">
                 <div className="flex items-center gap-2">
-                  <button className="p-1 hover:bg-gray-100 rounded-full">
+                  {/* <button className="p-1 hover:bg-gray-100 rounded-full">
                     <Mail className="h-4 w-4" />
-                  </button>
+                  </button> */}
                   <button
                     className="p-1 hover:bg-gray-100 rounded-full dropdown-toggle"
                     onClick={() =>

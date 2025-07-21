@@ -100,7 +100,7 @@ export default function InventoryPage() {
             <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-gray-500" />
             <input
               type="text"
-              placeholder="Tìm kiếm theo tên hoặc SKU..."
+              placeholder="Tìm kiếm ..."
               className="w-full rounded-md border border-gray-300 py-2 pl-8 pr-4 text-sm"
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}

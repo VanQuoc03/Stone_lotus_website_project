@@ -13,6 +13,13 @@ export default function ProductActions({
   const { updateCartCount, getCartItemQuantity } = useCart();
   const navigate = useNavigate();
 
+  const handleUnauthorized = () => {
+    toast.error("Bạn cần đăng nhập để thêm sản phẩm vào giỏ hàng.");
+    setTimeout(() => {
+      navigate("/login");
+    }, 1000);
+  };
+
   const handleAdd = async () => {
     try {
       const currentQuantity = await getCartItemQuantity(product._id);
@@ -31,9 +38,14 @@ export default function ProductActions({
         quantity,
         variantId: variant?._id,
         updateCartCount,
+        onUnauthorized: handleUnauthorized, // Pass the handler
+        showSuccess: () => toast.success("Đã thêm sản phẩm vào giỏ hàng!"), // Only show success when actually added
       });
-      toast.success("Đã thêm sản phẩm vào giỏ hàng!");
-    } catch (error) {}
+    } catch (error) {
+      console.error("Lỗi thêm vào giỏ hàng:", error);
+      // onUnauthorized đã được gọi trong addToCart nếu cần thiết
+      toast.error("Đã xảy ra lỗi khi thêm sản phẩm vào giỏ hàng.");
+    }
   };
 
   const handleBuyNow = async () => {
@@ -54,6 +66,9 @@ export default function ProductActions({
         quantity,
         variantId: variant?._id,
         updateCartCount,
+        onUnauthorized: handleUnauthorized,
+        showSuccess: () =>
+          toast.success("Đã thêm sản phẩm, chuyển đến thanh toán..."), // Only show success when actually added
       });
       navigate("/checkout", {
         state: {
@@ -64,7 +79,6 @@ export default function ProductActions({
           },
         },
       });
-      toast.success("Đã thêm sản phẩm, chuyển đến thanh toán...");
     } catch (error) {
       console.error("Lỗi khi mua ngay:", error);
       toast.error(

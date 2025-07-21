@@ -7,7 +7,6 @@ import api from "@/utils/axiosInstance";
 export default function ProductPage() {
   const { id: categoryId } = useParams();
   const navigate = useNavigate();
-
   const {
     products,
     totalCount,
@@ -15,6 +14,7 @@ export default function ProductPage() {
     loading,
     loadMore,
     handlePriceFilter,
+    handleSortChange, // Thêm handleSortChange vào đây
   } = useFilteredProducts(categoryId);
 
   const isAllProductPage = !categoryId;
@@ -46,6 +46,7 @@ export default function ProductPage() {
       products={products}
       totalCount={totalCount}
       onFilter={handlePriceFilter}
+      onSortChange={handleSortChange} // Truyền handleSortChange xuống ProductPageLayout
       showLoadMore={hasMore}
       onLoadMore={loadMore}
       loading={loading}

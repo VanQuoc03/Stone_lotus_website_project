@@ -89,7 +89,10 @@ export default function OrdersPage() {
             Quản lý và theo dõi tất cả đơn hàng của khách.
           </p>
         </div>
-        <Button variant="outline">
+        <Button
+          variant="outline"
+          onClick={() => alert("Chức năng xuất Excel chưa được triển khai")}
+        >
           <Download className="mr-2 h-4 w-4" /> Xuất Excel
         </Button>
       </div>

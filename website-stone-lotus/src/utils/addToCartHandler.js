@@ -26,5 +26,9 @@ export const addToCart = async ({
     if (showSuccess) showSuccess();
   } catch (err) {
     console.error("Lỗi thêm vào giỏ hàng:", err);
+    // Đảm bảo onUnauthorized được gọi khi có lỗi 401
+    if (err.response && err.response.status === 401 && onUnauthorized) {
+      onUnauthorized();
+    }
   }
 };

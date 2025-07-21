@@ -1,5 +1,4 @@
 import { createContext, useContext, useState, useEffect } from "react";
-import { getGuestCart } from "@/utils/guestCart"; // nếu có dùng guestCart
 import api from "@/utils/axiosInstance";
 
 const CartContext = createContext();
@@ -27,8 +26,8 @@ export const CartProvider = ({ children }) => {
         const count = res.data?.items?.length || 0;
         setCartCount(count);
       } else {
-        const guestCart = getGuestCart();
-        setCartCount(guestCart.length);
+        // Nếu không có token, giỏ hàng phải rỗng
+        setCartCount(0);
       }
     } catch (err) {
       console.error("Lỗi lấy số lượng giỏ hàng:", err);
@@ -38,6 +37,10 @@ export const CartProvider = ({ children }) => {
 
   const getCartItemQuantity = async (productId) => {
     try {
+      const currentToken = localStorage.getItem("token");
+      if (!currentToken) {
+        return 0; // Nếu không có token, không có sản phẩm trong giỏ hàng đăng nhập
+      }
       const res = await api.get("/api/cart");
       if (res.status !== 200 || !res.data || !res.data.items) {
         return 0;

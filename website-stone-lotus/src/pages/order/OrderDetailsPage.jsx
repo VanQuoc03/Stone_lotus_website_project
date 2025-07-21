@@ -33,7 +33,7 @@ export default function OrderDetailsPage() {
     <div className="mt-[210px] pb-16 max-w-5xl mx-auto px-4">
       <div
         className="flex items-center gap-2 cursor-pointer py-2 hover:bg-gray-100 rounded"
-        onClick={() => navigate("/order-manage")}
+        onClick={() => navigate(`/thank-you/${orderId}`)}
       >
         <ArrowLeft />
         Quay lại

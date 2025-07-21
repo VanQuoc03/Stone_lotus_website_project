@@ -4,6 +4,7 @@ import { fetchProducts } from "@/api/productApi";
 export default function useFilteredProducts(categoryId = null) {
   const [products, setProducts] = useState([]);
   const [priceFilters, setPriceFilters] = useState([]);
+  const [sortOrder, setSortOrder] = useState(""); // Thêm state cho sortOrder
   const [totalCount, setTotalCount] = useState(0);
   const [page, setPage] = useState(1);
   const [limit] = useState(30);
@@ -20,6 +21,7 @@ export default function useFilteredProducts(categoryId = null) {
         ...(priceFilters.length > 0 && {
           priceRanges: priceFilters.map((p) => `${p.min}-${p.max}`),
         }),
+        ...(sortOrder && { sort: sortOrder }), // Thêm sortOrder vào param
       };
       const res = await fetchProducts(param);
       const fetched = res.data.products || [];
@@ -35,12 +37,12 @@ export default function useFilteredProducts(categoryId = null) {
   };
   useEffect(() => {
     setPage(1);
-    // setProducts([]);
+    // setProducts([]); // Không cần đặt lại products về rỗng, fetchData sẽ xử lý page === 1
     window.scrollTo({ top: 0, behavior: "smooth" });
-  }, [categoryId, JSON.stringify(priceFilters)]);
+  }, [categoryId, JSON.stringify(priceFilters), sortOrder]); // Thêm sortOrder vào dependencies
   useEffect(() => {
     fetchData();
-  }, [page, categoryId, JSON.stringify(priceFilters)]);
+  }, [page, categoryId, JSON.stringify(priceFilters), sortOrder]); // Thêm sortOrder vào dependencies
   const loadMore = () => {
     if (hasMore) {
       setPage((prev) => prev + 1);
@@ -48,7 +50,15 @@ export default function useFilteredProducts(categoryId = null) {
   };
   const handlePriceFilter = ({ prices }) => {
     setPriceFilters(prices);
+    setPage(1); // Reset page khi lọc giá
   };
+
+  const handleSortChange = (sortOption) => {
+    // Thêm hàm xử lý sắp xếp
+    setSortOrder(sortOption);
+    setPage(1); // Reset page khi sắp xếp
+  };
+
   return {
     products,
     totalCount,
@@ -56,5 +66,6 @@ export default function useFilteredProducts(categoryId = null) {
     loading,
     loadMore,
     handlePriceFilter,
+    handleSortChange, // Trả về hàm xử lý sắp xếp
   };
 }

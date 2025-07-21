@@ -17,6 +17,7 @@ export default function useOrderDetails(orderId) {
             Authorization: `Bearer ${token}`,
           },
         });
+        console.log("Order Details:", res.data);
         setOrder(res.data);
       } catch (error) {
         setError("Không thể tải đơn hàng");

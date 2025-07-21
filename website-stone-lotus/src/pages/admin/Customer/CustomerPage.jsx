@@ -134,7 +134,7 @@ export default function CustomerPage() {
               className="w-[150px] rounded border border-gray-300 bg-white focus:outline-none px-4 py-2 text-sm shadow-sm"
               onChange={(e) => setStatusFilter(e.target.value)}
             >
-              <option value="all">Tất cả he</option>
+              <option value="all">Tất cả</option>
               <option value="active">Hoạt động</option>
               <option value="inactive">Không hoạt động</option>
             </select>
@@ -167,7 +167,7 @@ export default function CustomerPage() {
         <Pagination
           currentPage={currentPage}
           totalPages={totalPages}
-          onPageChange={setCurrentPage} 
+          onPageChange={setCurrentPage}
         />
       </div>
     </>

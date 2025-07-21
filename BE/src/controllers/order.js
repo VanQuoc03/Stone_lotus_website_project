@@ -168,8 +168,7 @@ exports.placeOrder = async (req, res) => {
     orderItems.forEach((item) => (item.order = newOrder._id));
     await OrderItem.insertMany(orderItems);
 
-    // await newOrder.save();
-    // Cập nhật tồn kho
+    // Cập nhật tồn kho & số lượng đã bán
     for (const item of itemsToProcess) {
       const productId = item.product?._id || item.product;
       const inventory = await ProductInventory.findOneAndUpdate(
@@ -183,6 +182,13 @@ exports.placeOrder = async (req, res) => {
       if (!inventory) {
         throw new Error(`Không tìm thấy tồn kho cho sản phẩm ${productId}`);
       }
+      await Product.findByIdAndUpdate(
+        productId,
+        {
+          $inc: { sold: item.quantity },
+        },
+        { new: false }
+      );
     }
 
     // Xóa giỏ hàng
@@ -264,6 +270,7 @@ exports.getOrderById = async (req, res) => {
     res.json({
       orderId: order._id,
       total_price: order.total_price,
+      shipping_fee: order.shipping_fee,
       shippingInfo: order.shipping_address,
       paymentMethod: order.payment_method,
       status: order.status,

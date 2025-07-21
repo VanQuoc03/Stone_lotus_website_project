@@ -95,29 +95,14 @@ export default function ProductPage() {
 
       if (product._id) {
         const updated = await updateProduct(productToSave);
-        const normalizedProduct = {
-          ...updated,
-          images: Array.isArray(updated.images)
-            ? updated.images.map((img) => img.image_url)
-            : [],
-        };
 
         setProducts((prev) =>
-          prev.map((p) =>
-            p._id === normalizedProduct._id ? normalizedProduct : p
-          )
+          prev.map((p) => (p._id === updated._id ? updated : p))
         );
       } else {
         const created = await addProduct(productToSave);
-        const normalizedProduct = {
-          ...created,
-          images: Array.isArray(created.images)
-            ? created.images.map((img) => img.image_url)
-            : [],
-        };
-
-        setProducts((prev) => [normalizedProduct, ...prev]);
-        setStockEntryProduct(normalizedProduct);
+        setProducts((prev) => [created, ...prev]);
+        setStockEntryProduct(created);
       }
     } catch (err) {
       console.error("Lỗi khi lưu sản phẩm:", err);

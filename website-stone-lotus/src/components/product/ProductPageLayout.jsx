@@ -9,6 +9,7 @@ export default function ProductPageLayout({
   products,
   totalCount,
   onFilter,
+  onSortChange,
   showLoadMore = false,
   onLoadMore = null,
   loading,
@@ -37,7 +38,7 @@ export default function ProductPageLayout({
             <span className="text-gray-600 text-sm mb-3">
               <strong className="font-bold">{totalCount}</strong> sản phẩm
             </span>
-            <SortFilter />
+            <SortFilter onSortChange={onSortChange} />
           </div>
 
           {products.length === 0 ? (

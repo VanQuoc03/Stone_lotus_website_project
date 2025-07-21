@@ -14,7 +14,7 @@ exports.calculateShippingFeeHandler = async (req, res) => {
     );
 
     const fee = await calculateGHNShippingFee({
-      fromDistrictId: 1450, // ✅ GHN shop district_id của bạn
+      fromDistrictId: 1450, //GHN shop district_id của bạn
       toDistrictId: districtCode,
       toWardCode: wardCode,
       weight,

@@ -3,20 +3,24 @@ const ProductImage = require("../models/productImage");
 const ProductInventory = require("../models/productInventory");
 const mongoose = require("mongoose");
 const productPurchase = require("../models/productPurchase");
+const OrderItem = require("../models/orderItem");
 
 //Lấy danh sách tất cả sản phẩm
 const getAllProduct = async (req, res) => {
   try {
-    const {
+    let {
       category,
       search,
       page = 1,
       limit = 10,
       priceRanges,
       includeInactive,
+      sort,
     } = req.query;
 
     const queryAnd = [];
+
+    // Search theo tên hoặc mô tả
     if (search) {
       queryAnd.push({
         $or: [
@@ -26,13 +30,16 @@ const getAllProduct = async (req, res) => {
       });
     }
 
+    // Lọc theo danh mục (chuyển về ObjectId nếu là string)
     if (category && category !== "all") {
-      queryAnd.push({ category });
+      if (mongoose.Types.ObjectId.isValid(category)) {
+        queryAnd.push({ category: new mongoose.Types.ObjectId(category) });
+      }
     }
 
+    //Lọc theo khoảng giá
     if (priceRanges) {
       const ranges = Array.isArray(priceRanges) ? priceRanges : [priceRanges];
-
       const priceConditions = ranges
         .map((range) => {
           const [min, max] = range.split("-").map(Number);
@@ -44,23 +51,98 @@ const getAllProduct = async (req, res) => {
         queryAnd.push({ $or: priceConditions });
       }
     }
+
+    // Trạng thái sản phẩm
     if (!includeInactive || includeInactive !== "true") {
       queryAnd.push({ status: "active" });
     }
 
     const finalQuery = queryAnd.length > 0 ? { $and: queryAnd } : {};
-
     const skip = (parseInt(page) - 1) * parseInt(limit);
-    const total = await Product.countDocuments(finalQuery);
 
-    const products = await Product.find(finalQuery)
-      .populate("category")
-      .populate("images")
-      .populate("inventory")
-      .skip(skip)
-      .limit(parseInt(limit))
-      .lean();
-    // Lấy giá nhập cuối cùng của mỗi sản phẩm
+    let products = [];
+    let total = 0;
+
+    //Xử lý sắp xếp theo tồn kho
+    if (sort === "stock_desc") {
+      const aggregateQuery = [
+        { $match: finalQuery },
+        {
+          $lookup: {
+            from: "productinventories",
+            localField: "_id",
+            foreignField: "product",
+            as: "inventory",
+          },
+        },
+        { $unwind: { path: "$inventory", preserveNullAndEmptyArrays: true } },
+        {
+          $lookup: {
+            from: "productimages",
+            localField: "_id",
+            foreignField: "product",
+            as: "images",
+          },
+        },
+        {
+          $lookup: {
+            from: "categories",
+            localField: "category",
+            foreignField: "_id",
+            as: "category",
+          },
+        },
+        { $unwind: { path: "$category", preserveNullAndEmptyArrays: true } },
+        { $sort: { "inventory.quantity": -1 } },
+        { $skip: skip },
+        { $limit: parseInt(limit) },
+      ];
+
+      const countQuery = [
+        { $match: finalQuery },
+        {
+          $lookup: {
+            from: "productinventories",
+            localField: "_id",
+            foreignField: "product",
+            as: "inventory",
+          },
+        },
+        { $count: "total" },
+      ];
+
+      const [productResults, countResults] = await Promise.all([
+        Product.aggregate(aggregateQuery),
+        Product.aggregate(countQuery),
+      ]);
+
+      products = productResults;
+      total = countResults[0]?.total || 0;
+    } else {
+      //Các sort khác
+      const sortOptions = {
+        price_asc: { price: 1 },
+        price_desc: { price: -1 },
+        name_asc: { name: 1 },
+        name_desc: { name: -1 },
+        created_desc: { createdAt: -1 },
+        created_asc: { createdAt: 1 },
+        bestseller: { sold: -1 },
+      }[sort] || { createdAt: -1 };
+
+      total = await Product.countDocuments(finalQuery);
+
+      products = await Product.find(finalQuery)
+        .populate("category")
+        .populate("images")
+        .populate("inventory")
+        .sort(sortOptions)
+        .skip(skip)
+        .limit(parseInt(limit))
+        .lean();
+    }
+
+    //Thêm giá nhập cuối
     const purchaseData = await productPurchase.aggregate([
       { $sort: { createdAt: -1 } },
       {
@@ -74,12 +156,13 @@ const getAllProduct = async (req, res) => {
       acc[cur._id.toString()] = cur.latestPrice;
       return acc;
     }, {});
+
     const enrichedProducts = products.map((p) => ({
       ...p,
-      purchasePrice: priceMap[p._id.toString()] || 0,
+      purchasePrice: priceMap[p._id?.toString()] || 0,
     }));
 
-    res.json({
+    return res.json({
       products: enrichedProducts,
       total,
       page: parseInt(page),

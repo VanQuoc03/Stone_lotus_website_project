@@ -86,7 +86,7 @@ export default function OrderSummary({ items, shippingFee = 0 }) {
             </div>
           )}
 
-          <div className="flex justify-between">
+          {/* <div className="flex justify-between">
             <span>Phí vận chuyển</span>
             <span>
               {shippingFee === 0 ? (
@@ -95,7 +95,7 @@ export default function OrderSummary({ items, shippingFee = 0 }) {
                 format(shippingFee)
               )}
             </span>
-          </div>
+          </div> */}
 
           <hr className="my-2" />
 

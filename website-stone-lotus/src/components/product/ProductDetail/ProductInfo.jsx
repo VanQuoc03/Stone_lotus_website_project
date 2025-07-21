@@ -1,6 +1,7 @@
 import React from "react";
 
 export default function ProductInfo({ product }) {
+  const formattedPrice = product.price.toLocaleString("vi-VN") || "0";
   return (
     <div className="space-y-3">
       <h1 className="text-2xl font-bold">{product.name}</h1>
@@ -15,7 +16,7 @@ export default function ProductInfo({ product }) {
         <p>
           Giá:{" "}
           <strong className="font-bold text-2xl text-red-500">
-            {product.price}₫
+            {formattedPrice}₫
           </strong>
         </p>
       </div>

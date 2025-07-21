@@ -24,6 +24,7 @@ export default function ThankYouPage() {
     const fetchOrderDetails = async () => {
       try {
         const res = await api.get(`/api/orders/${orderId}`);
+        console.log("Order Details:", res.data);
         setOrderDetails(res.data);
       } catch (err) {
         console.error("Lỗi khi lấy thông tin đơn hàng:", err);
@@ -171,16 +172,21 @@ export default function ThankYouPage() {
                       </div>
                       <div className="bg-gray-50 p-4">
                         <div className="flex justify-between font-semibold">
+                          <span>Phí vận chuyển:</span>
+                          <span>
+                            {(orderDetails.shipping_fee || 0).toLocaleString(
+                              "vi-VN"
+                            )}
+                            đ
+                          </span>
+                        </div>
+                      </div>
+
+                      <div className="bg-gray-50 p-4">
+                        <div className="flex justify-between font-semibold">
                           <span>Tổng cộng:</span>
                           <span>
-                            {orderDetails.items
-                              .reduce(
-                                (total, item) =>
-                                  total + item.price * item.quantity,
-                                0
-                              )
-                              .toLocaleString("vi-VN")}
-                            đ
+                            {orderDetails.total_price.toLocaleString("vi-VN")}đ
                           </span>
                         </div>
                       </div>
@@ -218,7 +224,7 @@ export default function ThankYouPage() {
                   to={`/order/${orderId}`}
                   className="flex items-center gap-2 px-6 py-3 bg-green-600 text-white rounded-md hover:bg-green-700 transition-colors"
                 >
-                  <FileText className="w-5 h-5" /> 
+                  <FileText className="w-5 h-5" />
                   <span>Xem đơn hàng của tôi</span>
                 </Link>
               </div>

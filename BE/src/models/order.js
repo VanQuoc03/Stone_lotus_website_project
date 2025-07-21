@@ -27,6 +27,10 @@ const orderSchema = new mongoose.Schema(
       ],
       default: "pending",
     },
+    shipping_fee: {
+      type: Number,
+      default: 30000,
+    },
     promotion_id: { type: mongoose.Schema.Types.ObjectId, ref: "Promotion" },
     timeline: [
       {

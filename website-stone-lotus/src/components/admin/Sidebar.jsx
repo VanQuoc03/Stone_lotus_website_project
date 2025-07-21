@@ -52,7 +52,7 @@ const navItems = [
   },
   {
     title: "Hướng dẫn chăm sóc",
-    href: "/care-guides",
+    href: "/admin/care-guides",
     icon: <BookOpen className="h-5 w-5" />,
   },
   {

@@ -8,8 +8,14 @@ import { toast } from "react-toastify";
 
 export default function ProductCard({ product }) {
   const navigate = useNavigate();
-  // const [showToast, setShowToast] = useState(false);
   const { updateCartCount } = useCart();
+
+  const handleUnauthorized = () => {
+    toast.error("Bạn cần đăng nhập để thêm sản phẩm vào giỏ hàng.");
+    setTimeout(() => {
+      navigate("/login");
+    }, 1000); 
+  };
 
   const handleClick = () => {
     navigate(`/products/${product.id || product._id}`);
@@ -22,18 +28,12 @@ export default function ProductCard({ product }) {
       quantity: 1,
       updateCartCount,
       showSuccess: () => toast.success("Đã thêm vào giỏ hàng!"),
-      onUnauthorized: () => navigate("/login"),
+      onUnauthorized: handleUnauthorized,
     });
   };
 
   return (
     <>
-      {/* {showToast && (
-        <div className="fixed top-6 right-6 z-50 bg-green-100 border border-green-400 text-green-800 px-4 py-2 rounded shadow-lg">
-          ✅ Đã thêm vào giỏ hàng!
-        </div>
-      )} */}
-
       <div
         className="group relative border rounded-lg p-3 shadow-sm hover:shadow-lg transition text-center text-sm bg-white h-full flex flex-col justify-between"
         onClick={handleClick}
