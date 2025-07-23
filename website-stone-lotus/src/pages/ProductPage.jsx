@@ -14,7 +14,7 @@ export default function ProductPage() {
     loading,
     loadMore,
     handlePriceFilter,
-    handleSortChange, // Thêm handleSortChange vào đây
+    handleSortChange,
   } = useFilteredProducts(categoryId);
 
   const isAllProductPage = !categoryId;

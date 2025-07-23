@@ -7,6 +7,7 @@ import SearchBar from "./SearchBar";
 import MainNavItems from "./MainNavItems";
 import { fetchCategories } from "@/api/categoryApi";
 import { useNavigate } from "react-router-dom";
+import { IoClose } from "react-icons/io5";
 
 function Header() {
   const [categories, setCategories] = useState([]);

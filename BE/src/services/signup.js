@@ -9,11 +9,10 @@ async function createUser(userData) {
     throw new Error("Email đã tồn tại");
   }
 
-  const hashedPassword = await bcrypt.hash(password, 10);
   const createdUser = new User({
     name,
     email,
-    password: hashedPassword,
+    password: password, // Lưu mật khẩu thô để hook `pre("save")` tự động hash
     role: "customer",
     status: true,
     created_at: new Date(),
