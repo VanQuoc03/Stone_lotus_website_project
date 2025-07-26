@@ -1,13 +1,21 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { ArrowRight } from "lucide-react";
+import api from "@/utils/axiosInstance";
+import { useAuth } from "@/hooks/useAuth";
+import { useCart } from "@/context/CartContext";
 
 export default function OrderSummary({ items, shippingFee = 0 }) {
   const navigate = useNavigate();
+  const [suggestedCoupons, setSuggestedCoupons] = useState([]);
+  const [loadingSuggestions, setLoadingSuggestions] = useState(true);
+  const { getUser } = useAuth();
+  const user = getUser();
+  const userId = user ? user.id : null;
   const [discountCode, setDiscountCode] = useState("");
-  const [discount, setDiscount] = useState(0);
   const [codeApplied, setCodeApplied] = useState(false);
+  const { discount, applyPromotion, clearPromotion } = useCart();
 
   const subTotal = items.reduce(
     (sum, { product, quantity }) => sum + product.price * quantity,
@@ -16,24 +24,50 @@ export default function OrderSummary({ items, shippingFee = 0 }) {
 
   const total = subTotal - discount + shippingFee;
 
-  const handleApplyCode = () => {
-    if (discountCode.trim().toUpperCase() === "GIAM10") {
-      const amount = Math.round(subTotal * 0.1);
-      setDiscount(amount);
-      setCodeApplied(true);
-      toast.success("Áp dụng mã GIAM10 thành công!");
-    } else {
-      setDiscount(0);
-      setCodeApplied(false);
-      toast.error("Mã giảm giá không hợp lệ.");
+  useEffect(() => {
+    const fetchSuggestions = async () => {
+      try {
+        const res = await api.get(
+          `/api/promotions/suggestions?total=${subTotal}&user_id=${userId}`
+        );
+        console.log(res.data);
+        setSuggestedCoupons(res.data || []);
+      } catch (err) {
+        console.error("Lỗi gợi ý mã giảm giá:", err);
+      } finally {
+        setLoadingSuggestions(false);
+      }
+    };
+
+    if (userId && subTotal > 0) {
+      fetchSuggestions();
     }
-  };
+  }, [subTotal, userId]);
 
   const format = (price) =>
     new Intl.NumberFormat("vi-VN", {
       style: "currency",
       currency: "VND",
     }).format(price);
+
+  const handleApplyCode = async () => {
+    try {
+      const res = await api.post("/api/promotions/apply", {
+        code: discountCode,
+        total: subTotal,
+        user_id: userId,
+      });
+
+      applyPromotion(res.data.discount, res.data.promotion);
+      setCodeApplied(true);
+      toast.success(res.data.message || "Áp dụng mã thành công");
+    } catch (err) {
+      console.error("Lỗi áp mã:", err);
+      toast.error(
+        err.response?.data?.error || "Không thể áp dụng mã. Vui lòng thử lại."
+      );
+    }
+  };
 
   return (
     <div className="space-y-6">
@@ -60,9 +94,26 @@ export default function OrderSummary({ items, shippingFee = 0 }) {
               Áp dụng
             </button>
           </div>
-          {codeApplied && (
-            <div className="text-sm text-green-600">
-              ✅ Mã <strong>GIAM10</strong> đã được áp dụng
+
+          {/* Gợi ý mã giảm giá */}
+          {!codeApplied && suggestedCoupons.length > 0 && (
+            <div className="space-y-2 text-sm text-gray-700 mt-2">
+              <p className="text-xs text-gray-500">Gợi ý mã giảm giá:</p>
+              <div className="flex flex-wrap gap-2">
+                {suggestedCoupons.map((c) => (
+                  <button
+                    key={c._id}
+                    type="button"
+                    onClick={() => {
+                      setDiscountCode(c.code);
+                      toast.info(`Đã chọn mã: ${c.code}`);
+                    }}
+                    className="px-2 py-1 border rounded text-green-700 border-green-500 hover:bg-green-100 text-xs font-mono"
+                  >
+                    {c.code}
+                  </button>
+                ))}
+              </div>
             </div>
           )}
         </div>
@@ -81,21 +132,10 @@ export default function OrderSummary({ items, shippingFee = 0 }) {
 
           {discount > 0 && (
             <div className="flex justify-between text-green-600">
-              <span>Giảm giá (10%)</span>
+              <span>Giảm giá ({discountCode})</span>
               <span>-{format(discount)}</span>
             </div>
           )}
-
-          {/* <div className="flex justify-between">
-            <span>Phí vận chuyển</span>
-            <span>
-              {shippingFee === 0 ? (
-                <span className="text-green-600 font-medium">Miễn phí</span>
-              ) : (
-                format(shippingFee)
-              )}
-            </span>
-          </div> */}
 
           <hr className="my-2" />
 
@@ -104,12 +144,12 @@ export default function OrderSummary({ items, shippingFee = 0 }) {
             <span className="text-green-700">{format(total)}</span>
           </div>
 
-          {shippingFee > 0 && (
+          {/* {shippingFee > 0 && (
             <p className="text-xs text-gray-600">
               Mua thêm <strong>{format(500000 - subTotal)}</strong> để được miễn
               phí vận chuyển
             </p>
-          )}
+          )} */}
         </div>
       </div>
 

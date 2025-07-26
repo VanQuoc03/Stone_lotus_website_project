@@ -1,24 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import { useLocation, Link } from "react-router-dom";
-import {
-  BarChart3,
-  ShoppingCart,
-  Users,
-  Leaf,
-  Tag,
-  Package,
-  BookOpen,
-  Megaphone,
-  Settings,
-  Menu,
-  Bell,
-  Search,
-  LogOut,
-  Sun,
-  Moon,
-  Droplets,
-  Calendar,
-} from "lucide-react";
+import { Calendar } from "lucide-react";
 import Header from "@/components/admin/Header";
 import SummaryCards from "@/components/dashboard/SummaryCards";
 import SalesChart from "@/components/dashboard/SalesChart";

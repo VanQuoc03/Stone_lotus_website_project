@@ -32,6 +32,13 @@ const orderSchema = new mongoose.Schema(
       default: 30000,
     },
     promotion_id: { type: mongoose.Schema.Types.ObjectId, ref: "Promotion" },
+    discount_amount: { type: Number, default: 0 }, // Thêm trường discount_amount
+    applied_promotion_details: {
+      // Thêm trường applied_promotion_details
+      code: { type: String },
+      type: { type: String, enum: ["percent", "fixed"] },
+      value: { type: Number },
+    },
     timeline: [
       {
         status: {

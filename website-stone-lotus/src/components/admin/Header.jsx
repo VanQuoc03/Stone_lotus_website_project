@@ -75,7 +75,7 @@ export default function Header({ open, setOpen }) {
                 Đơn hàng mới (#1234)
               </div>
               <div className="px-4 py-2 text-sm hover:bg-gray-50">
-                Sản phẩm sắp hết hàng: Sen đá Nhật Nguyệt
+                Sản phẩm sắp hết hàng: Sen đá hồng phấn
               </div>
               <div className="px-4 py-2 text-sm hover:bg-gray-50">
                 5 khách hàng mới đăng ký hôm nay

@@ -5,6 +5,7 @@ export default function OrderItems({
   subtotal,
   totalPrice,
   shippingFee,
+  discount_amount,
 }) {
   const formatPrice = (price) => {
     return new Intl.NumberFormat("vi-VN", {
@@ -12,11 +13,6 @@ export default function OrderItems({
       currency: "VND",
     }).format(price || 0);
   };
-
-  const total = items.reduce(
-    (sum, item) => sum + item.price * item.quantity,
-    0
-  );
 
   return (
     <div className="mt-8">
@@ -57,6 +53,12 @@ export default function OrderItems({
               {shippingFee > 0
                 ? shippingFee.toLocaleString("vi-VN") + "₫"
                 : "Miễn phí"}
+            </span>
+          </div>
+          <div className="flex justify-between font-semibold ">
+            <span className="">Giảm giá:</span>
+            <span className="text-red-500">
+              -{discount_amount.toLocaleString("vi-VN")}₫
             </span>
           </div>
         </div>

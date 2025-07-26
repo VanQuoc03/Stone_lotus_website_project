@@ -3,6 +3,8 @@ export default function CheckoutSummary({
   onSubmit,
   isPlacingOrder,
   shippingFee,
+  discount,
+  appliedPromotion,
 }) {
   const format = (price) =>
     new Intl.NumberFormat("vi-VN", {
@@ -16,7 +18,7 @@ export default function CheckoutSummary({
   }, 0);
 
   const shipping = typeof shippingFee === "number" ? shippingFee : 0;
-  const total = subtotal + shipping;
+  const total = subtotal + shipping - discount; // Trừ đi giảm giá
 
   return (
     <div className="bg-white rounded-lg shadow-sm p-6 sticky top-8">
@@ -57,9 +59,17 @@ export default function CheckoutSummary({
         <div className="flex justify-between text-sm">
           <span className="text-gray-600">Phí vận chuyển</span>
           <span className="font-medium">
-            {shipping === 0 ? "Miễn phí" : format(shipping)}
+            {shipping === 0 ? format(0) : format(shipping)}
           </span>
         </div>
+        {discount > 0 && (
+          <div className="flex justify-between text-sm text-green-600">
+            <span className="text-gray-600">
+              Giảm giá ({appliedPromotion?.code || ""})
+            </span>
+            <span className="font-medium">-{format(discount)}</span>
+          </div>
+        )}
         <div className="flex justify-between text-lg font-semibold pt-3 border-t border-gray-200">
           <span>Tổng cộng</span>
           <span className="text-green-600">{format(total)}</span>

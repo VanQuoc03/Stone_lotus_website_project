@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import { useLocation, Link } from "react-router-dom";
 import {
   BarChart3,
@@ -10,13 +10,7 @@ import {
   BookOpen,
   Megaphone,
   Settings,
-  Menu,
-  Bell,
-  Search,
-  LogOut,
-  Sun,
-  Moon,
-  Droplets,
+  Tag as DiscountIcon,
 } from "lucide-react";
 
 const navItems = [
@@ -46,6 +40,11 @@ const navItems = [
     icon: <Tag className="h-5 w-5" />,
   },
   {
+    title: "Giảm giá",
+    href: "/admin/promotions",
+    icon: <DiscountIcon className="h-5 w-5" />,
+  },
+  {
     title: "Kho hàng",
     href: "/inventory",
     icon: <Package className="h-5 w-5" />,
@@ -66,13 +65,14 @@ const navItems = [
     icon: <Settings className="h-5 w-5" />,
   },
 ];
+
 export default function Sidebar() {
+  const location = useLocation();
+
   return (
     <div className={`flex min-h-screen flex-col`}>
-      {/* Sidebar + Content */}
       <div className="flex flex-1">
-        {/* cmt */}
-        <aside className="hidden w-64 shank-toc-do-0 border-r bg-background md:block">
+        <aside className="hidden w-64 border-r bg-background md:block">
           <nav className="grid gap-2 p-4 text-sm">
             {navItems.map((item, index) => (
               <Link
@@ -90,7 +90,6 @@ export default function Sidebar() {
             ))}
           </nav>
         </aside>
-        {/* <main className="flex-1 overflow-auto p-4 md:p-6">{children}</main> */}
       </div>
     </div>
   );

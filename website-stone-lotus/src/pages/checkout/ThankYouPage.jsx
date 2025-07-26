@@ -129,7 +129,7 @@ export default function ThankYouPage() {
                   </div>
                 </div>
 
-                {orderDetails.items?.length > 0 && (
+                {/* {orderDetails.items?.length > 0 && (
                   <div>
                     <h2 className="text-lg font-semibold mb-3 flex items-center gap-2">
                       <ShoppingBag className="w-5 h-5" />
@@ -192,7 +192,7 @@ export default function ThankYouPage() {
                       </div>
                     </div>
                   </div>
-                )}
+                )} */}
               </div>
             ) : (
               <div className="text-center py-8">

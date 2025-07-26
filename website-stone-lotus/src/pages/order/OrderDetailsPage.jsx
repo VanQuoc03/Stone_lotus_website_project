@@ -14,7 +14,7 @@ export default function OrderDetailsPage() {
   const { order, loading, updateStatus, cancelOrder } =
     useOrderDetails(orderId);
   const navigate = useNavigate();
-
+  console.log(order);
   if (loading) {
     return <div className="text-center pt-32">Đang tải đơn hàng...</div>;
   }
@@ -28,7 +28,8 @@ export default function OrderDetailsPage() {
     0
   );
   const totalPrice = order.total_price || 0;
-  const shippingFee = totalPrice - subtotal;
+  const shippingFee = order.shipping_fee;
+  const discount_amount = order.discount_amount;
   return (
     <div className="mt-[210px] pb-16 max-w-5xl mx-auto px-4">
       <div
@@ -57,6 +58,7 @@ export default function OrderDetailsPage() {
             items={order.items}
             subtotal={subtotal}
             shippingFee={shippingFee}
+            discount_amount={discount_amount}
             totalPrice={totalPrice}
           />
         </div>

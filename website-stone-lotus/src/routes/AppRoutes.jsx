@@ -28,6 +28,7 @@ import CareGuidesPageClient from "@/pages/care-guide/CareGuidePage";
 import CareGuideDetailPageClient from "@/pages/care-guide/CareGuideDetailPage";
 import ProductReview from "@/components/review/ProductReview";
 import AdminCareGuideDetailPage from "@/pages/admin/care-guide/AdminCareGuideDetailPage";
+import Promotions from "@/pages/admin/promotions/Promotions";
 
 export default function AppRoutes() {
   return (
@@ -122,6 +123,18 @@ export default function AppRoutes() {
           <RequireAdmin>
             <AdminLayout>
               <AdminCareGuideDetailPage />
+            </AdminLayout>
+          </RequireAdmin>
+        }
+      />
+
+      {/* Promotions */}
+      <Route
+        path="/admin/promotions"
+        element={
+          <RequireAdmin>
+            <AdminLayout>
+              <Promotions />
             </AdminLayout>
           </RequireAdmin>
         }

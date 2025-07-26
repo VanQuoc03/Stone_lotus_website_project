@@ -95,7 +95,15 @@ exports.getAllOrders = async (req, res) => {
 exports.placeOrder = async (req, res) => {
   try {
     const userId = req.user.id;
-    const { shippingInfo, paymentMethod, items, shippingFee } = req.body;
+    const {
+      shippingInfo,
+      paymentMethod,
+      items,
+      shippingFee,
+      promotionId,
+      discountAmount,
+      appliedPromotionDetails,
+    } = req.body;
 
     const itemsToProcess =
       items ||
@@ -147,7 +155,7 @@ exports.placeOrder = async (req, res) => {
       });
     }
     const shipping = typeof shippingFee === "number" ? shippingFee : 30000;
-    const totalPrice = subtotal + shipping;
+    const totalPrice = subtotal + shipping - discountAmount;
 
     const newOrder = await Order.create({
       user: userId,
@@ -156,6 +164,9 @@ exports.placeOrder = async (req, res) => {
       payment_method: paymentMethod,
       shipping_fee: shipping,
       status: "pending",
+      promotion_id: promotionId || null,
+      discount_amount: discountAmount || 0,
+      applied_promotion_details: appliedPromotionDetails || null,
       timeline: [
         {
           status: "pending",
@@ -273,6 +284,7 @@ exports.getOrderById = async (req, res) => {
       shipping_fee: order.shipping_fee,
       shippingInfo: order.shipping_address,
       paymentMethod: order.payment_method,
+      discount_amount: order.discount_amount,
       status: order.status,
       items: formattedItems,
       createdAt: order.createdAt,

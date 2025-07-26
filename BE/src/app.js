@@ -24,6 +24,7 @@ const reviewRoutes = require("./routes/review");
 const dashboardRoutes = require("./routes/dashboard");
 const shippingRoutes = require("./routes/shipping");
 const bestSellingRoutes = require("./routes/bestSelling");
+const promotionsRoutes = require("./routes/promotion");
 
 app.use(bodyParser.json());
 app.use(
@@ -78,6 +79,9 @@ app.use("/api/shipping", shippingRoutes);
 
 // Best Selling Products
 app.use("/api", bestSellingRoutes);
+
+// promotions
+app.use("/api", promotionsRoutes);
 
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);

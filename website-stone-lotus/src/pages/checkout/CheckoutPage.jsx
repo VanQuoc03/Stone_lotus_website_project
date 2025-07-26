@@ -33,7 +33,8 @@ export default function CheckoutPage() {
   const navigate = useNavigate();
   const location = useLocation();
   const buyNowItem = location.state?.buyNowItem;
-  const { updateCartCount } = useCart();
+  const { updateCartCount, discount, appliedPromotion, clearPromotion } =
+    useCart();
 
   useEffect(() => {
     const fetchCart = async () => {
@@ -132,12 +133,22 @@ export default function CheckoutPage() {
         items: itemsToSubmit,
         shippingFee,
         fromCart: !buyNowItem,
+        promotionId: appliedPromotion?._id || null,
+        discountAmount: discount || 0,
+        appliedPromotionDetails: appliedPromotion
+          ? {
+              code: appliedPromotion.code,
+              type: appliedPromotion.type,
+              value: appliedPromotion.value,
+            }
+          : null,
       });
 
       console.log(res.data);
       alert("Đặt hàng thành công!");
       navigate(`/thank-you/${res.data.orderId}`);
       await updateCartCount();
+      clearPromotion(); // <--- Thêm dòng này để xóa mã giảm giá sau khi đặt hàng
     } catch (error) {
       console.error("Lỗi đặt hàng:", error);
       alert(
@@ -148,7 +159,7 @@ export default function CheckoutPage() {
       setIsPlacingOrder(false);
     }
   };
-  
+
   //Hàm tính phí shipping
   const fetchShippingFee = async () => {
     if (!formData.districtCode || !formData.wardCode || !cartItems.length) {
@@ -212,6 +223,8 @@ export default function CheckoutPage() {
               <CheckoutSummary
                 shippingFee={shippingFee}
                 cartItems={cartItems}
+                discount={discount}
+                appliedPromotion={appliedPromotion}
                 onSubmit={handleSubmit}
                 isPlacingOrder={isPlacingOrder}
               />

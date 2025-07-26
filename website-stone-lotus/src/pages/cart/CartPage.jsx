@@ -41,7 +41,6 @@ export default function Cart() {
     }
     try {
       const res = await api.put("/api/cart/update", { productId, quantity });
-      console.log("Cập nhật giỏ hàng thành công:", res.data);
       if (!res.data || !res.data.items) {
         throw new Error("Dữ liệu giỏ hàng không hợp lệ");
       }

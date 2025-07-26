@@ -8,6 +8,15 @@ export const useCart = () => useContext(CartContext);
 export const CartProvider = ({ children }) => {
   const [cartCount, setCartCount] = useState(0);
   const [token, setToken] = useState(localStorage.getItem("token"));
+  // Khởi tạo discount và appliedPromotion từ localStorage
+  const [discount, setDiscount] = useState(() => {
+    const storedDiscount = localStorage.getItem("appliedDiscount");
+    return storedDiscount ? parseFloat(storedDiscount) : 0;
+  });
+  const [appliedPromotion, setAppliedPromotion] = useState(() => {
+    const storedPromo = localStorage.getItem("appliedPromotionDetails");
+    return storedPromo ? JSON.parse(storedPromo) : null;
+  });
 
   // Theo dõi sự thay đổi token từ localStorage
   useEffect(() => {
@@ -55,13 +64,38 @@ export const CartProvider = ({ children }) => {
     }
   };
 
+  const applyPromotion = (promoDiscount, promoDetails) => {
+    setDiscount(promoDiscount);
+    setAppliedPromotion(promoDetails);
+    localStorage.setItem("appliedDiscount", promoDiscount.toString());
+    localStorage.setItem(
+      "appliedPromotionDetails",
+      JSON.stringify(promoDetails)
+    );
+  };
+
+  const clearPromotion = () => {
+    setDiscount(0);
+    setAppliedPromotion(null);
+    localStorage.removeItem("appliedDiscount");
+    localStorage.removeItem("appliedPromotionDetails");
+  };
+
   useEffect(() => {
     updateCartCount();
   }, [token]);
 
   return (
     <CartContext.Provider
-      value={{ cartCount, updateCartCount, getCartItemQuantity }}
+      value={{
+        cartCount,
+        updateCartCount,
+        getCartItemQuantity,
+        discount,
+        appliedPromotion,
+        applyPromotion,
+        clearPromotion,
+      }}
     >
       {children}
     </CartContext.Provider>
