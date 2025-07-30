@@ -13,11 +13,13 @@ export default function CheckoutPage() {
     phone: "",
     email: "",
     address: "",
-    city: "",
-    district: "",
-    ward: "",
+    cityCode: "", // ✅ THÊM DÒNG NÀY
+    districtCode: "", // ✅ THÊM DÒNG NÀY
+    wardCode: "", // ✅ THÊM DÒNG NÀY
     note: "",
   });
+
+  const [formError, setFormError] = useState({});
   const [isPlacingOrder, setIsPlacingOrder] = useState(false);
 
   const [paymentMethod, setPaymenMethod] = useState("cod");
@@ -35,6 +37,31 @@ export default function CheckoutPage() {
   const buyNowItem = location.state?.buyNowItem;
   const { updateCartCount, discount, appliedPromotion, clearPromotion } =
     useCart();
+  const validateForm = () => {
+    const errors = {};
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    const phoneRegex = /^[0-9]{9,11}$/;
+
+    if (!formData.fullName.trim()) errors.fullName = "Họ tên là bắt buộc";
+    if (!formData.phone.trim()) {
+      errors.phone = "Số điện thoại là bắt buộc";
+    } else if (!phoneRegex.test(formData.phone)) {
+      errors.phone = "Số điện thoại không hợp lệ";
+    }
+    if (!formData.email) {
+      errors.email = "Email là bắt buộc";
+    } else if (!emailRegex.test(formData.email)) {
+      errors.email = "Email không hợp lệ";
+    }
+
+    if (!formData.address.trim()) errors.address = "Địa chỉ là bắt buộc";
+    if (!formData.cityCode) errors.city = "Vui lòng chọn tỉnh/thành phố";
+    if (!formData.districtCode) errors.district = "Vui lòng chọn quận/huyện";
+    if (!formData.wardCode) errors.ward = "Vui lòng chọn phường/xã";
+
+    setFormError(errors);
+    return Object.keys(errors).length === 0;
+  };
 
   useEffect(() => {
     const fetchCart = async () => {
@@ -83,11 +110,30 @@ export default function CheckoutPage() {
 
       return newForm;
     });
+
+    // Xóa lỗi của field đó nếu có
+    setFormError((prev) => {
+      const newErrors = { ...prev };
+      // map lỗi field name với key trong formErrors
+      const errorKeyMap = {
+        cityCode: "city",
+        districtCode: "district",
+        wardCode: "ward",
+      };
+      const key = errorKeyMap[name] || name;
+      if (newErrors[key]) {
+        delete newErrors[key];
+      }
+      return newErrors;
+    });
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (isPlacingOrder) return;
+
+    const isvalid = validateForm();
+    if (!isvalid) return;
 
     setIsPlacingOrder(true);
     try {
@@ -213,6 +259,7 @@ export default function CheckoutPage() {
                 formData={formData}
                 onChange={handleInputChange}
                 setLocationData={setLocationData}
+                formErrors={formError}
               />
               <PaymentMethodSelector
                 selected={paymentMethod}

@@ -1,14 +1,15 @@
+require("dotenv").config();
 const mongoose = require("mongoose");
 
-mongoose.connect("mongodb://127.0.0.1:27017/jwt_db",{
-    serverSelectionTimeoutMS: 5000
+mongoose.connect(process.env.MONGO_URI, {
+  serverSelectionTimeoutMS: 5000,
 });
 
 mongoose.connection.on("connected", () => {
-    console.log("✅ Connected to MongoDB");
+  console.log("Connected to MongoDB Atlas");
 });
 
 mongoose.connection.on("error", (err) => {
-    console.log("Error connecting to MongoDB", err);
-})
+  console.log("Error connecting to MongoDB", err);
+});
 module.exports = mongoose;

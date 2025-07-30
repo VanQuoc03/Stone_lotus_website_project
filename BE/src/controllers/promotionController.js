@@ -203,6 +203,58 @@ const applyPromotion = async (req, res) => {
   }
 };
 
+const validatePromotion = async (req, res) => {
+  try {
+    const { code, total, user_id } = req.body;
+    const promo = await Promotion.findOne({ code, status: "active" });
+    if (!promo) {
+      return res.status(200).json({ valid: false });
+    }
+
+    const now = new Date();
+    if (now < promo.start_date && now < promo.end_date)
+      return res.status(200).json({ valid: false });
+    if (promo.min_order_value && total < promo.min_order_value)
+      return res.status(200).json({ valid: false });
+    if (promo.max_uses && promo.used_count >= promo.max_uses)
+      return res.status(200).json({ valid: false });
+
+    if (promo.max_uses_per_user) {
+      const used = await Promotion.countDocuments({
+        promotion_id: promo._id,
+        user_id,
+      });
+      if (used >= promo.max_uses_per_user) {
+        return res.status(200).json({ valid: false });
+      }
+    }
+
+    let discount = 0;
+    if (promo.type === "percent") {
+      discount = Math.floor((promo.discount_amount / 100) * total);
+      if (promo.discount_amount && discount > promo.discount_amount) {
+        discount = promo.discount_amount;
+      }
+    } else {
+      discount = promo.discount_amount;
+    }
+    return res.status(200).json({
+      valid: true,
+      discount,
+      promotion: {
+        id: promo._id,
+        code: promo.code,
+        type: promo.type,
+        percent: promo.discount_percent,
+        amount: promo.discount_amount,
+      },
+    });
+  } catch (err) {
+    console.error("Lỗi validate mã giảm giá:", err);
+    return res.status(500).json({ valid: false });
+  }
+};
+
 module.exports = {
   addPromotion,
   getPromotions,
@@ -212,4 +264,5 @@ module.exports = {
   deletePromotion,
   getSuggestedPromotions,
   applyPromotion,
+  validatePromotion,
 };

@@ -15,7 +15,12 @@ export default function OrderSummary({ items, shippingFee = 0 }) {
   const userId = user ? user.id : null;
   const [discountCode, setDiscountCode] = useState("");
   const [codeApplied, setCodeApplied] = useState(false);
-  const { discount, applyPromotion, clearPromotion } = useCart();
+  const {
+    discount,
+    applyPromotion,
+    clearPromotion,
+    appliedPromotion: contextAppliedPromotion,
+  } = useCart();
 
   const subTotal = items.reduce(
     (sum, { product, quantity }) => sum + product.price * quantity,
@@ -23,6 +28,26 @@ export default function OrderSummary({ items, shippingFee = 0 }) {
   );
 
   const total = subTotal - discount + shippingFee;
+
+  // Đồng bộ trạng thái mã giảm giá với CartContext
+  useEffect(() => {
+    if (!contextAppliedPromotion) {
+      // Nếu mã giảm giá trong context bị xóa
+      setDiscountCode("");
+      setCodeApplied(false);
+    } else if (contextAppliedPromotion.code !== discountCode) {
+      // Nếu có mã giảm giá trong context và khác với mã hiện tại
+      setDiscountCode(contextAppliedPromotion.code);
+      setCodeApplied(true);
+    }
+    // Cập nhật trạng thái `codeApplied` dựa trên `discount` từ context
+    // Điều này sẽ giúp hiển thị/ẩn gợi ý mã giảm giá chính xác hơn
+    if (discount > 0 && contextAppliedPromotion) {
+      setCodeApplied(true);
+    } else {
+      setCodeApplied(false);
+    }
+  }, [contextAppliedPromotion, discount]); // Theo dõi appliedPromotion và discount từ context
 
   useEffect(() => {
     const fetchSuggestions = async () => {

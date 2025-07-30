@@ -8,7 +8,6 @@ export const useCart = () => useContext(CartContext);
 export const CartProvider = ({ children }) => {
   const [cartCount, setCartCount] = useState(0);
   const [token, setToken] = useState(localStorage.getItem("token"));
-  // Khởi tạo discount và appliedPromotion từ localStorage
   const [discount, setDiscount] = useState(() => {
     const storedDiscount = localStorage.getItem("appliedDiscount");
     return storedDiscount ? parseFloat(storedDiscount) : 0;
@@ -80,6 +79,49 @@ export const CartProvider = ({ children }) => {
     localStorage.removeItem("appliedDiscount");
     localStorage.removeItem("appliedPromotionDetails");
   };
+
+  useEffect(() => {
+    const validateInitialPromotion = async () => {
+      if (!appliedPromotion) return;
+      try {
+        const res = await api.post("/api/promotions/validate", {
+          promoCode: appliedPromotion.code,
+        });
+        if (!res.data?.valid) {
+          clearPromotion();
+        } else {
+          setDiscount(res.data.discount);
+        }
+      } catch (err) {
+        console.warn("Không thể xác minh mã giảm giá: ", err);
+        clearPromotion();
+      }
+    };
+    validateInitialPromotion();
+  }, []);
+
+  useEffect(() => {
+    const validatePromotionOnCartChange = async () => {
+      if (!appliedPromotion) return;
+      try {
+        const res = await api.post("/api/promotions/validate", {
+          promoCode: appliedPromotion.code,
+        });
+        if (!res.data?.valid) {
+          clearPromotion();
+        } else {
+          setDiscount(res.data.discount);
+        }
+      } catch (err) {
+        console.warn(
+          "Không thể xác minh mã giảm giá khi giỏ hàng thay đổi:",
+          err
+        );
+        clearPromotion();
+      }
+    };
+    validatePromotionOnCartChange();
+  }, [cartCount]);
 
   useEffect(() => {
     updateCartCount();

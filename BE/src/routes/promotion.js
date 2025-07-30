@@ -29,6 +29,13 @@ router.post(
   requireRole("admin"),
   promotionController.addPromotion
 );
+
+router.post(
+  "/promotions/validate",
+  authenticateToken,
+  promotionController.validatePromotion
+);
+
 router.post(
   "/promotions/apply",
   authenticateToken,

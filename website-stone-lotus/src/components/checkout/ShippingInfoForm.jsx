@@ -11,6 +11,7 @@ export default function ShippingInfoForm({
   formData,
   onChange,
   setLocationData,
+  formErrors,
 }) {
   const [cities, setCities] = useState([]);
   const [districts, setDistricts] = useState([]);
@@ -74,6 +75,7 @@ export default function ShippingInfoForm({
             value={formData.fullName}
             onChange={onChange}
             required
+            error={formErrors.fullName}
           />
           <InputField
             icon={<Phone />}
@@ -82,6 +84,7 @@ export default function ShippingInfoForm({
             value={formData.phone}
             onChange={onChange}
             required
+            error={formErrors.phone}
           />
         </div>
         <InputField
@@ -91,6 +94,7 @@ export default function ShippingInfoForm({
           type="email"
           value={formData.email}
           onChange={onChange}
+          error={formErrors.email}
         />
         <InputField
           icon={<MapPin />}
@@ -99,6 +103,7 @@ export default function ShippingInfoForm({
           value={formData.address}
           onChange={onChange}
           required
+          error={formErrors.address}
         />
         <div className="grid md:grid-cols-3 gap-4">
           <SelectField
@@ -111,6 +116,7 @@ export default function ShippingInfoForm({
               label: city.ProvinceName,
               value: city.ProvinceID,
             }))}
+            error={formErrors.city}
           />
           <SelectField
             label="Quận/Huyện"
@@ -122,6 +128,7 @@ export default function ShippingInfoForm({
               label: district.DistrictName,
               value: district.DistrictID,
             }))}
+            error={formErrors.district}
           />
           <SelectField
             label="Phường/Xã"
@@ -133,6 +140,7 @@ export default function ShippingInfoForm({
               label: ward.WardName,
               value: ward.WardCode,
             }))}
+            error={formErrors.ward}
           />
         </div>
         <div>
@@ -160,6 +168,7 @@ function InputField({
   onChange,
   type = "text",
   required,
+  error,
 }) {
   return (
     <div>
@@ -176,10 +185,13 @@ function InputField({
           value={value}
           onChange={onChange}
           required={required}
-          className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg"
+          className={`w-full pl-10 pr-4 py-3 border rounded-lg
+            ${error ? "border-red-500" : "border-gray-300"}
+            `}
           placeholder={`Nhập ${label.toLowerCase()}`}
         />
       </div>
+      {error && <p className="text-red-500 tex-sm mt-1">{error}</p>}
     </div>
   );
 }

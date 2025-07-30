@@ -5,6 +5,7 @@ export default function SelectField({
   onChange,
   required = false,
   options = [],
+  error,
 }) {
   return (
     <div>
@@ -16,7 +17,9 @@ export default function SelectField({
         value={value || ""}
         onChange={onChange}
         required={required}
-        className="w-full px-4 py-3 border border-gray-300 rounded-lg"
+        className={`w-full px-4 py-3 border rounded-lg ${
+          error ? "border-red-500" : "border-gray-300"
+        }`}
       >
         <option value="">Chọn {label.toLowerCase()}</option>
         {options.map((option) => (
@@ -25,6 +28,7 @@ export default function SelectField({
           </option>
         ))}
       </select>
+      {error && <p className="text-red-500 text-sm mt-1">{error}</p>}
     </div>
   );
 }
